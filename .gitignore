@@ -1,3 +1,8 @@
 *.iml
 Services/DropExample/.idea/
 Services/DropExample/target/
+Services/CapsuleExample/.idea/
+Services/CapsuleExample/build/
+Services/CapExample/.idea/
+Services/CapExample/build/
+Services/CapExample/.gradle/

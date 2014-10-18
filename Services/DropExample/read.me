@@ -1,0 +1,26 @@
+READ ME
+
+$> mvn install
+
+Find .jar file in "target" directory.
+
+In order to run service.
+
+java -jar <(Path) + JAR file name> server <name of config file>
+
+My specific example
+$> java -jar target/my-project-0.0.1-SNAPSHOT.jar server hello-world.yml
+
+
+Test the service by pointing browser to
+
+http://localhost:8080/hello-world
+or 
+http://localhost:8080/hello-world?name=Successful+Dropwizard+User
+
+Admin port at
+
+http://localhost:8081/
+
+Thread check at
+http://localhost:8081/threads
