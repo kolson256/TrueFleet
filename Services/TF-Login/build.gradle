@@ -49,7 +49,8 @@ run {
 
 task makeCapsule(type: FatCapsule) {
     applicationClass 'edu.depaul.truefleet.service.login.LoginMain'
+    reallyExecutable
     from { sourceSets.main.resources }
-    capsuleManifest.systemProperties = ["dropwizard.config": '$CAPSULE_DIR/jmodern.yml']
-
+    capsule.jar = 'c:/Capsule'
+    capsule.dir = 'c:/Capsule/Cache'
 }

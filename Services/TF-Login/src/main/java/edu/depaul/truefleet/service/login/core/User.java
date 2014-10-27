@@ -1,7 +1,7 @@
 package edu.depaul.truefleet.service.login.core;
 
 /**
- * Created by VM-Dev on 10/27/2014.
+ * Created by Richard Morgan on 10/27/2014.
  */
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
@@ -9,16 +9,21 @@ import org.hibernate.validator.constraints.Length;
 public class User {
     private long id;
 
-    @Length(max = 3)
-    private String content;
+    private String email;
+    private String password;
+
+    private String displayName;
+
+    //private Role role;
+
 
     public User() {
         // Jackson deserialization
     }
 
-    public User(long id, String content) {
+    public User(long id, String email) {
         this.id = id;
-        this.content = content;
+        this.email = email;
     }
 
     @JsonProperty
@@ -27,7 +32,9 @@ public class User {
     }
 
     @JsonProperty
-    public String getContent() {
-        return content;
+    public String getEmail() {
+        return email;
     }
+
+
 }
