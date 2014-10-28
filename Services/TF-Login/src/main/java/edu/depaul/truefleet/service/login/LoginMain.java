@@ -11,12 +11,12 @@ import edu.depaul.truefleet.service.login.health.TemplateHealthCheck;
 
 public class LoginMain extends Application<LoginConfiguration> {
     public static void main(String[] args) throws Exception {
-        new LoginMain().run(args);
+        new LoginMain().run(new String[]{"server", System.getProperty("dropwizard.config")});
     }
 
     @Override
     public String getName() {
-        return "hello-world";
+        return "LoginMain";
     }
 
     @Override
