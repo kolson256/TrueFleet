@@ -18,7 +18,7 @@ configurations {
 }
 
 dependencies {
-    compile 'io.ifar:dw-shiro-bundle:1'
+    //compile 'io.ifar:dw-shiro-bundle:1'
     compile 'io.dropwizard:dropwizard-core:0.7.1'
     capsule 'co.paralleluniverse:capsule:0.9.0'
     testCompile 'junit:junit:4.11'

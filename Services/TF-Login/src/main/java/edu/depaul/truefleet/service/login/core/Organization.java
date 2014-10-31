@@ -17,6 +17,8 @@
 package edu.depaul.truefleet.service.login.core;
 
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * Created by Richard Morgan on 10/27/2014.

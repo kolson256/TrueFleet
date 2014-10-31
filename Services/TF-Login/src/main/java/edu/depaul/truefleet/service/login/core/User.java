@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 public class User {
     private long id;
 
+    private Organization company;
     private String email;
     private String password;
 
