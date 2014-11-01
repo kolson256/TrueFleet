@@ -1,8 +1,8 @@
 package app.truefleet.com.truefleet;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+        import android.content.Context;
+        import android.net.ConnectivityManager;
+        import android.net.NetworkInfo;
 
 public class ConnectionDetector {
     private Context _context;
