@@ -3,6 +3,7 @@ package edu.depaul.truefleet.service.login;
 /**
  * Created by Richard Morgan on 10/27/2014.
  */
+import com.google.common.base.Optional;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -11,12 +12,28 @@ import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration.Dynamic;
 
 import edu.depaul.truefleet.service.login.resources.LoginResource;
-import edu.depaul.truefleet.service.login.health.TemplateHealthCheck;
+import edu.depaul.truefleet.security.stormpath.shiro.*;
+import edu.depaul.truefleet.security.stormpath.*;
 
 import java.util.EnumSet;
 
 
 public class LoginMain extends Application<LoginConfiguration> {
+
+    private final StormpathShiroBundle stormpathShiroBundle =
+            new StormpathShiroBundle<LoginConfiguration>() {
+                @Override
+                public Optional<StormpathConfiguration> getStormpathConfiguration(final LoginConfiguration configuration) {
+                    return Optional.fromNullable(configuration.getStormpathConfiguration());
+                }
+                @Override
+                public Optional<StormpathShiroConfiguration> getStormpathShiroConfiguration(final LoginConfiguration configuration) {
+                    return Optional.fromNullable(configuration.getStormpathShiroConfiguration());
+                }
+            };
+
+
+
     public static void main(String[] args) throws Exception {
         new LoginMain().run(new String[]{"server", System.getProperty("dropwizard.config")});
     }
@@ -27,22 +44,18 @@ public class LoginMain extends Application<LoginConfiguration> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void initialize(Bootstrap<LoginConfiguration> bootstrap) {
-        // nothing to do yet
+
+        bootstrap.addBundle(this.stormpathShiroBundle);
     }
 
     @Override
     public void run(LoginConfiguration configuration,
                     Environment environment) {
-        final LoginResource resource = new LoginResource(
-                configuration.getTemplate(),
-                configuration.getDefaultName()
-        );
-        final TemplateHealthCheck healthCheck =
-                new TemplateHealthCheck(configuration.getTemplate());
+        final LoginResource loginResource = new LoginResource(  );
 
-        environment.healthChecks().register("template", healthCheck);
-        environment.jersey().register(resource);
+        environment.jersey().register(loginResource);
 
         configureCors(environment);
     }

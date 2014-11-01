@@ -4,34 +4,31 @@ package edu.depaul.truefleet.service.login;
  * Created by Rich Morgan on 10/27/2014.
  */
 
+        import edu.depaul.truefleet.security.stormpath.shiro.StormpathShiroConfiguration;
+        import edu.depaul.truefleet.security.stormpath.StormpathConfiguration;
         import io.dropwizard.Configuration;
         import com.fasterxml.jackson.annotation.JsonProperty;
         import org.hibernate.validator.constraints.NotEmpty;
 
+
+        import javax.validation.Valid;
+
 public class LoginConfiguration extends Configuration {
+
+    @Valid
     @NotEmpty
-    private String template;
+    @JsonProperty("stormpath")
+    private StormpathConfiguration stormpathConfiguration = new StormpathConfiguration();
 
+    @Valid
     @NotEmpty
-    private String defaultName = "Stranger";
+    @JsonProperty("stormpath-shiro")
+    private StormpathShiroConfiguration stormpathShiroConfiguration = new StormpathShiroConfiguration();
 
-    @JsonProperty
-    public String getTemplate() {
-        return template;
-    }
 
-    @JsonProperty
-    public void setTemplate(String template) {
-        this.template = template;
+    public StormpathConfiguration getStormpathConfiguration() {
+        return stormpathConfiguration;
     }
+    public StormpathShiroConfiguration getStormpathShiroConfiguration() {return stormpathShiroConfiguration; }
 
-    @JsonProperty
-    public String getDefaultName() {
-        return defaultName;
-    }
-
-    @JsonProperty
-    public void setDefaultName(String name) {
-        this.defaultName = name;
-    }
 }

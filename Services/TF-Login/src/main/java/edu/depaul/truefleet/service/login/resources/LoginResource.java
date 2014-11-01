@@ -14,23 +14,27 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/hello-world")
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
+
+
+@Path("/login-check")
 @Produces(MediaType.APPLICATION_JSON)
 public class LoginResource {
-    private final String template;
-    private final String defaultName;
-    private final AtomicLong counter;
 
-    public LoginResource(String template, String defaultName) {
-        this.template = template;
-        this.defaultName = defaultName;
-        this.counter = new AtomicLong();
+    public LoginResource() {
     }
 
     @GET
     @Timed
-    public User sayHello(@QueryParam("name") Optional<String> name) {
-        final String value = String.format(template, name.or(defaultName));
-        return new User(counter.incrementAndGet(), value);
+    public String isLoggedIn()
+    {
+        final Subject s = SecurityUtils.getSubject();
+        if (s != null && s.isAuthenticated()) {
+            return String.format("Logged in as '%s'.", s.getPrincipal());
+        } else {
+            return "Not logged in.";
+        }
     }
 }

@@ -1,2 +1,8 @@
-template: Hello, %s!
-defaultName: Stranger
+
+stormpath:
+ enabled: true
+ apiKeyLocation: C:\Stormpath\
+ applicationRestUrl: https://api.stormpath.com/v1/applications/1gGuKsRquOyI72rBQeuXJP
+
+stormpath-shiro:
+  sessionStorageEnabled: true
