@@ -5,11 +5,12 @@ sourceCompatibility = '1.8'
 
 mainClassName = 'edu.depaul.truefleet.service.login.LoginMain'
 version = '0.1.0'
+String dropwizard_version = '0.7.1'
 
 repositories {
     mavenCentral()
     maven{
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
+        url "http://repository-multifarious.forge.cloudbees.com/snapshot/"
     }
 }
 
@@ -18,9 +19,14 @@ configurations {
 }
 
 dependencies {
-    //compile 'io.ifar:dw-shiro-bundle:1'
-    compile 'io.dropwizard:dropwizard-core:0.7.1'
+    //compile 'io.ifar:dw-shiro-bundle:0.0.2-SNAPSHOT'
+    compile "io.dropwizard:dropwizard-core:$dropwizard_version"
+    compile "io.dropwizard:dropwizard-db:$dropwizard_version"
+    compile "io.dropwizard:dropwizard-jdbi:$dropwizard_version"
+    compile"org.postgresql:postgresql:9.3-1102-jdbc41"
+
     capsule 'co.paralleluniverse:capsule:0.9.0'
+
     testCompile 'junit:junit:4.11'
 }
 run {

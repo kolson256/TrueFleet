@@ -3,34 +3,43 @@ package edu.depaul.truefleet.service.login.resources;
 /**
  * Created by Richard Morgan on 10/27/2014.
  */
-import edu.depaul.truefleet.service.login.core.User;
-import com.google.common.base.Optional;
+
 import com.codahale.metrics.annotation.Timed;
+import edu.depaul.truefleet.service.login.core.UserLogin;
+import edu.depaul.truefleet.service.login.dao.UserLoginDAO;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/hello-world")
+
+@Path("/login")
 @Produces(MediaType.APPLICATION_JSON)
 public class LoginResource {
-    private final String template;
-    private final String defaultName;
-    private final AtomicLong counter;
 
-    public LoginResource(String template, String defaultName) {
-        this.template = template;
-        this.defaultName = defaultName;
-        this.counter = new AtomicLong();
+    private final UserLoginDAO dao;
+
+    public LoginResource(UserLoginDAO dao) {
+        this.dao = dao;
     }
 
     @GET
     @Timed
-    public User sayHello(@QueryParam("name") Optional<String> name) {
-        final String value = String.format(template, name.or(defaultName));
-        return new User(counter.incrementAndGet(), value);
+    public String login(@QueryParam("username") String name, @QueryParam("password") String password ) {
+
+        UserLogin userLogin = dao.FindUserLoginbyUserName( name );
+
+        if( userLogin.getPassword().equals(password)){
+            return "login successful";
+        }else{
+            return "login failed.";
+        }
+
     }
+
+    @POST
+    public void register(@QueryParam("username") String name, @QueryParam("password") String password, @QueryParam("orgID") long orgid){
+        dao.insert( name, password, orgid);
+    }
+
+
 }

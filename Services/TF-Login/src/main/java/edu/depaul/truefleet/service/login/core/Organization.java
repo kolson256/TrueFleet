@@ -25,12 +25,64 @@ import org.hibernate.validator.constraints.Length;
  */
 public class Organization{
 
-    private long id;
-    private String displayName;
+    private String name;
+    private long tenantID;
+    private String DatabaseURL;
+    private String ApiVersion;
 
-    private List<User> roster;
+    public Organization(String name) {
+        this.name = name;
+    }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public long getTenantID() {
+        return tenantID;
+    }
 
+    public void setTenantID(long tenantID) {
+        this.tenantID = tenantID;
+    }
+
+    public String getDatabaseURL() {
+        return DatabaseURL;
+    }
+
+    public void setDatabaseURL(String databaseURL) {
+        DatabaseURL = databaseURL;
+    }
+
+    public String getApiVersion() {
+        return ApiVersion;
+    }
+
+    public void setApiVersion(String apiVersion) {
+        ApiVersion = apiVersion;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Organization that = (Organization) o;
+
+        if (tenantID != that.tenantID) return false;
+        if (!name.equals(that.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + (int) (tenantID ^ (tenantID >>> 32));
+        return result;
+    }
 }

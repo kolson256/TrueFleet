@@ -3,15 +3,18 @@ package edu.depaul.truefleet.service.login;
 /**
  * Created by Richard Morgan on 10/27/2014.
  */
+import edu.depaul.truefleet.service.login.dao.UserLoginDAO;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
+
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration.Dynamic;
 
 import edu.depaul.truefleet.service.login.resources.LoginResource;
-import edu.depaul.truefleet.service.login.health.TemplateHealthCheck;
+import org.skife.jdbi.v2.DBI;
 
 import java.util.EnumSet;
 
@@ -33,16 +36,13 @@ public class LoginMain extends Application<LoginConfiguration> {
 
     @Override
     public void run(LoginConfiguration configuration,
-                    Environment environment) {
-        final LoginResource resource = new LoginResource(
-                configuration.getTemplate(),
-                configuration.getDefaultName()
-        );
-        final TemplateHealthCheck healthCheck =
-                new TemplateHealthCheck(configuration.getTemplate());
+                    Environment environment) throws ClassNotFoundException {
 
-        environment.healthChecks().register("template", healthCheck);
-        environment.jersey().register(resource);
+        final DBIFactory factory = new DBIFactory();
+        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "TFAdmin");
+
+        final UserLoginDAO dao = jdbi.onDemand(UserLoginDAO.class);
+        environment.jersey().register(new LoginResource(dao));
 
         configureCors(environment);
     }
