@@ -30,10 +30,10 @@ public interface UserLoginDAO {
 
     //find User by username
     @SqlQuery("select username from userlogin where username = :user")
+    @Mapper(UserLoginMapper.class)
     public UserLogin FindUserLoginbyUserName(@Bind("user") String username);
 
     @SqlUpdate("insert into userlogin (username, password, organizationid) values (:name, :pw, :orgid)")
-    @Mapper(UserLoginMapper.class)
     void insert(@Bind("name") String name, @Bind("pw") String pw, @Bind("orgid") long orgid);
 
 
