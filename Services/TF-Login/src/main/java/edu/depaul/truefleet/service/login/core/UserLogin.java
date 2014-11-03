@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 public class UserLogin {
 
 
-    private long organizationId;
+    private String organizationId;
 
     private String username;
 
@@ -21,10 +21,10 @@ public class UserLogin {
         // Jackson deserialization
     }
 
-    public UserLogin(String username, long orgID, String password) {
+    public UserLogin(String username, String password, String orgID) {
         this.username = username;
-        this.organizationId = orgID;
         this.password = password;
+        this.organizationId = orgID;
     }
 
     @JsonProperty
@@ -33,7 +33,7 @@ public class UserLogin {
     }
 
     @JsonProperty
-    public long getOrganizationId() {
+    public String getOrganizationId() {
         return organizationId;
     }
 
@@ -54,7 +54,7 @@ public class UserLogin {
 
     @Override
     public int hashCode() {
-        int result = (int) (organizationId ^ (organizationId >>> 32));
+        int result = (int) (organizationId.hashCode() ^ (organizationId.hashCode() >>> 32));
         result = 31 * result + username.hashCode();
         return result;
     }

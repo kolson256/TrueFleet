@@ -29,10 +29,10 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 
 public interface OrganizationDAO {
 
-    @SqlQuery("select \"Name\" from \"Organization\" where \"Name\" = :name")
+    @SqlQuery("select name from organization where name = :name")
     public Organization FindOrganizationByName(@Bind("name") String name);
 
-    @SqlUpdate("insert into \"Organization\" (\"Name\", \"DatabaseURL\", \"APIVersion\") values (:name, :db, :api)")
+    @SqlUpdate("insert into organization (name, databaseurl, apiversion) values (:name, :db, :api)")
     void orgInsert(@Bind("name") String name, @Bind("db") String dbURL, @Bind("api") String apiVersion);
 
 }

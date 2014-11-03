@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.5
 -- Dumped by pg_dump version 9.3.5
--- Started on 2014-11-01 13:15:41
+-- Started on 2014-11-03 17:43:35
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -31,7 +31,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
--- TOC entry 177 (class 3079 OID 16543)
+-- TOC entry 177 (class 3079 OID 16592)
 -- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -54,24 +54,24 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 170 (class 1259 OID 16465)
--- Name: AppRole; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 170 (class 1259 OID 16603)
+-- Name: approle; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE "AppRole" (
-    "Id" integer NOT NULL,
-    "Name" text
+CREATE TABLE approle (
+    id integer NOT NULL,
+    name text
 );
 
 
-ALTER TABLE public."AppRole" OWNER TO postgres;
+ALTER TABLE public.approle OWNER TO postgres;
 
 --
--- TOC entry 171 (class 1259 OID 16471)
--- Name: AppRole_Id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 171 (class 1259 OID 16609)
+-- Name: approle_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE "AppRole_Id_seq"
+CREATE SEQUENCE approle_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -79,51 +79,38 @@ CREATE SEQUENCE "AppRole_Id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."AppRole_Id_seq" OWNER TO postgres;
+ALTER TABLE public.approle_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 1981 (class 0 OID 0)
 -- Dependencies: 171
--- Name: AppRole_Id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: approle_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE "AppRole_Id_seq" OWNED BY "AppRole"."Id";
+ALTER SEQUENCE approle_id_seq OWNED BY approle.id;
 
 
 --
--- TOC entry 172 (class 1259 OID 16473)
--- Name: AppUser; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 172 (class 1259 OID 16611)
+-- Name: appuser; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE "AppUser" (
-    "Id" integer NOT NULL,
-    "FirstName" text,
-    "LastName" text,
-    "UserName" text NOT NULL
+CREATE TABLE appuser (
+    id integer NOT NULL,
+    firstname text,
+    lastname text,
+    username text NOT NULL
 );
 
 
-ALTER TABLE public."AppUser" OWNER TO postgres;
+ALTER TABLE public.appuser OWNER TO postgres;
 
 --
--- TOC entry 173 (class 1259 OID 16479)
--- Name: AppUserRole; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 174 (class 1259 OID 16620)
+-- Name: appuser_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE "AppUserRole" (
-    "AppUserId" integer NOT NULL,
-    "AppRoleId" integer NOT NULL
-);
-
-
-ALTER TABLE public."AppUserRole" OWNER TO postgres;
-
---
--- TOC entry 174 (class 1259 OID 16482)
--- Name: AppUser_Id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE "AppUser_Id_seq"
+CREATE SEQUENCE appuser_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -131,108 +118,121 @@ CREATE SEQUENCE "AppUser_Id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."AppUser_Id_seq" OWNER TO postgres;
+ALTER TABLE public.appuser_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 1982 (class 0 OID 0)
 -- Dependencies: 174
--- Name: AppUser_Id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: appuser_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE "AppUser_Id_seq" OWNED BY "AppUser"."Id";
+ALTER SEQUENCE appuser_id_seq OWNED BY appuser.id;
 
 
 --
--- TOC entry 175 (class 1259 OID 16484)
--- Name: AuthToken; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 173 (class 1259 OID 16617)
+-- Name: appuserrole; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE "AuthToken" (
-    "AppUserId" integer NOT NULL,
-    "Token" text NOT NULL,
-    "ExpirationDate" timestamp with time zone NOT NULL
+CREATE TABLE appuserrole (
+    appuserid integer NOT NULL,
+    approleid integer NOT NULL
 );
 
 
-ALTER TABLE public."AuthToken" OWNER TO postgres;
+ALTER TABLE public.appuserrole OWNER TO postgres;
 
 --
--- TOC entry 1851 (class 2604 OID 16490)
--- Name: Id; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 175 (class 1259 OID 16622)
+-- Name: authtoken; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "AppRole" ALTER COLUMN "Id" SET DEFAULT nextval('"AppRole_Id_seq"'::regclass);
+CREATE TABLE authtoken (
+    appuserid integer NOT NULL,
+    token text NOT NULL,
+    expirationdate timestamp with time zone NOT NULL
+);
 
 
---
--- TOC entry 1852 (class 2604 OID 16491)
--- Name: Id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "AppUser" ALTER COLUMN "Id" SET DEFAULT nextval('"AppUser_Id_seq"'::regclass);
-
+ALTER TABLE public.authtoken OWNER TO postgres;
 
 --
--- TOC entry 1854 (class 2606 OID 16493)
--- Name: AppRole_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 1851 (class 2604 OID 16628)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY "AppRole"
-    ADD CONSTRAINT "AppRole_pkey" PRIMARY KEY ("Id");
+ALTER TABLE ONLY approle ALTER COLUMN id SET DEFAULT nextval('approle_id_seq'::regclass);
 
 
 --
--- TOC entry 1860 (class 2606 OID 16495)
--- Name: AppUserRole_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 1852 (class 2604 OID 16629)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY "AppUserRole"
-    ADD CONSTRAINT "AppUserRole_pkey" PRIMARY KEY ("AppUserId", "AppRoleId");
-
-
---
--- TOC entry 1856 (class 2606 OID 16497)
--- Name: AppUser_UserName_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "AppUser"
-    ADD CONSTRAINT "AppUser_UserName_key" UNIQUE ("UserName");
+ALTER TABLE ONLY appuser ALTER COLUMN id SET DEFAULT nextval('appuser_id_seq'::regclass);
 
 
 --
--- TOC entry 1858 (class 2606 OID 16499)
--- Name: AppUser_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 1854 (class 2606 OID 16631)
+-- Name: approle_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "AppUser"
-    ADD CONSTRAINT "AppUser_pkey" PRIMARY KEY ("Id");
-
-
---
--- TOC entry 1862 (class 2606 OID 16501)
--- Name: AuthToken_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "AuthToken"
-    ADD CONSTRAINT "AuthToken_pkey" PRIMARY KEY ("Token");
+ALTER TABLE ONLY approle
+    ADD CONSTRAINT approle_pkey PRIMARY KEY (id);
 
 
 --
--- TOC entry 1863 (class 2606 OID 16502)
--- Name: AppUserRole_AppRoleId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1856 (class 2606 OID 16637)
+-- Name: appuser_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "AppUserRole"
-    ADD CONSTRAINT "AppUserRole_AppRoleId_fkey" FOREIGN KEY ("AppRoleId") REFERENCES "AppRole"("Id");
+ALTER TABLE ONLY appuser
+    ADD CONSTRAINT appuser_pkey PRIMARY KEY (id);
 
 
 --
--- TOC entry 1864 (class 2606 OID 16507)
--- Name: AppUserRole_AppUserId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1858 (class 2606 OID 16635)
+-- Name: appuser_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "AppUserRole"
-    ADD CONSTRAINT "AppUserRole_AppUserId_fkey" FOREIGN KEY ("AppUserId") REFERENCES "AppUser"("Id");
+ALTER TABLE ONLY appuser
+    ADD CONSTRAINT appuser_username_key UNIQUE (username);
+
+
+--
+-- TOC entry 1860 (class 2606 OID 16633)
+-- Name: appuserrole_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY appuserrole
+    ADD CONSTRAINT appuserrole_pkey PRIMARY KEY (appuserid, approleid);
+
+
+--
+-- TOC entry 1862 (class 2606 OID 16639)
+-- Name: authtoken_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY authtoken
+    ADD CONSTRAINT authtoken_pkey PRIMARY KEY (token);
+
+
+--
+-- TOC entry 1863 (class 2606 OID 16640)
+-- Name: appuserrole_approleid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY appuserrole
+    ADD CONSTRAINT appuserrole_approleid_fkey FOREIGN KEY (approleid) REFERENCES approle(id);
+
+
+--
+-- TOC entry 1864 (class 2606 OID 16645)
+-- Name: appuserrole_appuserid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY appuserrole
+    ADD CONSTRAINT appuserrole_appuserid_fkey FOREIGN KEY (appuserid) REFERENCES appuser(id);
 
 
 --
@@ -247,7 +247,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2014-11-01 13:15:41
+-- Completed on 2014-11-03 17:43:35
 
 --
 -- PostgreSQL database dump complete

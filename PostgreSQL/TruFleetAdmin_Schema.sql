@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.5
 -- Dumped by pg_dump version 9.3.5
--- Started on 2014-11-01 13:16:19
+-- Started on 2014-11-03 17:45:23
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,7 +14,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 173 (class 3079 OID 11750)
+-- TOC entry 172 (class 3079 OID 11750)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -22,8 +22,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 1961 (class 0 OID 0)
--- Dependencies: 173
+-- TOC entry 1958 (class 0 OID 0)
+-- Dependencies: 172
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -31,7 +31,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
--- TOC entry 174 (class 3079 OID 16532)
+-- TOC entry 173 (class 3079 OID 16678)
 -- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -39,8 +39,8 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 
 
 --
--- TOC entry 1962 (class 0 OID 0)
--- Dependencies: 174
+-- TOC entry 1959 (class 0 OID 0)
+-- Dependencies: 173
 -- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -54,97 +54,64 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 170 (class 1259 OID 16513)
--- Name: Organization; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 170 (class 1259 OID 16689)
+-- Name: organization; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE "Organization" (
-    "Name" text,
-    "TenantId" uuid DEFAULT uuid_generate_v4() NOT NULL,
-    "DatabaseURL" text,
-    "APIVersion" text,
-    "Id" integer NOT NULL
+CREATE TABLE organization (
+    "name" text,
+    tenantid text DEFAULT uuid_generate_v4() NOT NULL,
+    databaseurl text,
+    apiversion text
 );
 
 
-ALTER TABLE public."Organization" OWNER TO postgres;
+ALTER TABLE public.organization OWNER TO postgres;
 
 --
--- TOC entry 171 (class 1259 OID 16563)
--- Name: Organization_Id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 171 (class 1259 OID 16696)
+-- Name: userlogin; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE SEQUENCE "Organization_Id_seq"
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public."Organization_Id_seq" OWNER TO postgres;
-
---
--- TOC entry 1963 (class 0 OID 0)
--- Dependencies: 171
--- Name: Organization_Id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE "Organization_Id_seq" OWNED BY "Organization"."Id";
-
-
---
--- TOC entry 172 (class 1259 OID 16577)
--- Name: UserLogin; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE "UserLogin" (
-    "UserName" text NOT NULL,
-    "Password" text NOT NULL,
-    "OrganizationId" uuid NOT NULL
+CREATE TABLE userlogin (
+    username text NOT NULL,
+    password text NOT NULL,
+    organizationid text NOT NULL
 );
 
 
-ALTER TABLE public."UserLogin" OWNER TO postgres;
+ALTER TABLE public.userlogin OWNER TO postgres;
 
 --
--- TOC entry 1841 (class 2604 OID 16565)
--- Name: Id; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 1840 (class 2606 OID 16703)
+-- Name: organization_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "Organization" ALTER COLUMN "Id" SET DEFAULT nextval('"Organization_Id_seq"'::regclass);
-
-
---
--- TOC entry 1843 (class 2606 OID 16576)
--- Name: Organization_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "Organization"
-    ADD CONSTRAINT "Organization_pkey" PRIMARY KEY ("TenantId");
+ALTER TABLE ONLY organization
+    ADD CONSTRAINT organization_pkey PRIMARY KEY (tenantid);
 
 
 --
--- TOC entry 1845 (class 2606 OID 16584)
--- Name: UserLogin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 1842 (class 2606 OID 16705)
+-- Name: userlogin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "UserLogin"
-    ADD CONSTRAINT "UserLogin_pkey" PRIMARY KEY ("UserName");
-
-
---
--- TOC entry 1846 (class 2606 OID 16585)
--- Name: UserLogin_OrganizationId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "UserLogin"
-    ADD CONSTRAINT "UserLogin_OrganizationId_fkey" FOREIGN KEY ("OrganizationId") REFERENCES "Organization"("TenantId");
+ALTER TABLE ONLY userlogin
+    ADD CONSTRAINT userlogin_pkey PRIMARY KEY (username);
 
 
 --
--- TOC entry 1960 (class 0 OID 0)
--- Dependencies: 5
+-- TOC entry 1843 (class 2606 OID 16706)
+-- Name: userlogin_organizationid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY userlogin
+    ADD CONSTRAINT userlogin_organizationid_fkey FOREIGN KEY (organizationid) REFERENCES organization(tenantid);
+
+
+--
+-- TOC entry 1957 (class 0 OID 0)
+-- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
 
@@ -154,7 +121,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2014-11-01 13:16:19
+-- Completed on 2014-11-03 17:45:23
 
 --
 -- PostgreSQL database dump complete

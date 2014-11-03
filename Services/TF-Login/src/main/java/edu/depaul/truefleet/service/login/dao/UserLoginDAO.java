@@ -17,22 +17,23 @@
 package edu.depaul.truefleet.service.login.dao;
 
 import edu.depaul.truefleet.service.login.core.UserLogin;
+import edu.depaul.truefleet.service.login.core.UserLoginMapper;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
 /**
  * Created by Richard Morgan on 11/2/2014.
  */
 public interface UserLoginDAO {
 
-
-
     //find User by username
-    @SqlQuery("select \"UserName\" from \"UserLogin\" where \"UserName\" = :user")
+    @SqlQuery("select username from userlogin where username = :user")
     public UserLogin FindUserLoginbyUserName(@Bind("user") String username);
 
-    @SqlUpdate("insert into \"UserLogin\" (UserName, Password, OrganizationID) values (:name, :pw, :orgid)")
+    @SqlUpdate("insert into userlogin (username, password, organizationid) values (:name, :pw, :orgid)")
+    @Mapper(UserLoginMapper.class)
     void insert(@Bind("name") String name, @Bind("pw") String pw, @Bind("orgid") long orgid);
 
 

@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Optional;
 import edu.depaul.truefleet.service.login.core.UserLogin;
 import edu.depaul.truefleet.service.login.dao.UserLoginDAO;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -27,22 +29,36 @@ public class LoginResource {
     }
 
     @POST
-    @Timed
-    public String login(@FormParam("username") String name, @FormParam("password") String password ) {
+        public String login(String body){
 
-        Optional<UserLogin> userLogin = Optional.fromNullable( dao.FindUserLoginbyUserName( name ) );
+            System.out.println("body: " + body);
+            try {
+                JSONObject json = new JSONObject(body);
+                String username = json.getString("username");
+                String password = json.getString("password");
 
-        if (userLogin.isPresent()){
-            if( userLogin.get().getPassword().equals(password)){
-                return "status: login successful";
-            }else{
-                return "status: login failed.";
+                System.out.println( "username: " + username );
+                System.out.println( "password: " + password );
+
+                UserLogin userLogin = dao.FindUserLoginbyUserName( username );
+
+
+                System.out.println( "userLogin: " + userLogin);
+                System.out.println( "getUsername: " + userLogin.getUsername());
+                System.out.println( "getPassword: " + userLogin.getPassword());
+                System.out.println( "getOrganizationId: " + userLogin.getOrganizationId());
+
+                if( userLogin.getPassword().equals(password)){
+                    return "login successful";
+                }else{
+                    return "login failed.";
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }else{
-            return "status: user does not exist.";
+
+            return "login failed.";
         }
-
-
-    }
 
 }
