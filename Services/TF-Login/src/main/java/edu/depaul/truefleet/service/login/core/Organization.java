@@ -18,16 +18,24 @@ package edu.depaul.truefleet.service.login.core;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.validator.constraints.Length;
 
 /**
  * Created by Richard Morgan on 10/27/2014.
  */
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Organization{
 
+    @JsonProperty
     private String name;
-    private long tenantID;
+    @JsonProperty
+    private String tenantID;
+
+    @JsonProperty
     private String DatabaseURL;
+    @JsonProperty
     private String ApiVersion;
 
     public Organization(String name) {
@@ -42,11 +50,11 @@ public class Organization{
         this.name = name;
     }
 
-    public long getTenantID() {
+    public String getTenantID() {
         return tenantID;
     }
 
-    public void setTenantID(long tenantID) {
+    public void setTenantID(String tenantID) {
         this.tenantID = tenantID;
     }
 
@@ -73,8 +81,8 @@ public class Organization{
 
         Organization that = (Organization) o;
 
-        if (tenantID != that.tenantID) return false;
         if (!name.equals(that.name)) return false;
+        if (!tenantID.equals(that.tenantID)) return false;
 
         return true;
     }
@@ -82,7 +90,8 @@ public class Organization{
     @Override
     public int hashCode() {
         int result = name.hashCode();
-        result = 31 * result + (int) (tenantID ^ (tenantID >>> 32));
+        result = 31 * result + tenantID.hashCode();
         return result;
     }
+
 }

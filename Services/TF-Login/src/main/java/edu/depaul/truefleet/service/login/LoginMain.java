@@ -3,7 +3,10 @@ package edu.depaul.truefleet.service.login;
 /**
  * Created by Richard Morgan on 10/27/2014.
  */
+import edu.depaul.truefleet.service.login.dao.OrganizationDAO;
 import edu.depaul.truefleet.service.login.dao.UserLoginDAO;
+import edu.depaul.truefleet.service.login.resources.OrganizationResource;
+import edu.depaul.truefleet.service.login.resources.UserRegisterResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.jdbi.DBIFactory;
@@ -42,8 +45,11 @@ public class LoginMain extends Application<LoginConfiguration> {
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "TFAdmin");
 
         final UserLoginDAO dao = jdbi.onDemand(UserLoginDAO.class);
-        environment.jersey().register(new LoginResource(dao));
+        final OrganizationDAO orgDAO = jdbi.onDemand(OrganizationDAO.class);
 
+        environment.jersey().register(new LoginResource(dao));
+        environment.jersey().register(new UserRegisterResource(dao));
+        environment.jersey().register(new OrganizationResource( orgDAO ));
         configureCors(environment);
     }
 

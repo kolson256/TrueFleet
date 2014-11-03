@@ -16,10 +16,23 @@
 
 package edu.depaul.truefleet.service.login.dao;
 
+import edu.depaul.truefleet.service.login.core.Organization;
+import org.skife.jdbi.v2.sqlobject.Bind;
+import org.skife.jdbi.v2.sqlobject.SqlQuery;
+import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+
 /**
  * Created by Richard Morgan on 11/2/2014.
  */
 
 
+
 public interface OrganizationDAO {
+
+    @SqlQuery("select \"Name\" from \"Organization\" where \"Name\" = :name")
+    public Organization FindOrganizationByName(@Bind("name") String name);
+
+    @SqlUpdate("insert into \"Organization\" (\"Name\", \"DatabaseURL\", \"APIVersion\") values (:name, :db, :api)")
+    void orgInsert(@Bind("name") String name, @Bind("db") String dbURL, @Bind("api") String apiVersion);
+
 }

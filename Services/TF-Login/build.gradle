@@ -31,6 +31,8 @@ dependencies {
 }
 run {
     systemProperty "dropwizard.config", "build/resources/main/login-config.yml"
+    systemProperty "STOP.PORT", "8082"
+    systemProperty "STOP.KEY", "stop"
 }
 task capsule(type: Jar, dependsOn: classes) {
     archiveName = "TF-Login-Deploy.jar"

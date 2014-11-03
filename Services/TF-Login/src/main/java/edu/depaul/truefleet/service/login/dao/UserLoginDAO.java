@@ -26,11 +26,13 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
  */
 public interface UserLoginDAO {
 
+
+
     //find User by username
-    @SqlQuery("select UserName from UserLogin where Username = :user")
+    @SqlQuery("select \"UserName\" from \"UserLogin\" where \"UserName\" = :user")
     public UserLogin FindUserLoginbyUserName(@Bind("user") String username);
 
-    @SqlUpdate("insert into UserLogin (UserName, Password, OrganizationID) values (:name, :pw, :orgid)")
+    @SqlUpdate("insert into \"UserLogin\" (UserName, Password, OrganizationID) values (:name, :pw, :orgid)")
     void insert(@Bind("name") String name, @Bind("pw") String pw, @Bind("orgid") long orgid);
 
 

@@ -5,6 +5,9 @@ package edu.depaul.truefleet.service.login.resources;
  */
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Optional;
 import edu.depaul.truefleet.service.login.core.UserLogin;
 import edu.depaul.truefleet.service.login.dao.UserLoginDAO;
 
@@ -14,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/login")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class LoginResource {
 
     private final UserLoginDAO dao;
@@ -22,24 +26,23 @@ public class LoginResource {
         this.dao = dao;
     }
 
-    @GET
+    @POST
     @Timed
-    public String login(@QueryParam("username") String name, @QueryParam("password") String password ) {
+    public String login(@FormParam("username") String name, @FormParam("password") String password ) {
 
-        UserLogin userLogin = dao.FindUserLoginbyUserName( name );
+        Optional<UserLogin> userLogin = Optional.fromNullable( dao.FindUserLoginbyUserName( name ) );
 
-        if( userLogin.getPassword().equals(password)){
-            return "login successful";
+        if (userLogin.isPresent()){
+            if( userLogin.get().getPassword().equals(password)){
+                return "status: login successful";
+            }else{
+                return "status: login failed.";
+            }
         }else{
-            return "login failed.";
+            return "status: user does not exist.";
         }
 
-    }
 
-    @POST
-    public void register(@QueryParam("username") String name, @QueryParam("password") String password, @QueryParam("orgID") long orgid){
-        dao.insert( name, password, orgid);
     }
-
 
 }
