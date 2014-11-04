@@ -29,7 +29,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 public interface UserLoginDAO {
 
     //find User by username
-    @SqlQuery("select username from userlogin where username = :user")
+    @SqlQuery("select username, password, organizationid from userlogin where username = :user")
     @Mapper(UserLoginMapper.class)
     public UserLogin FindUserLoginbyUserName(@Bind("user") String username);
 

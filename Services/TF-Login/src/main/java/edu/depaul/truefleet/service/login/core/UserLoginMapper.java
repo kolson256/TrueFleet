@@ -13,6 +13,6 @@ import java.sql.SQLException;
 public class UserLoginMapper implements ResultSetMapper<UserLogin> {
     public UserLogin map(int index, ResultSet r, StatementContext ctx) throws SQLException
       {
-        return new UserLogin(r.getString("username"), r.getString("password"), r.getString("orgid"));
+        return new UserLogin(r.getString("username"), r.getString("password"), r.getString("organizationid"));
       }
 }
