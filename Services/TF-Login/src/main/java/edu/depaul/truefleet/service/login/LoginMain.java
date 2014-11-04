@@ -8,6 +8,7 @@ import edu.depaul.truefleet.service.login.dao.UserLoginDAO;
 import edu.depaul.truefleet.service.login.resources.OrganizationResource;
 import edu.depaul.truefleet.service.login.resources.UserRegisterResource;
 import io.dropwizard.Application;
+import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
@@ -47,7 +48,7 @@ public class LoginMain extends Application<LoginConfiguration> {
         final UserLoginDAO dao = jdbi.onDemand(UserLoginDAO.class);
         final OrganizationDAO orgDAO = jdbi.onDemand(OrganizationDAO.class);
 
-        environment.jersey().register(new LoginResource(dao));
+        environment.jersey().register(new LoginResource(dao, environment));
         environment.jersey().register(new UserRegisterResource(dao));
         environment.jersey().register(new OrganizationResource( orgDAO ));
         configureCors(environment);

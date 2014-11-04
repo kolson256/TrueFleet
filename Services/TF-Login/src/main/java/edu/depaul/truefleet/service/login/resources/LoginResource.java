@@ -8,10 +8,21 @@ import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Optional;
+import edu.depaul.truefleet.service.login.core.AppUser;
+import edu.depaul.truefleet.service.login.core.Organization;
 import edu.depaul.truefleet.service.login.core.UserLogin;
 import edu.depaul.truefleet.service.login.dao.UserLoginDAO;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.jdbi.DBIFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
+import io.dropwizard.setup.Environment;
+import org.skife.jdbi.v2.DBI;
+
+import java.util.Calendar;
+import java.util.UUID;
+import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -23,42 +34,59 @@ import javax.ws.rs.core.MediaType;
 public class LoginResource {
 
     private final UserLoginDAO dao;
+    private final Environment environment;
 
-    public LoginResource(UserLoginDAO dao) {
+    public LoginResource(UserLoginDAO dao, Environment environment) {
         this.dao = dao;
+        this.environment = environment;
     }
 
     @POST
-        public String login(String body){
+        public String login(String body) throws ClassNotFoundException {
 
-            System.out.println("body: " + body);
             try {
                 JSONObject json = new JSONObject(body);
                 String username = json.getString("username");
                 String password = json.getString("password");
 
-                System.out.println( "username: " + username );
-                System.out.println( "password: " + password );
-
                 UserLogin userLogin = dao.FindUserLoginbyUserName( username );
 
+                if (userLogin == null)
+                    return "Username not found";
 
-                System.out.println( "userLogin: " + userLogin);
-                System.out.println( "getUsername: " + userLogin.getUsername());
-                System.out.println( "getPassword: " + userLogin.getPassword());
-                System.out.println( "getOrganizationId: " + userLogin.getOrganizationId());
+                Organization organization = dao.FindOrganizationbyTenantId(userLogin.getOrganizationId());
+                System.out.println( "getDatabaseURL: " + organization.getDatabaseURL());
+
+                DataSourceFactory dataSourceFactory = new DataSourceFactory();
+                dataSourceFactory.setUrl(organization.getDatabaseURL());
+                dataSourceFactory.setUser("postgres");
+                dataSourceFactory.setPassword("password");
+                dataSourceFactory.setDriverClass("org.postgresql.Driver");
+
+                final DBIFactory factory = new DBIFactory();
+                final DBI jdbi = factory.build(environment, dataSourceFactory, "TruFleetTenant");
+                UserLoginDAO daoTenant = jdbi.onDemand(UserLoginDAO.class);
+
+                AppUser appUser = daoTenant.FindAppUserbyUserName( username );
+
+                UUID uuid = UUID.randomUUID();
+                daoTenant.insertToken(appUser.getId(), uuid.toString(), new Timestamp(Calendar.getInstance().getTime().getTime()));
+
+                JSONObject response = new JSONObject();
+                response.put("authenticationToken", uuid.toString());
+                response.put("tenantId", organization.getTenantID());
+                response.put("apiVersion", organization.getApiVersion());
 
                 if( userLogin.getPassword().equals(password)){
-                    return "login successful";
+                    return response.toString();
                 }else{
-                    return "login failed.";
+                    return "Incorrect Password";
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
+                return e.getMessage();
             }
-
-            return "login failed.";
         }
 
 }

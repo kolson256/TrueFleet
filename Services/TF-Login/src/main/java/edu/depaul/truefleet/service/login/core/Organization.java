@@ -21,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.validator.constraints.Length;
 
+import javax.xml.crypto.Data;
+
 /**
  * Created by Richard Morgan on 10/27/2014.
  */
@@ -40,6 +42,13 @@ public class Organization{
 
     public Organization(String name) {
         this.name = name;
+    }
+
+    public Organization(String name, String tenantID, String DatabaseURL, String ApiVersion) {
+        this.name = name;
+        this.tenantID = tenantID;
+        this.DatabaseURL = DatabaseURL;
+        this.ApiVersion = ApiVersion;
     }
 
     public String getName() {
