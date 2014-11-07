@@ -39,7 +39,7 @@ public class UserRegisterResource {
 
     @GET
     public UserLogin query(@QueryParam("name") String name){
-        return dao.FindUserLoginbyUserName(name);
+        return dao.findUserLoginbyUserName(name);
     }
 
     @POST

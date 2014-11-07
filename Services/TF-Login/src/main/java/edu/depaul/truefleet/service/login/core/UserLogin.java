@@ -10,11 +10,11 @@ import org.hibernate.validator.constraints.Length;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class UserLogin {
 
-
+    @JsonProperty("organizationid")
     private String organizationId;
-
+    @JsonProperty
     private String username;
-
+    @JsonProperty
     private String password;
 
     public UserLogin() {
@@ -27,17 +27,27 @@ public class UserLogin {
         this.organizationId = orgID;
     }
 
-    @JsonProperty
     public String getUsername() {
         return username;
     }
 
-    @JsonProperty
     public String getOrganizationId() {
         return organizationId;
     }
 
     public String getPassword(){return password;}
+
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -46,7 +56,9 @@ public class UserLogin {
 
         UserLogin userLogin = (UserLogin) o;
 
-        if (organizationId != userLogin.organizationId) return false;
+        if (organizationId != null ? !organizationId.equals(userLogin.organizationId) : userLogin.organizationId != null)
+            return false;
+        if (!password.equals(userLogin.password)) return false;
         if (!username.equals(userLogin.username)) return false;
 
         return true;
@@ -54,8 +66,9 @@ public class UserLogin {
 
     @Override
     public int hashCode() {
-        int result = (int) (organizationId.hashCode() ^ (organizationId.hashCode() >>> 32));
+        int result = organizationId != null ? organizationId.hashCode() : 0;
         result = 31 * result + username.hashCode();
+        result = 31 * result + password.hashCode();
         return result;
     }
 }

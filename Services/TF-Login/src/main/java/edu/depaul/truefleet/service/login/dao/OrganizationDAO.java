@@ -17,9 +17,11 @@
 package edu.depaul.truefleet.service.login.dao;
 
 import edu.depaul.truefleet.service.login.core.Organization;
-import org.skife.jdbi.v2.sqlobject.Bind;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import edu.depaul.truefleet.service.login.core.OrganizationMapper;
+import org.skife.jdbi.v2.sqlobject.*;
+import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
+
+import java.util.List;
 
 /**
  * Created by Richard Morgan on 11/2/2014.
@@ -29,10 +31,26 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 
 public interface OrganizationDAO {
 
-    @SqlQuery("select name from organization where name = :name")
-    public Organization FindOrganizationByName(@Bind("name") String name);
+    @SqlQuery("select * from organization")
+    @Mapper(OrganizationMapper.class)
+    public List<Organization> findAllOrganizations();
+
+    @SqlQuery("select * from organization where name = :name")
+    @Mapper(OrganizationMapper.class)
+    public Organization findOrganizationByName(@Bind("name") String name);
+
+    //find Organization by tenantid
+    @SqlQuery("select * from organization where tenantid = :tenantid")
+    @Mapper(OrganizationMapper.class)
+    public Organization findOrganizationbyTenantId(@Bind("tenantid") String tenantid);
 
     @SqlUpdate("insert into organization (name, databaseurl, apiversion) values (:name, :db, :api)")
-    void orgInsert(@Bind("name") String name, @Bind("db") String dbURL, @Bind("api") String apiVersion);
+    @GetGeneratedKeys
+    public String insertOrganization(@Bind("name") String name, @Bind("db") String dbURL, @Bind("api") String apiVersion);
+
+    @SqlUpdate("insert into organization (name, databaseurl, apiversion) values (:name, :DatabaseURL, :apiversion)")
+    public int updateOrganization(@BindBean Organization org);
+
+    public void removeOrganization();
 
 }

@@ -33,17 +33,17 @@ public interface UserLoginDAO {
     //find User by username
     @SqlQuery("select username, password, organizationid from userlogin where username = :user")
     @Mapper(UserLoginMapper.class)
-    public UserLogin FindUserLoginbyUserName(@Bind("user") String username);
+    public UserLogin findUserLoginbyUserName(@Bind("user") String username);
 
     //find Organization by tenantid
     @SqlQuery("select name, tenantid, databaseurl, apiversion from organization where tenantid = :tenantid")
     @Mapper(OrganizationMapper.class)
-    public Organization FindOrganizationbyTenantId(@Bind("tenantid") String tenantid);
+    public Organization findOrganizationbyTenantId(@Bind("tenantid") String tenantid);
 
     //find User by username
     @SqlQuery("select id, username, firstname, lastname from appuser where username = :user")
     @Mapper(AppUserMapper.class)
-    public AppUser FindAppUserbyUserName(@Bind("user") String username);
+    public AppUser findAppUserbyUserName(@Bind("user") String username);
 
     @SqlUpdate("insert into authtoken (appuserid, token, expirationdate) values (:id, :token, :expdate)")
     void insertToken(@Bind("id") long id, @Bind("token") String token, @Bind("expdate") Timestamp expirationDate);

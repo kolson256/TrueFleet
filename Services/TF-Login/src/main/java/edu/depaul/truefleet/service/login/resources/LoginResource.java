@@ -49,12 +49,12 @@ public class LoginResource {
                 String username = json.getString("username");
                 String password = json.getString("password");
 
-                UserLogin userLogin = dao.FindUserLoginbyUserName( username );
+                UserLogin userLogin = dao.findUserLoginbyUserName(username);
 
                 if (userLogin == null)
                     return "Username not found";
 
-                Organization organization = dao.FindOrganizationbyTenantId(userLogin.getOrganizationId());
+                Organization organization = dao.findOrganizationbyTenantId(userLogin.getOrganizationId());
                 System.out.println( "getDatabaseURL: " + organization.getDatabaseURL());
 
                 DataSourceFactory dataSourceFactory = new DataSourceFactory();
@@ -67,7 +67,7 @@ public class LoginResource {
                 final DBI jdbi = factory.build(environment, dataSourceFactory, "TruFleetTenant");
                 UserLoginDAO daoTenant = jdbi.onDemand(UserLoginDAO.class);
 
-                AppUser appUser = daoTenant.FindAppUserbyUserName( username );
+                AppUser appUser = daoTenant.findAppUserbyUserName( username );
 
                 UUID uuid = UUID.randomUUID();
                 daoTenant.insertToken(appUser.getId(), uuid.toString(), new Timestamp(Calendar.getInstance().getTime().getTime()));

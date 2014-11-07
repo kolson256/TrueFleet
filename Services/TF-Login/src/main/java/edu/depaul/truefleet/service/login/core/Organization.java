@@ -17,10 +17,13 @@
 package edu.depaul.truefleet.service.login.core;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.crypto.Data;
 
 /**
@@ -28,27 +31,33 @@ import javax.xml.crypto.Data;
  */
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Organization{
 
     @JsonProperty
+    @NotNull
     private String name;
-    @JsonProperty
-    private String tenantID;
 
-    @JsonProperty
-    private String DatabaseURL;
-    @JsonProperty
-    private String ApiVersion;
+
+    @JsonProperty("tenantid")
+    private String tenantID;
+    @JsonProperty("databaseurl")
+    private String databaseURL;
+    @JsonProperty("apiversion")
+    private String apiVersion;
+
+
+    public Organization(){}
 
     public Organization(String name) {
         this.name = name;
     }
 
-    public Organization(String name, String tenantID, String DatabaseURL, String ApiVersion) {
+    public Organization(String name, String tenantID, String databaseURL, String apiVersion) {
         this.name = name;
         this.tenantID = tenantID;
-        this.DatabaseURL = DatabaseURL;
-        this.ApiVersion = ApiVersion;
+        this.databaseURL = databaseURL;
+        this.apiVersion = apiVersion;
     }
 
     public String getName() {
@@ -68,19 +77,19 @@ public class Organization{
     }
 
     public String getDatabaseURL() {
-        return DatabaseURL;
+        return databaseURL;
     }
 
     public void setDatabaseURL(String databaseURL) {
-        DatabaseURL = databaseURL;
+        this.databaseURL = databaseURL;
     }
 
     public String getApiVersion() {
-        return ApiVersion;
+        return apiVersion;
     }
 
     public void setApiVersion(String apiVersion) {
-        ApiVersion = apiVersion;
+        this.apiVersion = apiVersion;
     }
 
     @Override
@@ -90,8 +99,10 @@ public class Organization{
 
         Organization that = (Organization) o;
 
+        if (apiVersion != null ? !apiVersion.equals(that.apiVersion) : that.apiVersion != null) return false;
+        if (databaseURL != null ? !databaseURL.equals(that.databaseURL) : that.databaseURL != null) return false;
         if (!name.equals(that.name)) return false;
-        if (!tenantID.equals(that.tenantID)) return false;
+        if (tenantID != null ? !tenantID.equals(that.tenantID) : that.tenantID != null) return false;
 
         return true;
     }
@@ -99,8 +110,9 @@ public class Organization{
     @Override
     public int hashCode() {
         int result = name.hashCode();
-        result = 31 * result + tenantID.hashCode();
+        result = 31 * result + (tenantID != null ? tenantID.hashCode() : 0);
+        result = 31 * result + (databaseURL != null ? databaseURL.hashCode() : 0);
+        result = 31 * result + (apiVersion != null ? apiVersion.hashCode() : 0);
         return result;
     }
-
 }

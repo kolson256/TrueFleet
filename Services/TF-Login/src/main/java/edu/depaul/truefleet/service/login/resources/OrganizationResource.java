@@ -25,6 +25,7 @@ import edu.depaul.truefleet.service.login.dao.OrganizationDAO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/org")
 @Produces(MediaType.APPLICATION_JSON)
@@ -37,14 +38,59 @@ public class OrganizationResource {
         this.orgDAO = orgDAO;
     }
 
+    /*
+        Query for all Organizations in system.
+     */
     @GET
-    public Organization query(@QueryParam("name") String name){
-        return orgDAO.FindOrganizationByName(name);
+    public List<Organization> queryAllOrganizations(){
+
+
+        return null;
     }
 
+    @GET
+    @Path("/{name}")
+    public Organization queryOrganizationByName(@PathParam("name") String name) {
+        return orgDAO.findOrganizationByName(name);
+    }
+
+    /*
+        Create an Organization
+
+        return modified ORG JSON?
+     */
     @POST
-    public void register(@FormParam("Name") String name){
-        orgDAO.orgInsert(name, "testDbURL", "version-0.1");
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void createOrganization(String json){
+
+        //verify org does not already exist. Then call insert.
+        //orgDAO.insertOrganization();
+    }
+
+    /*
+        Update an Organization.
+
+        return modified Org JSON?
+
+     */
+    @PUT  @Path("/{name}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void updateOrganization(@PathParam("name") String name, String json) {
+        //verify org named exists, get that object.
+        //verify that there is a change, if so commit it, if not, do nothing.
+
+
+
+    }
+
+     /*
+        Delete an Organization.
+
+     */
+    @DELETE @Path("/{name}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void removeOrganization(@PathParam("name") String name, String json){
+
     }
 
 
