@@ -51,6 +51,7 @@ public interface OrganizationDAO {
     @SqlUpdate("insert into organization (name, databaseurl, apiversion) values (:name, :DatabaseURL, :apiversion)")
     public int updateOrganization(@BindBean Organization org);
 
-    public void removeOrganization();
+    @SqlUpdate("delete from organization * where name = :name")
+    public void removeOrganization(@BindBean Organization org);
 
 }

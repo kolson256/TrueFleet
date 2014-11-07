@@ -86,10 +86,13 @@ public class OrganizationResource {
      /*
         Delete an Organization.
 
+        Should this have a return?
      */
     @DELETE @Path("/{name}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void removeOrganization(@PathParam("name") String name, String json){
+
+        //verify that org exists as requested, if same then delete.
 
     }
 
