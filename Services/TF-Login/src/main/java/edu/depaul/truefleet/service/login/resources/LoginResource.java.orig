@@ -27,15 +27,36 @@ import java.sql.Timestamp;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+<<<<<<< HEAD
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
 
 
 @Path("/login-check")
+=======
+
+@Path("/login")
+>>>>>>> 542b013d9e40d9b0f9dca989027d385657f08df8
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class LoginResource {
+<<<<<<< HEAD
+
+    public LoginResource() {
+    }
+
+    @GET
+    @Timed
+    public String isLoggedIn()
+    {
+        final Subject s = SecurityUtils.getSubject();
+        if (s != null && s.isAuthenticated()) {
+            return String.format("Logged in as '%s'.", s.getPrincipal());
+        } else {
+            return "Not logged in.";
+        }
+=======
 
     private final UserLoginDAO dao;
     private final Environment environment;
@@ -43,6 +64,7 @@ public class LoginResource {
     public LoginResource(UserLoginDAO dao, Environment environment) {
         this.dao = dao;
         this.environment = environment;
+>>>>>>> 542b013d9e40d9b0f9dca989027d385657f08df8
     }
 
     @POST

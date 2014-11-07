@@ -4,10 +4,14 @@ apply plugin: 'application'
 sourceCompatibility = '1.8'
 mainClassName = 'edu.depaul.truefleet.service.login.LoginMain'
 version = '0.1.0'
+<<<<<<< HEAD
 String shiro_version = '1.2.2'
 String stormpath_version = '1.0.RC2.1'
 String dropwizard_version = '0.7.1'
 
+=======
+String dropwizard_version = '0.7.1'
+>>>>>>> 542b013d9e40d9b0f9dca989027d385657f08df8
 
 repositories {
     mavenCentral()
@@ -21,6 +25,15 @@ configurations {
 }
 
 dependencies {
+<<<<<<< HEAD
+    compile "org.apache.shiro:shiro-core:$shiro_version"
+    compile "org.apache.shiro:shiro-web:$shiro_version"
+    compile "com.stormpath.sdk:stormpath-sdk-api:$stormpath_version"
+    compile "com.stormpath.sdk:stormpath-sdk-httpclient:$stormpath_version"
+    compile "com.stormpath.shiro:stormpath-shiro-core:0.6.0"
+    compile "io.dropwizard:dropwizard-core:$dropwizard_version"
+    compile "io.dropwizard:dropwizard-auth:$dropwizard_version"
+=======
     //compile 'io.ifar:dw-shiro-bundle:0.0.2-SNAPSHOT'
     compile "io.dropwizard:dropwizard-core:$dropwizard_version"
     compile "io.dropwizard:dropwizard-db:$dropwizard_version"
@@ -33,6 +46,7 @@ dependencies {
     compile "org.postgresql:postgresql:9.3-1102-jdbc41"
     compile "org.json:json:20090211"
 
+>>>>>>> 542b013d9e40d9b0f9dca989027d385657f08df8
     capsule 'co.paralleluniverse:capsule:0.9.0'
 
     testCompile 'junit:junit:4.11'

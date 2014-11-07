@@ -11,8 +11,10 @@ package edu.depaul.truefleet.service.login;
         import io.dropwizard.db.DataSourceFactory;
         import org.hibernate.validator.constraints.NotEmpty;
 
+<<<<<<< HEAD
+
         import javax.validation.Valid;
-        import javax.validation.constraints.NotNull;
+
 public class LoginConfiguration extends Configuration {
 
     @Valid
@@ -25,6 +27,18 @@ public class LoginConfiguration extends Configuration {
     @JsonProperty("stormpath-shiro")
     private StormpathShiroConfiguration stormpathShiroConfiguration = new StormpathShiroConfiguration();
 
+
+    public StormpathConfiguration getStormpathConfiguration() {
+        return stormpathConfiguration;
+    }
+    public StormpathShiroConfiguration getStormpathShiroConfiguration() {return stormpathShiroConfiguration; }
+
+=======
+        import javax.validation.Valid;
+        import javax.validation.constraints.NotNull;
+
+public class LoginConfiguration extends Configuration {
+
     @Valid
     @NotNull
     @JsonProperty
@@ -33,6 +47,6 @@ public class LoginConfiguration extends Configuration {
     public DataSourceFactory getDataSourceFactory() {
         return database;
     }
-    public StormpathShiroConfiguration getStormpathShiroConfiguration() {return stormpathShiroConfiguration; }
 
+>>>>>>> 542b013d9e40d9b0f9dca989027d385657f08df8
 }

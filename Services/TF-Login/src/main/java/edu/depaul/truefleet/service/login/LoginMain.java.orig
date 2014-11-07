@@ -3,10 +3,14 @@ package edu.depaul.truefleet.service.login;
 /**
  * Created by Richard Morgan on 10/27/2014.
  */
+<<<<<<< HEAD
+import com.google.common.base.Optional;
+=======
 import edu.depaul.truefleet.service.login.dao.OrganizationDAO;
 import edu.depaul.truefleet.service.login.dao.UserLoginDAO;
 import edu.depaul.truefleet.service.login.resources.OrganizationResource;
 import edu.depaul.truefleet.service.login.resources.UserRegisterResource;
+>>>>>>> 542b013d9e40d9b0f9dca989027d385657f08df8
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.setup.Bootstrap;
@@ -18,9 +22,12 @@ import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration.Dynamic;
 
 import edu.depaul.truefleet.service.login.resources.LoginResource;
-import org.skife.jdbi.v2.DBI;
+<<<<<<< HEAD
 import edu.depaul.truefleet.security.stormpath.shiro.*;
 import edu.depaul.truefleet.security.stormpath.*;
+=======
+import org.skife.jdbi.v2.DBI;
+>>>>>>> 542b013d9e40d9b0f9dca989027d385657f08df8
 
 import java.util.EnumSet;
 
@@ -59,6 +66,12 @@ public class LoginMain extends Application<LoginConfiguration> {
 
     @Override
     public void run(LoginConfiguration configuration,
+<<<<<<< HEAD
+                    Environment environment) {
+        final LoginResource loginResource = new LoginResource(  );
+
+        environment.jersey().register(loginResource);
+=======
                     Environment environment) throws ClassNotFoundException {
 
         final DBIFactory factory = new DBIFactory();
@@ -66,6 +79,7 @@ public class LoginMain extends Application<LoginConfiguration> {
 
         final UserLoginDAO dao = jdbi.onDemand(UserLoginDAO.class);
         final OrganizationDAO orgDAO = jdbi.onDemand(OrganizationDAO.class);
+>>>>>>> 542b013d9e40d9b0f9dca989027d385657f08df8
 
         environment.jersey().register(new LoginResource(dao, environment));
         environment.jersey().register(new UserRegisterResource(dao));

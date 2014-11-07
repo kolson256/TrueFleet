@@ -1,8 +1,12 @@
+database:
+  # the name of your JDBC driver
+  driverClass: org.postgresql.Driver
 
-stormpath:
- enabled: true
- apiKeyLocation: C:\Stormpath\
- applicationRestUrl: https://api.stormpath.com/v1/applications/1gGuKsRquOyI72rBQeuXJP
+  # the username
+  user: postgres
 
-stormpath-shiro:
-  sessionStorageEnabled: true
+  # the password
+  password: password
+
+  # the JDBC URL
+  url: jdbc:postgresql://localhost:5432/TruFleetAdmin

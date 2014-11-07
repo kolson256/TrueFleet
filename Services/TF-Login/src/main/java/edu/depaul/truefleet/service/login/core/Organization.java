@@ -17,20 +17,102 @@
 package edu.depaul.truefleet.service.login.core;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
+import javax.xml.crypto.Data;
 
 /**
  * Created by Richard Morgan on 10/27/2014.
  */
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Organization{
 
-    private long id;
-    private String displayName;
-
-    private List<User> roster;
-
+    @JsonProperty
+    @NotNull
+    private String name;
 
 
+    @JsonProperty("tenantid")
+    private String tenantID;
+    @JsonProperty("databaseurl")
+    private String databaseURL;
+    @JsonProperty("apiversion")
+    private String apiVersion;
 
+
+    public Organization(){}
+
+    public Organization(String name) {
+        this.name = name;
+    }
+
+    public Organization(String name, String tenantID, String databaseURL, String apiVersion) {
+        this.name = name;
+        this.tenantID = tenantID;
+        this.databaseURL = databaseURL;
+        this.apiVersion = apiVersion;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTenantID() {
+        return tenantID;
+    }
+
+    public void setTenantID(String tenantID) {
+        this.tenantID = tenantID;
+    }
+
+    public String getDatabaseURL() {
+        return databaseURL;
+    }
+
+    public void setDatabaseURL(String databaseURL) {
+        this.databaseURL = databaseURL;
+    }
+
+    public String getApiVersion() {
+        return apiVersion;
+    }
+
+    public void setApiVersion(String apiVersion) {
+        this.apiVersion = apiVersion;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Organization that = (Organization) o;
+
+        if (apiVersion != null ? !apiVersion.equals(that.apiVersion) : that.apiVersion != null) return false;
+        if (databaseURL != null ? !databaseURL.equals(that.databaseURL) : that.databaseURL != null) return false;
+        if (!name.equals(that.name)) return false;
+        if (tenantID != null ? !tenantID.equals(that.tenantID) : that.tenantID != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + (tenantID != null ? tenantID.hashCode() : 0);
+        result = 31 * result + (databaseURL != null ? databaseURL.hashCode() : 0);
+        result = 31 * result + (apiVersion != null ? apiVersion.hashCode() : 0);
+        return result;
+    }
 }
