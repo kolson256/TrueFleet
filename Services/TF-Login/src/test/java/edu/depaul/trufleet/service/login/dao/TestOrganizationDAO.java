@@ -18,23 +18,29 @@ package edu.depaul.trufleet.service.login.dao;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.fest.assertions.api.Assertions.assertThat;
+import static com.ninja_squad.dbsetup.Operations.*;
 
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.DbSetupTracker;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import com.ninja_squad.dbsetup.operation.Operation;
 import edu.depaul.truefleet.service.login.core.Organization;
 import edu.depaul.truefleet.service.login.dao.OrganizationDAO;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.dropwizard.jackson.Jackson;
-import org.h2.jdbcx.JdbcConnectionPool;
-import org.h2.jdbcx.JdbcDataSource;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
+import org.skife.jdbi.v2.sqlobject.Bind;
 import org.slf4j.*;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import org.postgresql.ds.PGPoolingDataSource;
 
 
 /**
@@ -45,30 +51,45 @@ public class TestOrganizationDAO {
    static Logger logger = LoggerFactory.getLogger(TestOrganizationDAO.class);
    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
-   private static JdbcDataSource dataSource;
+   private static DataSource dataSource;
    private static OrganizationDAO orgdao;
+   private static DbSetupTracker dbSetupTracker = new DbSetupTracker();
 
    @BeforeClass
    public static void initialize() throws IOException{
 
       logger.debug(">>> Initializing Tests. <<<");
 
-       dataSource = new JdbcDataSource();
-       dataSource.setURL("jdbc:h2:mem:test;MODE=PostgreSQL,lowerCaseIdentifiers");
-       dataSource.setUser("sa");
-       dataSource.setPassword("");
+       PGPoolingDataSource source = new PGPoolingDataSource();
+       source.setDataSourceName("A Data Source");
+       source.setServerName("localhost");
+       source.setDatabaseName("TruFleetTest");
+       source.setUser("postgres");
+       source.setPassword("password");
 
-       String schema = fixture("fixtures/org-test-db-schema.sql");
+       dataSource = source;
 
        DBI dbi = new DBI(dataSource);
-       Handle h = dbi.open();
-       h.execute(schema);
-
        orgdao = dbi.onDemand(OrganizationDAO.class);
 
        logger.debug(">>> Leaving Test Initialization <<<");
    }
 
+
+    @Before
+    public void prepare() throws Exception {
+
+        Operation operation =
+                sequenceOf(
+                        CommonOperations.DELETE_ALL,
+                        CommonOperations.INSERT_REFERENCE_DATA );
+
+
+        DbSetup dbSetup = new DbSetup(new DataSourceDestination(dataSource), operation);
+
+        // use the tracker to launch the DbSetup.
+        dbSetupTracker.launchIfNecessary(dbSetup);
+    }
 
 //  Methods to test
 /*  public List<Organization> findAllOrganizations();
@@ -89,8 +110,18 @@ public class TestOrganizationDAO {
 
         String returnKey = orgdao.insertOrganization( org.getName(), org.getDatabaseURL(), org.getApiVersion() );
 
-        logger.debug(">>>> insert Organization returned with Tenant ID of: " + returnKey +" <<<<");
+        logger.debug(">>>> insert Organization returned with key of: " + returnKey +" <<<<");
         assertThat(returnKey).isNotEmpty();
+        logger.debug(">>>> insert Organization returned with key of: " + returnKey +" <<<<");
+
+    }
+
+    @Test
+    public void testFindOrganizationByName(){
+
+        Organization returnedOrg = orgdao.findOrganizationByName("TestOrg1");
+
+        assertThat( returnedOrg.getName()).isEqualTo("TestOrg1");
 
     }
 
