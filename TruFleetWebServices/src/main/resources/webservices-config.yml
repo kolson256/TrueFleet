@@ -1,0 +1,25 @@
+adminDatabase:
+  # the name of your JDBC driver
+  driverClass: org.postgresql.Driver
+
+  # the username
+  user: postgres
+
+  # the password
+  password: password
+
+  # the JDBC URL
+  url: jdbc:postgresql://localhost:5432/TruFleetAdmin
+
+tenantDatabase:
+  # the name of your JDBC driver
+  driverClass: org.postgresql.Driver
+
+  # the username
+  user: postgres
+
+  # the password
+  password: password
+
+  # the JDBC URL, this will be changed
+  url: jdbc:postgresql://xxxx/TruFleetAdmin
