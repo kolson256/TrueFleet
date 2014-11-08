@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package edu.depaul.trufleet.service.login.json;
+package com.trufleet.service.login.json;
 
 import static io.dropwizard.testing.FixtureHelpers.*;
 import static org.fest.assertions.api.Assertions.assertThat;

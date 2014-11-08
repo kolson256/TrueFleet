@@ -40,7 +40,7 @@ public interface OrganizationDAO {
     public Organization findOrganizationByName(@Bind("name") String name);
 
     //find Organization by tenantid
-    @SqlQuery("select name, tenantid, databaseurl, apiversion from  organization where tenantid = :tenantid")
+    @SqlQuery("select * from  organization where tenantid = :tenantid")
     @Mapper(OrganizationMapper.class)
     public Organization findOrganizationbyTenantId(@Bind("tenantid") String tenantid);
 
@@ -48,7 +48,7 @@ public interface OrganizationDAO {
     @GetGeneratedKeys
     public String insertOrganization(@Bind("name") String name, @Bind("db") String dbURL, @Bind("api") String apiVersion);
 
-    @SqlUpdate("insert into organization (name, databaseurl, apiversion) values (:name, :DatabaseURL, :apiversion)")
+    @SqlUpdate("update organization set (name, databaseurl, apiversion) values (:name, :databaseURL, :apiVersion) where tenantid = :tenantID")
     public int updateOrganization(@BindBean Organization org);
 
     @SqlUpdate("delete from organization * where name = :name")

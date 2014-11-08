@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package edu.depaul.trufleet.service.login.dao;
+package com.trufleet.service.login.dao;
 
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -30,7 +30,8 @@ import org.skife.jdbi.v2.Handle;
 import org.slf4j.*;
 
 import java.io.IOException;
-
+import javax.sql.DataSource;
+import org.postgresql.ds.PGPoolingDataSource;
 
 /**
  * Created by Richard Morgan on 11/6/2014.
@@ -40,7 +41,7 @@ public class TestOrganizationDAO {
    static Logger logger = LoggerFactory.getLogger(TestOrganizationDAO.class);
    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
-   //private static JdbcDataSource dataSource;
+   private static PGPoolingDataSource dataSource;
    private static OrganizationDAO orgdao;
 
    @BeforeClass
@@ -48,18 +49,16 @@ public class TestOrganizationDAO {
 
       logger.debug(">>> Initializing Tests. <<<");
 
-       /*dataSource = new JdbcDataSource();
-       dataSource.setURL("jdbc:h2:mem:test;MODE=PostgreSQL,lowerCaseIdentifiers");
-       dataSource.setUser("sa");
-       dataSource.setPassword("");
-
-       String schema = fixture("fixtures/org-test-db-schema.sql");
+       dataSource = new PGPoolingDataSource();
+       dataSource.setDataSourceName("TestDataSource");
+       dataSource.setServerName("localhost");
+       dataSource.setDatabaseName("TruFleetAdminTest");
+       dataSource.setUser("postgres");
+       dataSource.setPassword("password");
+       dataSource.setMaxConnections(10);
 
        DBI dbi = new DBI(dataSource);
-       Handle h = dbi.open();
-       h.execute(schema);
-
-       orgdao = dbi.onDemand(OrganizationDAO.class);*/
+       orgdao = dbi.onDemand(OrganizationDAO.class);
 
        logger.debug(">>> Leaving Test Initialization <<<");
    }

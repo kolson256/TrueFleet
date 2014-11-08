@@ -57,8 +57,6 @@ public class OrganizationResource extends BaseResource {
     /*
         Update an Organization.
 
-        return modified Org JSON?
-
      */
     @PUT  @Path("/{name}")
     @Consumes(MediaType.APPLICATION_JSON)
