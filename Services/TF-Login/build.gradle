@@ -36,7 +36,7 @@ dependencies {
     testCompile 'junit:junit:4.11'
     testCompile "io.dropwizard:dropwizard-testing:$dropwizard_version"
     testCompile 'org.easytesting:fest-assert-core:2.0M10'
-    testCompile 'com.h2database:h2:1.4.182'
+    //testCompile 'com.h2database:h2:1.4.182'
 
 }
 run {

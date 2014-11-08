@@ -10,3 +10,6 @@ Services/TF-Login/.idea/
 Services/TF-Login/build/
 Services/TF-Login/.gradle/
 Services/TF-Login/atlassian-ide-plugin.xml
+TruFleetWebServices/.idea
+TruFleetWebServices/build
+TruFleetWebServices/.gradle

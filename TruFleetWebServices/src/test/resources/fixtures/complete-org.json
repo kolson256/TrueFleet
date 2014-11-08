@@ -1,0 +1,6 @@
+{
+    "name": "TestOrganization1",
+    "tenantid":"abcdefghijk-lmnopqrstuvwxyz",
+    "databaseurl": "jdbc:postgresql://localhost:5432/TruFleetTest",
+    "apiversion": "0.1"
+}
