@@ -40,7 +40,7 @@ public interface OrganizationDAO {
     public Organization findOrganizationByName(@Bind("name") String name);
 
     //find Organization by tenantid
-    @SqlQuery("select * from organization where tenantid = :tenantid")
+    @SqlQuery("select name, tenantid, databaseurl, apiversion from  organization where tenantid = :tenantid")
     @Mapper(OrganizationMapper.class)
     public Organization findOrganizationbyTenantId(@Bind("tenantid") String tenantid);
 

@@ -26,7 +26,7 @@ dependencies {
     compile "io.dropwizard:dropwizard-jackson:$dropwizard_version"
     compile "io.dropwizard:dropwizard-logging:$dropwizard_version"
     compile "io.dropwizard:dropwizard-metrics:$dropwizard_version"
-    compile "io.dropwizard:dropwizard-jdbi:$dropwizard_version"
+
 
     compile "org.postgresql:postgresql:9.3-1102-jdbc41"
     compile "org.json:json:20090211"

@@ -1,4 +1,4 @@
-package com.trufleet.services.jdbi.Mapper;
+package com.trufleet.services.jdbi.mapper;
 
 import com.trufleet.services.core.AppUser;
 import org.skife.jdbi.v2.StatementContext;

@@ -17,7 +17,7 @@
 package com.trufleet.services.jdbi;
 
 import com.trufleet.services.core.*;
-import com.trufleet.services.jdbi.Mapper.UserLoginMapper;
+import com.trufleet.services.jdbi.mapper.UserLoginMapper;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;

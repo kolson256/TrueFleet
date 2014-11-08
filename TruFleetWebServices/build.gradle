@@ -24,17 +24,21 @@ dependencies {
     compile "io.dropwizard:dropwizard-db:$dropwizard_version"
     compile "io.dropwizard:dropwizard-jdbi:$dropwizard_version"
     compile "io.dropwizard:dropwizard-jackson:$dropwizard_version"
+    compile "io.dropwizard:dropwizard-logging:$dropwizard_version"
+    compile "io.dropwizard:dropwizard-metrics:$dropwizard_version"
+
     compile"org.postgresql:postgresql:9.3-1102-jdbc41"
     compile "org.json:json:20090211"
 
     capsule 'co.paralleluniverse:capsule:0.9.0'
 
     testCompile 'junit:junit:4.11'
+    testCompile "io.dropwizard:dropwizard-testing:$dropwizard_version"
+    testCompile 'org.easytesting:fest-assert-core:2.0M10'
+
 }
 run {
     systemProperty "dropwizard.config", "build/resources/main/webservices-config.yml"
-    systemProperty "STOP.PORT", "8082"
-    systemProperty "STOP.KEY", "stop"
 }
 task capsule(type: Jar, dependsOn: classes) {
     archiveName = "TruFleetWebServices-Deploy.jar"

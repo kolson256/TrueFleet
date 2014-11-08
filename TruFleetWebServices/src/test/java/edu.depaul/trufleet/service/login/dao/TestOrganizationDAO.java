@@ -19,21 +19,16 @@ package edu.depaul.trufleet.service.login.dao;
 import static io.dropwizard.testing.FixtureHelpers.fixture;
 import static org.fest.assertions.api.Assertions.assertThat;
 
-import edu.depaul.truefleet.service.login.core.Organization;
-import edu.depaul.truefleet.service.login.dao.OrganizationDAO;
-
-
+import com.trufleet.services.jdbi.OrganizationDAO;
+import com.trufleet.services.core.Organization;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.dropwizard.jackson.Jackson;
-import org.h2.jdbcx.JdbcConnectionPool;
-import org.h2.jdbcx.JdbcDataSource;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.slf4j.*;
 
-import javax.sql.DataSource;
 import java.io.IOException;
 
 
@@ -45,7 +40,7 @@ public class TestOrganizationDAO {
    static Logger logger = LoggerFactory.getLogger(TestOrganizationDAO.class);
    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
-   private static JdbcDataSource dataSource;
+   //private static JdbcDataSource dataSource;
    private static OrganizationDAO orgdao;
 
    @BeforeClass
@@ -53,7 +48,7 @@ public class TestOrganizationDAO {
 
       logger.debug(">>> Initializing Tests. <<<");
 
-       dataSource = new JdbcDataSource();
+       /*dataSource = new JdbcDataSource();
        dataSource.setURL("jdbc:h2:mem:test;MODE=PostgreSQL,lowerCaseIdentifiers");
        dataSource.setUser("sa");
        dataSource.setPassword("");
@@ -64,7 +59,7 @@ public class TestOrganizationDAO {
        Handle h = dbi.open();
        h.execute(schema);
 
-       orgdao = dbi.onDemand(OrganizationDAO.class);
+       orgdao = dbi.onDemand(OrganizationDAO.class);*/
 
        logger.debug(">>> Leaving Test Initialization <<<");
    }

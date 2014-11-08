@@ -20,7 +20,8 @@ import static io.dropwizard.testing.FixtureHelpers.*;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.depaul.truefleet.service.login.core.Organization;
+import com.trufleet.services.core.Organization;
+
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
 
