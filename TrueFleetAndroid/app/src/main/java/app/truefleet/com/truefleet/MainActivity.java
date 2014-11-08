@@ -2,6 +2,7 @@ package app.truefleet.com.truefleet;
 
 import android.app.Activity;
 import android.app.Fragment;
+import java.io.DataInputStream;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,17 +16,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.io.DataOutputStream;
 
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URLConnection;
 import java.net.URL;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MainActivity extends Activity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -64,56 +73,42 @@ public class MainActivity extends Activity {
             BufferedReader reader = null;
             String username = params[0];
             String password = params[1];
+            JSONObject toLogin = new JSONObject();
+
             try {
-                URL url = new URL("http://10.0.2.2:8080/hello-world?name=" + username);
+                    toLogin.put("password", password);
+                toLogin.put("username", username);
 
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
 
-                urlConnection.connect();
 
-                // Read the input stream into a String
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
+                URL url = new URL("http://10.0.2.2:8080/login");
+                HttpPost post = new HttpPost("http://10.0.2.2:8080/login");
+                post.setHeader("Content-type", "application/json");
 
-                    return null;
-                }
+                post.setEntity(new StringEntity(toLogin.toString()));
 
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-                System.out.println(buffer.toString());
-                if (buffer.length() == 0) {
-                    return null;
-                }
-                loginStr = buffer.toString();
-                Log.v(LOG_TAG, "Login String returned from server: " + loginStr);
+                HttpResponse response = (new DefaultHttpClient()).execute(post);
+                Log.v(LOG_TAG, "Sending 'POST' request to URL : " + url);
 
-                JSONObject loginJSON = new JSONObject(loginStr);
-
-                String id = loginJSON.getString("id");
-                String email = loginJSON.getString("email");
-
-                if (email.startsWith("Hello")) {
-
+                String json_string = EntityUtils.toString(response.getEntity());
+                if (json_string.equalsIgnoreCase("login successful"))
                     login();
-                }
                 else
                     invalidLoginAttempt();
-
                 return new String[0];
-
             //TODO: Add relevent messages for catch's
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
+                displayToast("Unable to connect to server");
 
                 loginStr = null;
             } catch (JSONException e) {
                 e.printStackTrace();
-            } finally {
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally {
                 if (urlConnection != null) {
                     urlConnection.disconnect();
                 }
@@ -152,12 +147,13 @@ public class MainActivity extends Activity {
             connectedToInternet = cd.isConnectingToInternet();
 
             if (connectedToInternet) {
-                FetchLogin loginTask = new FetchLogin();
+
 
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
                 if (user.length() > 1 && pass.length() > 1) {
+                    FetchLogin loginTask = new FetchLogin();
                     loginTask.execute(user, pass);
                 }
                 else
