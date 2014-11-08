@@ -2,7 +2,6 @@ package app.truefleet.com.truefleet;
 
 import android.app.Activity;
 import android.app.Fragment;
-import java.io.DataInputStream;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,9 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.DataOutputStream;
 
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -26,15 +23,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URLConnection;
 import java.net.URL;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MainActivity extends Activity {
     private final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -80,10 +73,11 @@ public class MainActivity extends Activity {
                 toLogin.put("username", username);
 
 
-
+                System.out.println(toLogin.toString());
                 URL url = new URL("http://10.0.2.2:8080/login");
                 HttpPost post = new HttpPost("http://10.0.2.2:8080/login");
                 post.setHeader("Content-type", "application/json");
+                post.setHeader("Accept", "application/json");
 
                 post.setEntity(new StringEntity(toLogin.toString()));
 
@@ -125,8 +119,7 @@ public class MainActivity extends Activity {
     }
     public void invalidLoginAttempt() {
         Log.v(LOG_TAG, "unsuccessful login: " + username.getText().toString());
-        Toast.makeText(getApplicationContext(), "Wrong Credentials",
-                Toast.LENGTH_SHORT).show();
+        displayToast("Wrong Credentials");
         counter--;
         attempts.setText(Integer.toString(counter));
         if (counter == 0) {
@@ -134,8 +127,13 @@ public class MainActivity extends Activity {
         }
     }
     public void displayToast(String message) {
-        Toast.makeText(getApplicationContext(), message,
-                Toast.LENGTH_SHORT).show();
+        final String msg = message;
+        MainActivity.this.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(getApplicationContext(), msg,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     public void login() {
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class).putExtra(Intent.EXTRA_TEXT, "Welcome, " + username.getText().toString() + "!");
