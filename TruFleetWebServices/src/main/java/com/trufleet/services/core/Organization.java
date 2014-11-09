@@ -43,8 +43,6 @@ public class Organization{
     @JsonProperty
     @NotNull
     private String name;
-
-
     @JsonProperty("tenantid")
     private String tenantID;
     @JsonProperty("databaseurl")

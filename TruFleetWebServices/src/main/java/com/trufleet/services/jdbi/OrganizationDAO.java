@@ -20,6 +20,8 @@ import com.trufleet.services.core.Organization;
 import com.trufleet.services.jdbi.mapper.OrganizationMapper;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
+import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
+import org.skife.jdbi.v2.sqlobject.mixins.Transactional;
 
 import java.util.List;
 
@@ -28,27 +30,32 @@ import java.util.List;
  */
 
 
-
-public interface OrganizationDAO {
+@RegisterMapper(OrganizationMapper.class)
+public interface OrganizationDAO extends Transactional<OrganizationDAO>{
 
     @SqlQuery("select * from organization")
-    @Mapper(OrganizationMapper.class)
     public List<Organization> findAllOrganizations();
 
     @SqlQuery("select * from organization where name = :name")
-    @Mapper(OrganizationMapper.class)
     public Organization findOrganizationByName(@Bind("name") String name);
 
     //find Organization by tenantid
     @SqlQuery("select * from  organization where tenantid = :tenantid")
-    @Mapper(OrganizationMapper.class)
     public Organization findOrganizationbyTenantId(@Bind("tenantid") String tenantid);
 
     @SqlUpdate("insert into organization (name, databaseurl, apiversion) values (:name, :db, :api)")
     @GetGeneratedKeys
     public String insertOrganization(@Bind("name") String name, @Bind("db") String dbURL, @Bind("api") String apiVersion);
 
-    @SqlUpdate("update organization set (name, databaseurl, apiversion) values (:name, :databaseURL, :apiVersion) where tenantid = :tenantID")
+    /* Note: COALESCE will return whichever value is not null, before entering a null.
+        This allows an Organization object that contains null values for some values to be used to update
+        an existing Organization.  For example if a JSON object does not have the tenantID, we will not overwrite it with null
+    */
+    @SqlUpdate("update organization set " +
+            "tenantid = COALESCE( :tenantID, tenantid), " +
+            "databaseurl = COALESCE( :databaseURL, databaseurl), " +
+            "apiversion = COALESCE( :apiVersion, apiversion) " +
+            "where name = :name")
     public int updateOrganization(@BindBean Organization org);
 
     @SqlUpdate("delete from organization * where name = :name")

@@ -27,7 +27,7 @@ import static com.ninja_squad.dbsetup.Operations.*;
 public class CommonOperations {
 
     public static final Operation DELETE_ALL =
-            deleteAllFrom("organization", "userlogin");
+            deleteAllFrom( "userlogin", "organization");
 
     public static final Operation INSERT_REFERENCE_DATA =
             sequenceOf(

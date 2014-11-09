@@ -1,13 +1,17 @@
 package com.trufleet.services.resources;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trufleet.services.TruFleetAPIConfiguration;
 import com.trufleet.services.core.Organization;
 import com.trufleet.services.jdbi.OrganizationDAO;
+import io.dropwizard.jackson.Jackson;
 import io.dropwizard.setup.Environment;
+import org.json.JSONException;
 import org.skife.jdbi.v2.DBI;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -15,25 +19,25 @@ import java.util.List;
  */
 
 @Path("/org")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes("application/x-www-form-urlencoded")
+@Produces( MediaType.APPLICATION_JSON )
+@Consumes( MediaType.APPLICATION_JSON )
 public class OrganizationResource extends BaseResource {
 
+
+    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
     private final OrganizationDAO orgdao =  getAdminDb().onDemand(OrganizationDAO.class);
 
     public OrganizationResource(DBI adminDBI, TruFleetAPIConfiguration configuration, Environment environment) throws ClassNotFoundException {
         super(adminDBI, configuration, environment);
     }
 
-    /*
-      Query for all Organizations in system.
-   */
+
+    //  Query for all Organizations in system.
     @GET
-    public List<Organization> queryAllOrganizations(){
-
-
-        return null;
+    public List<Organization> queryAllOrganizations() {
+        return orgdao.findAllOrganizations();
     }
+
 
     @GET
     @Path("/{name}")
@@ -48,10 +52,18 @@ public class OrganizationResource extends BaseResource {
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createOrganization(String json){
+    public void createOrganization(String json) throws JSONException, IOException{
+        //Deserialize incoming JSON to Organization
+
+        Organization org = MAPPER.readValue(json, Organization.class);
 
         //verify org does not already exist. Then call insert.
-        //orgDAO.insertOrganization();
+        if (null == orgdao.findOrganizationByName(org.getName())) {
+
+            //TODO: refactor insertOrganizaiton() to take Organization object rather than Strings.
+            //orgdao.insertOrganization(org);
+        }
+
     }
 
     /*
