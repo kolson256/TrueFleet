@@ -44,6 +44,7 @@ public class LoginTask extends AsyncTask<String, Void, String[]> {
 
         if (activity!=null)
             attempts = (TextView)activity.findViewById(R.id.textView5);
+
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String username = params[0];
@@ -133,6 +134,7 @@ public class LoginTask extends AsyncTask<String, Void, String[]> {
         if (activity!=null) {
             result = true;
             Intent intent = new Intent(activity.getApplicationContext(), HomeActivity.class).putExtra(Intent.EXTRA_TEXT, "Welcome, " + username + "!");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.getApplicationContext().startActivity(intent);
         }
     }

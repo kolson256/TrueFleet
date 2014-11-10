@@ -3,7 +3,6 @@ package app.truefleet.com.truefleet.Activitieis;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,21 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import app.truefleet.com.truefleet.Resources.ConnectionDetector;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Resources.ConnectionDetector;
 import app.truefleet.com.truefleet.Tasks.LoginTask;
 
 public class LoginActivity extends Activity {
@@ -93,6 +79,7 @@ public class LoginActivity extends Activity {
                     LoginTask loginTask = new LoginTask(this);
                     //FetchLogin loginTask = new FetchLogin();
                     loginTask.execute(user, pass);
+
                 }
             } else {
                 displayToast( "Not connected to the internet. Unable to login.");
