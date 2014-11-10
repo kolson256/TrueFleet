@@ -125,7 +125,7 @@ public class TestOrganizationDAO {
 
         logger.debug(">>>> Deserialized Organization object: " + org.toString() +" from JSON. <<<<");
 
-        String returnKey = orgdao.insertOrganization( org.getName(), org.getDatabaseURL(), org.getApiVersion() );
+        String returnKey = orgdao.insertOrganization( org );
 
         assertThat(returnKey).isNotEmpty();
         logger.debug(">>>> insert Organization returned with key of: " + returnKey + " <<<<");

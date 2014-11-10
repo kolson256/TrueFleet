@@ -19,7 +19,6 @@ package com.trufleet.services.jdbi;
 import com.trufleet.services.core.Organization;
 import com.trufleet.services.jdbi.mapper.OrganizationMapper;
 import org.skife.jdbi.v2.sqlobject.*;
-import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.sqlobject.mixins.Transactional;
 
@@ -43,9 +42,9 @@ public interface OrganizationDAO extends Transactional<OrganizationDAO>{
     @SqlQuery("select * from  organization where tenantid = :tenantid")
     public Organization findOrganizationbyTenantId(@Bind("tenantid") String tenantid);
 
-    @SqlUpdate("insert into organization (name, databaseurl, apiversion) values (:name, :db, :api)")
+    @SqlUpdate("insert into organization (name, databaseurl, apiversion) values (:name, :databaseURL, :apiVersion)")
     @GetGeneratedKeys
-    public String insertOrganization(@Bind("name") String name, @Bind("db") String dbURL, @Bind("api") String apiVersion);
+    public String insertOrganization(@BindBean Organization organization);
 
     /* Note: COALESCE will return whichever value is not null, before entering a null.
         This allows an Organization object that contains null values for some values to be used to update

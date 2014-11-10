@@ -1,5 +1,14 @@
 <atlassian-ide-plugin>
   <project-configuration id="1">
-    <servers id="2" />
+    <servers id="2">
+      <jira id="3">
+        <server-id id="4">b3634d16-137e-4801-95f1-2568505d84db</server-id>
+        <name>TruFleet</name>
+        <url>https://trufleet.atlassian.net</url>
+        <shared>false</shared>
+        <useSessionCookies>false</useSessionCookies>
+      </jira>
+    </servers>
+    <default-jira-server reference="4" />
   </project-configuration>
 </atlassian-ide-plugin>

@@ -13,3 +13,4 @@ Services/TF-Login/atlassian-ide-plugin.xml
 TruFleetWebServices/.idea
 TruFleetWebServices/build
 TruFleetWebServices/.gradle
+TruFleetWebServices/atlassian-ide-plugin.xml

@@ -1,6 +1,7 @@
 package com.trufleet.services;
 
 import com.trufleet.services.resources.LoginResource;
+import com.trufleet.services.resources.OrganizationResource;
 import com.trufleet.services.resources.ProvisionUserResource;
 import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
@@ -40,6 +41,7 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
 
         environment.jersey().register(new LoginResource(adminDBI, configuration, environment));
         environment.jersey().register(new ProvisionUserResource(adminDBI, configuration, environment));
+        environment.jersey().register(new OrganizationResource(adminDBI, configuration, environment));
 
         configureCors(environment);
     }

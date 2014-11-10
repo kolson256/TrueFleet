@@ -9,6 +9,7 @@ import io.dropwizard.setup.Environment;
 import org.json.JSONException;
 import org.skife.jdbi.v2.DBI;
 
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
@@ -18,13 +19,14 @@ import java.util.List;
  * Created by Richard on 11/8/2014.
  */
 
-@Path("/org")
+@Path("/0.1/org")
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class OrganizationResource extends BaseResource {
 
 
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
+
     private final OrganizationDAO orgdao =  getAdminDb().onDemand(OrganizationDAO.class);
 
     public OrganizationResource(DBI adminDBI, TruFleetAPIConfiguration configuration, Environment environment) throws ClassNotFoundException {
@@ -52,18 +54,17 @@ public class OrganizationResource extends BaseResource {
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createOrganization(String json) throws JSONException, IOException{
+    public void createOrganization(@Valid Organization organization) throws JSONException, IOException{
         //Deserialize incoming JSON to Organization
 
-        Organization org = MAPPER.readValue(json, Organization.class);
+        Organization org = organization;
 
         //verify org does not already exist. Then call insert.
         if (null == orgdao.findOrganizationByName(org.getName())) {
-
-            //TODO: refactor insertOrganizaiton() to take Organization object rather than Strings.
-            //orgdao.insertOrganization(org);
+           orgdao.insertOrganization(org);
         }
 
+        //TODO:  Create a return message?
     }
 
     /*
@@ -72,11 +73,19 @@ public class OrganizationResource extends BaseResource {
      */
     @PUT  @Path("/{name}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateOrganization(@PathParam("name") String name, String json) {
+    public void updateOrganization(@PathParam("name") String name, @Valid Organization organization)
+            throws JSONException, IOException{
+
         //verify org named exists, get that object.
-        //verify that there is a change, if so commit it, if not, do nothing.
+        Organization checkOrg = orgdao.findOrganizationByName(name);
 
+        if( null != checkOrg ) {
+            Organization org = organization;
+            orgdao.updateOrganization(org);
+        }
+        //TODO: compare existing to request to verify that there is a change?
 
+        //TODO:  Create a return message?
 
     }
 
@@ -87,10 +96,19 @@ public class OrganizationResource extends BaseResource {
     */
     @DELETE @Path("/{name}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void removeOrganization(@PathParam("name") String name, String json){
+    public void removeOrganization(@PathParam("name") String name, @Valid Organization organization)
+            throws JSONException, IOException{
 
-        //verify that org exists as requested, if same then delete.
+        //verify that org exists
+        Organization checkOrg = orgdao.findOrganizationByName(name);
 
+        if( null != checkOrg ) {
+            Organization org = organization;
+            orgdao.removeOrganization(org);
+        }
+        //TODO: compare existing to request to verify that there is a change?
+
+        //TODO:  Create a return message?
     }
 
 
