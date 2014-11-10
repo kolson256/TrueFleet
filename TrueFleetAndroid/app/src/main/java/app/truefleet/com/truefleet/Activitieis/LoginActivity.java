@@ -1,4 +1,4 @@
-package app.truefleet.com.truefleet;
+package app.truefleet.com.truefleet.Activitieis;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -29,8 +29,12 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class MainActivity extends Activity {
-    private final String LOG_TAG = MainActivity.class.getSimpleName();
+import app.truefleet.com.truefleet.Resources.ConnectionDetector;
+import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Tasks.LoginTask;
+
+public class LoginActivity extends Activity {
+    private final String LOG_TAG = LoginActivity.class.getSimpleName();
 
     private EditText  username=null;
     private EditText  password=null;
@@ -54,81 +58,11 @@ public class MainActivity extends Activity {
         login = (Button)findViewById(R.id.buttonLogin);
 
     }
-    public class FetchLogin extends AsyncTask<String, Void, String[]> {
-        private final String LOG_TAG = FetchLogin.class.getSimpleName();
-        String loginStr = null;
-
-        @Override
-        //takes in login name and password params[0], params[1]
-        protected String[] doInBackground(String... params) {
-
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-            String username = params[0];
-            String password = params[1];
-            JSONObject toLogin = new JSONObject();
-
-            try {
-                    toLogin.put("password", password);
-                toLogin.put("username", username);
 
 
-                System.out.println(toLogin.toString());
-                URL url = new URL("http://10.0.2.2:8080/login");
-                HttpPost post = new HttpPost("http://10.0.2.2:8080/login");
-                post.setHeader("Content-type", "application/json");
-                post.setHeader("Accept", "application/json");
-
-                post.setEntity(new StringEntity(toLogin.toString()));
-
-                HttpResponse response = (new DefaultHttpClient()).execute(post);
-                Log.v(LOG_TAG, "Sending 'POST' request to URL : " + url);
-
-                String json_string = EntityUtils.toString(response.getEntity());
-                if (json_string.equalsIgnoreCase("login successful"))
-                    login();
-                else
-                    invalidLoginAttempt();
-                return new String[0];
-            //TODO: Add relevent messages for catch's
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error ", e);
-                displayToast("Unable to connect to server");
-
-                loginStr = null;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(LOG_TAG, "Error closing stream", e);
-                    }
-                }
-            }
-            return null;
-        }
-    }
-    public void invalidLoginAttempt() {
-        Log.v(LOG_TAG, "unsuccessful login: " + username.getText().toString());
-        displayToast("Wrong Credentials");
-        counter--;
-        attempts.setText(Integer.toString(counter));
-        if (counter == 0) {
-            login.setEnabled(false);
-        }
-    }
     public void displayToast(String message) {
         final String msg = message;
-        MainActivity.this.runOnUiThread(new Runnable() {
+        LoginActivity.this.runOnUiThread(new Runnable() {
             public void run() {
                 Toast.makeText(getApplicationContext(), msg,
                         Toast.LENGTH_SHORT).show();
@@ -150,20 +84,19 @@ public class MainActivity extends Activity {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
-                if (user.length() > 1 && pass.length() > 1) {
-                    FetchLogin loginTask = new FetchLogin();
+                if (user.length() < 1)
+                    displayToast("Please enter a username");
+                else if (password.length() < 1)
+                    displayToast("Please enter a password");
+                else
+                {
+                    LoginTask loginTask = new LoginTask(this);
+                    //FetchLogin loginTask = new FetchLogin();
                     loginTask.execute(user, pass);
                 }
-                else
-                    displayToast("Username/password must be at least 2 digits long"); //TODO: real length
-                //not connected to internet
             } else {
                 displayToast( "Not connected to the internet. Unable to login.");
             }
-        }
-
-        public void attemptLogin() {
-
         }
 
         @Override

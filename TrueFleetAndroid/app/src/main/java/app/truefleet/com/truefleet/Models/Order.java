@@ -1,4 +1,4 @@
-package app.truefleet.com.truefleet;
+package app.truefleet.com.truefleet.Models;
 
 /**
  * Created by night_000 on 10/28/2014.

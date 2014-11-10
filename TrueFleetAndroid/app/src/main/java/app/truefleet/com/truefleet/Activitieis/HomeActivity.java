@@ -1,4 +1,4 @@
-package app.truefleet.com.truefleet;
+package app.truefleet.com.truefleet.Activitieis;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import app.truefleet.com.truefleet.R;
 
 public class HomeActivity extends Activity {
 
@@ -55,7 +57,7 @@ public class HomeActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            System.out.println("?");
+
             Intent intent = getActivity().getIntent();
 
 

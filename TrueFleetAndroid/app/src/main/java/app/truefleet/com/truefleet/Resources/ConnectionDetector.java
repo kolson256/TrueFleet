@@ -1,4 +1,4 @@
-package app.truefleet.com.truefleet;
+package app.truefleet.com.truefleet.Resources;
 
         import android.content.Context;
         import android.net.ConnectivityManager;
