@@ -7,15 +7,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by Richard Morgan on 11/10/2014.
  */
 public class StatusJson {
-    private final String header, message;
+    private final String status, message;
 
     @JsonCreator
     public StatusJson(@JsonProperty("header") String header, @JsonProperty("message") String message){
-        this.header = header;
+        this.status = header;
         this.message = message;
     }
 
-    public String getHeader() { return header; }
+    public String getHeader() { return status; }
 
     public String getMessage() { return message; }
 }
