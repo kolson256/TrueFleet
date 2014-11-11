@@ -1,4 +1,4 @@
-package com.trufleet.services.core;
+package com.trufleet.services.message;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,8 +10,8 @@ public class StatusJson {
     private final String status, message;
 
     @JsonCreator
-    public StatusJson(@JsonProperty("header") String header, @JsonProperty("message") String message){
-        this.status = header;
+    public StatusJson(@JsonProperty("status") String status, @JsonProperty("message") String message){
+        this.status = status;
         this.message = message;
     }
 

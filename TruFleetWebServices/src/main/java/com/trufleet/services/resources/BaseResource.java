@@ -14,6 +14,8 @@ import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
 import org.json.JSONException;
 import org.skife.jdbi.v2.DBI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -21,6 +23,8 @@ import java.util.Date;
  * Created by Kyle Olson on 11/6/2014.
  */
 public abstract class BaseResource {
+
+    static Logger logger = LoggerFactory.getLogger(BaseResource.class);
     private final TruFleetAPIConfiguration configuration;
     private final Environment environment;
 
@@ -36,6 +40,9 @@ public abstract class BaseResource {
     }
 
     protected void buildTenantDb(String tenantId) throws JSONException, ClassNotFoundException, InvalidTenantIdException {
+
+        logger.debug(">>>> Inside buildTenantDB, tenantID given is: " + tenantId);
+
         final DBIFactory factory = new DBIFactory();
         OrganizationDAO organizationDAO = adminDb.onDemand(OrganizationDAO.class);
         organization = organizationDAO.findOrganizationbyTenantId(tenantId);
@@ -46,6 +53,7 @@ public abstract class BaseResource {
         DataSourceFactory dataSourceFactory = configuration.getTenantDatabaseFactory();
         dataSourceFactory.setUrl(organization.getDatabaseURL());
 
+        logger.debug(">>>> URL given is : " + dataSourceFactory.getUrl());
         tenantDb = factory.build(environment, dataSourceFactory, "TFTenant");
     }
 
