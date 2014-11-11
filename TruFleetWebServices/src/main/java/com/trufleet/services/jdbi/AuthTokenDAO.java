@@ -21,7 +21,7 @@ public interface AuthTokenDAO extends Transactional<AppUserDAO> {
     public AuthToken findAuthToken(@Bind("token") String token);
 
     //find User by username
-    @SqlQuery("select appuserid, token, expirationDate from authtoken where token = :token")
+    @SqlQuery("select appuserid, token, expirationDate from authtoken where appuserid = :userid")
     public AuthToken findAuthTokenByUserId(@Bind("userid") long userId);
 
     @SqlUpdate("insert into authtoken (appuserid, token, expirationdate) values (:id, :token, :expdate)")
