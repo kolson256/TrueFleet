@@ -64,6 +64,13 @@ public class LoginResource extends BaseResource {
             return response.toString();
         }
 
+        try {
+            buildTenantDb(userLogin.getTenantId());
+        } catch (Exception e) {
+            response.put("errorMessage", e.getMessage());
+            return response.toString();
+        }
+
         //  Find the user and current token in the tenant database
         AppUserDAO appUserDAO = getTenantDb().onDemand(AppUserDAO.class);
         AuthTokenDAO authTokenDAO = getTenantDb().onDemand(AuthTokenDAO.class);
