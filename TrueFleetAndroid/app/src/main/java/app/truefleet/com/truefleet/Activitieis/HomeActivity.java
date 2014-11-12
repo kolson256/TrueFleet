@@ -1,7 +1,10 @@
 package app.truefleet.com.truefleet.Activitieis;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,20 +14,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Resources.GooglePlayServicesCheck;
 import app.truefleet.com.truefleet.Resources.LoginManager;
 
 public class HomeActivity extends Activity {
-
+    private final String LOG_TAG = HomeActivity.class.getSimpleName();
     LoginManager loginManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
+        GooglePlayServicesCheck playServicesCheck = new GooglePlayServicesCheck(getApplicationContext());
+
+
+        if (!playServicesCheck.checkGooglePlayServices()) {
+            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(playServicesCheck.getResultCode(), this, playServicesCheck.getRQS_GooglePlayServices());
+
+            if (dialog != null)
+                dialog.show();
+            else //this should not happen
+                showOkDialogWithText(getApplicationContext(), "Please make sure that you have Google Play Store installed and that you are connected to the internet");
+        }
+
         LoginManager loginManager = new LoginManager(getApplicationContext());
-        System.out.println("In home activity");
+
         if (loginManager.checkLogin())
             finish();
 
@@ -34,6 +54,17 @@ public class HomeActivity extends Activity {
                     .commit();
         }
     }
+
+    public static void showOkDialogWithText(Context context, String messageText)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(messageText);
+        builder.setCancelable(true);
+        builder.setPositiveButton("OK", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     public void logout(View view) {
         loginManager = new LoginManager(getApplicationContext());
          loginManager.logout();
