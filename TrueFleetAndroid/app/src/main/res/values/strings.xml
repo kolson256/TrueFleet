@@ -10,6 +10,8 @@
     <string name="attempts">Attempts Left:</string>
     <string name="title_activity_my">MyActivity</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="Logout">Logout</string>
 
     <style name="ButtonText">
         <item name="android:layout_width">fill_parent</item>

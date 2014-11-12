@@ -7,13 +7,18 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 
 import app.truefleet.com.truefleet.Activitieis.HomeActivity;
+import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Resources.LoginManager;
 
 public class LoginTask extends AsyncTask<String, Void, String[]> {
 
@@ -46,16 +51,30 @@ public class LoginTask extends AsyncTask<String, Void, String[]> {
             toLogin.put("password", password);
             toLogin.put("username", username);
 
-            WebServiceHelper wsResult = WebService.invokeWSPost("login", toLogin.toString());
+            WebServiceHelper wsResult = WebService.invokeWSPost("Login", toLogin.toString());
 
-            if (wsResult.connectionSuccess) {
-                String json_string = wsResult.result;
 
-                if (json_string.equalsIgnoreCase("login successful"))
-                    login(username);
-                else
-                    invalidLoginAttempt(username);
+            if (wsResult.getConnectionSuccess()) {
 
+                if (!wsResult.getResponseSuccess()) {
+                    //TODO: Handle error message returned by webservice
+                }
+                else {
+                    String json_string = wsResult.getBody();
+                    JSONObject userObj = new JSONObject(json_string);
+
+
+                    if (!userObj.has("errorMessage")) {
+                        userObj.put("username", username);
+                        System.out.println(userObj.toString());
+                        User user = new ObjectMapper().readValue(userObj.toString(), new TypeReference<User>(){});
+                        //TODO: Store in shared preferences
+                        login(user);
+
+                    }
+                    else
+                        invalidLoginAttempt(username);
+                }
             } else {
 
                 displayToast("Unable to connect to server");
@@ -103,16 +122,24 @@ public class LoginTask extends AsyncTask<String, Void, String[]> {
         }
     }
 
-    public void login(String username) {
+    public void login(User user) {
 
         final Activity activity = mActivity.get();
         result = true;
 
         if (activity != null) {
 
-            Intent intent = new Intent(activity.getApplicationContext(), HomeActivity.class).putExtra(Intent.EXTRA_TEXT, "Welcome, " + username + "!");
+            LoginManager manager = new LoginManager(activity.getApplicationContext());
+            manager.createLoginSession(user);
+
+
+            Intent intent = new Intent(activity.getApplicationContext(), HomeActivity.class).putExtra(Intent.EXTRA_TEXT, "Welcome, " + user.getUsername() + "!");
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.getApplicationContext().startActivity(intent);
+            activity.finish();
+
+
 
         }
     }

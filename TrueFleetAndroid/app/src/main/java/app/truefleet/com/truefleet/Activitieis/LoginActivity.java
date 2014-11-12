@@ -2,9 +2,7 @@ package app.truefleet.com.truefleet.Activitieis;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +15,7 @@ import android.widget.Toast;
 
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Resources.ConnectionDetector;
+import app.truefleet.com.truefleet.Resources.LoginManager;
 import app.truefleet.com.truefleet.Tasks.LoginTask;
 
 public class LoginActivity extends Activity {
@@ -35,6 +34,8 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         cd = new ConnectionDetector(getApplicationContext());
 
         username = (EditText)findViewById(R.id.textUsername);
@@ -43,6 +44,10 @@ public class LoginActivity extends Activity {
         attempts.setText(Integer.toString(counter));
         login = (Button)findViewById(R.id.buttonLogin);
 
+        LoginManager loginManager = new LoginManager(getApplicationContext());
+
+       // if (loginManager.checkLogin())
+        //    finish();
     }
 
 
@@ -55,10 +60,7 @@ public class LoginActivity extends Activity {
             }
         });
     }
-    public void login() {
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class).putExtra(Intent.EXTRA_TEXT, "Welcome, " + username.getText().toString() + "!");
-        startActivity(intent);
-    }
+
 
 
         public void login(View view) {
@@ -117,6 +119,7 @@ public class LoginActivity extends Activity {
             public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                      Bundle savedInstanceState) {
                 View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
                 return rootView;
             }
         }

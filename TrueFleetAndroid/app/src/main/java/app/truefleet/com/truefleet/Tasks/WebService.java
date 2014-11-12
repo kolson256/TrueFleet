@@ -7,6 +7,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -25,17 +27,31 @@ public class WebService {
         post.setEntity(new StringEntity(body));
 
         try {
-
+            String error = "";
             HttpResponse response = (new DefaultHttpClient()).execute(post);
             Log.v(LOG_TAG, "Sending 'POST' request to URL : " + URL + serviceName);
             String json_string = EntityUtils.toString(response.getEntity());
-            return new WebServiceHelper(true, json_string);
+
+            JSONObject json = new JSONObject(json_string);
+            Log.v(LOG_TAG,"Received back: " + json_string);
+
+            //check for error
+            if (json.has("message"))
+                return new WebServiceHelper(true, json.getString("message"), false);
+
+            return new WebServiceHelper(true, json_string, true);
 
         } catch (IOException e) {
 
             Log.e(LOG_TAG, "Error executing response for url: " + URL + serviceName);
             e.printStackTrace();
-            return new WebServiceHelper(false, "Error executing response");
+            return new WebServiceHelper(false, "Error executing response", false);
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "Received non json response from server");
+
+
+            e.printStackTrace();
+            return new WebServiceHelper(false, "Received invalid response back from server", false);
         }
     }
 }

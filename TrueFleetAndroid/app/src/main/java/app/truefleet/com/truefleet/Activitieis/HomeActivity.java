@@ -11,19 +11,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Resources.LoginManager;
 
 public class HomeActivity extends Activity {
 
+    LoginManager loginManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        LoginManager loginManager = new LoginManager(getApplicationContext());
+        System.out.println("In home activity");
+        if (loginManager.checkLogin())
+            finish();
+
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+    }
+    public void logout(View view) {
+        loginManager = new LoginManager(getApplicationContext());
+         loginManager.logout();
     }
 
 
@@ -57,19 +70,24 @@ public class HomeActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-
+            LoginManager loginManager = new LoginManager(getActivity().getApplicationContext());
             Intent intent = getActivity().getIntent();
 
+            if (loginManager.checkLogin())
+                getActivity().finish();
 
-
+            User user  = loginManager.getUser();
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+            TextView tvWelcome = (TextView) rootView.findViewById(R.id.welcome_text);
+            tvWelcome.setText("Welcome, " + user.getUsername() + "!");
 
+    /*
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
                 String welcome = intent.getStringExtra(Intent.EXTRA_TEXT);
                 System.out.println(welcome);
                 TextView tvWelcome = (TextView) rootView.findViewById(R.id.welcome_text);
                 tvWelcome.setText(welcome);
-            }
+            }*/
 
             return rootView;
         }
