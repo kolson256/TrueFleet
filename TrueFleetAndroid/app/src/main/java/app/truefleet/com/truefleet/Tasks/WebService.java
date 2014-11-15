@@ -16,10 +16,10 @@ import java.net.MalformedURLException;
 
 public class WebService {
     private static final String LOG_TAG = WebService.class.getSimpleName();
-    private static final String genymotion = "http://10.0.2.2:8080";
-    private static final String androidEmulator = "http://10.0.3.2:8080";
+    private static final String genymotion = "http://10.0.3.2:8080/";
+    private static final String androidEmulator = "http://10.0.2.2:8080/";
 
-    private static final String URL = genymotion;
+    private static final String URL = androidEmulator;
 
     public static WebServiceHelper invokeWSPost(String serviceName, String body) throws MalformedURLException, UnsupportedEncodingException {
 

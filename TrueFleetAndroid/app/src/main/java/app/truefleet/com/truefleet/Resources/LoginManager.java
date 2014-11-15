@@ -42,12 +42,14 @@ public class LoginManager {
         editor.putString(KEY_APIVERSION, user.getApiVersion());
         editor.putString(KEY_LAST_USER,  user.getUsername());
 
+
         //check if registration ID exists
 
         //if not obtain it
         editor.commit();
-
+        Log.i(LOG_TAG, "Stored Login information in preferences");
     }
+
     public boolean isUserLoggedIn(){
 
         return sharedPreferences.getBoolean(LOGGED_IN, false);
@@ -75,8 +77,14 @@ public class LoginManager {
     }
 
     public void logout() {
-        //todo: need to  not remove last logged in user, registration id, appversion
-        editor.clear();
+
+        //dont remove last logged in, registration id, or app version
+        editor.putBoolean(LOGGED_IN, false);
+        editor.remove(KEY_USER);
+        editor.remove(KEY_TOKEN);
+        editor.remove(KEY_TENANTID);
+        editor.remove(KEY_APIVERSION);
+
         editor.commit();
         startLoginActivity();
 
@@ -88,10 +96,10 @@ public class LoginManager {
         context.startActivity(i);
 
     }
-    private void storeRegistrationId(String regId) {
+    public void storeRegistrationId(String regId) {
 
         int appVersion = getAppVersion(context);
-        Log.i(LOG_TAG, "Saving regId on app version " + appVersion);
+        Log.i(LOG_TAG, "Saving regId: " + regId + " on app version " + appVersion);
         editor.putString(KEY_REGISTRATION_ID, regId );
         editor.putInt(KEY_APP_VERSION, appVersion);
         editor.commit();
@@ -101,7 +109,7 @@ public class LoginManager {
         int currentVersion = getAppVersion(context);
         int registeredVersion = sharedPreferences.getInt(KEY_APP_VERSION, Integer.MIN_VALUE);
         if (registeredVersion != currentVersion) {
-            Log.i(LOG_TAG, "App version changed.");
+            Log.i(LOG_TAG, "App version changed. from: " + registeredVersion + " to " + currentVersion);
 
             return "";
         }

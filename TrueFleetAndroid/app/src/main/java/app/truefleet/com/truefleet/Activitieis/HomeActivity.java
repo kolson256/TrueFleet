@@ -2,19 +2,23 @@ package app.truefleet.com.truefleet.Activitieis;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import java.io.IOException;
 
 import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.R;
@@ -24,29 +28,22 @@ import app.truefleet.com.truefleet.Resources.LoginManager;
 public class HomeActivity extends Activity {
     private final String LOG_TAG = HomeActivity.class.getSimpleName();
     LoginManager loginManager;
-
+    GoogleCloudMessaging gcm;
+    String regid;
+    private final String PROJECT_NUMBER = "171359155716";
+    Context context;
+    Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        activity = this;
+        context = getApplicationContext();
+        LoginManager loginManager = new LoginManager(context);
 
+        System.out.println("REGISTRATION ID: " + loginManager.getRegistrationId());
 
-        GooglePlayServicesCheck playServicesCheck = new GooglePlayServicesCheck(getApplicationContext());
-
-
-        if (!playServicesCheck.checkGooglePlayServices()) {
-            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(playServicesCheck.getResultCode(), this, playServicesCheck.getRQS_GooglePlayServices());
-
-            if (dialog != null)
-                dialog.show();
-            else //this should not happen
-                showOkDialogWithText(getApplicationContext(), "Please make sure that you have Google Play Store installed and that you are connected to the internet");
-        }
-
-        LoginManager loginManager = new LoginManager(getApplicationContext());
-
-        if (loginManager.checkLogin())
-            finish();
+        gcmSetup();
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
@@ -54,7 +51,101 @@ public class HomeActivity extends Activity {
                     .commit();
         }
     }
+    private void gcmSetup() {
+        LoginManager loginManager = new LoginManager(context);
 
+        System.out.println("REGISTRATION ID: " + loginManager.getRegistrationId());
+
+
+        if (checkPlayServices()) {
+
+            gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+
+            regid = loginManager.getRegistrationId();
+            System.out.println("Registration id currently on device: " + regid);
+            Log.i(LOG_TAG, "Current registration ID on device: " + regid);
+
+            if (regid.isEmpty()|| regid == null) {
+                System.out.println("reg id empty");
+                registerInBackground();
+            }
+        }
+        else {
+            Log.i(LOG_TAG, "No valid Google Play Services APK found.");
+        }
+
+
+        if (loginManager.checkLogin())
+            finish();
+    }
+    private void registerInBackground() {
+
+        Log.i(LOG_TAG, "Registering registration ID");
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg="t";
+                try {
+                    if (gcm == null) {
+                        System.out.println("gcm was null");
+                        gcm = GoogleCloudMessaging.getInstance(context);
+                    }
+                    gcm.unregister();
+                    regid = gcm.register(PROJECT_NUMBER);
+
+                    msg = "Device registered, registration ID=" + regid;
+
+                    sendRegistrationIdToBackend();
+                    if (loginManager == null)
+                        loginManager = new LoginManager(context);
+                    loginManager.storeRegistrationId(regid);
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return msg;
+
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+
+                Toast.makeText(activity, msg,
+                        Toast.LENGTH_SHORT).show();
+            }
+        }.execute(null, null, null);
+
+    }
+
+    protected void onResume() {
+        super.onResume();
+      //  gcmSetup();
+    }
+    private boolean checkPlayServices() {
+        GooglePlayServicesCheck playServicesCheck = new GooglePlayServicesCheck(getApplicationContext());
+       GoogleCloudMessaging gcm =  GoogleCloudMessaging.getInstance(context);
+
+
+        if (!playServicesCheck.checkGooglePlayServices()) {
+           // Dialog dialog = GooglePlayServicesUtil.getErrorDialog(playServicesCheck.getResultCode(), this, playServicesCheck.getRQS_GooglePlayServices());
+              System.out.println("good play services not i nstalled");
+           // if (dialog != null)
+                System.out.println("show dialog");//todo: redirect to login and show dialog?
+              //  dialog.show();
+
+         //   else //this should not happen
+           //     System.out.println("show dialog");//todo: redirect to login and show dialog?
+              //  showOkDialogWithText(context, "Please make sure that you have Google Play Store installed and that you are connected to the internet");
+            return false;
+        }
+        return true;
+    }
+
+
+    private void sendRegistrationIdToBackend() {
+        //TODO: is this being sent when user logs in?
+    }
     public static void showOkDialogWithText(Context context, String messageText)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -66,7 +157,7 @@ public class HomeActivity extends Activity {
     }
 
     public void logout(View view) {
-        loginManager = new LoginManager(getApplicationContext());
+        loginManager = new LoginManager(context);
          loginManager.logout();
     }
 
@@ -110,7 +201,8 @@ public class HomeActivity extends Activity {
             User user  = loginManager.getUser();
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
             TextView tvWelcome = (TextView) rootView.findViewById(R.id.welcome_text);
-            tvWelcome.setText("Welcome, " + user.getUsername() + "!");
+            LoginManager lm = new LoginManager(getActivity().getApplicationContext());
+            tvWelcome.setText("Welcome, " + user.getUsername() + "!" + lm.getRegistrationId());
 
     /*
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
