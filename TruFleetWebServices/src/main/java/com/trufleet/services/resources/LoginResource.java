@@ -30,6 +30,7 @@ public class LoginResource extends BaseResource {
 
     public LoginResource(DBI adminDBI, TruFleetAPIConfiguration configuration, Environment environment) throws ClassNotFoundException {
         super(adminDBI, configuration, environment);
+
     }
 
     @POST
