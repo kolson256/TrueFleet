@@ -22,6 +22,7 @@ public class ContactEntry {
     private String address;
 
     private Map<String, String> phoneEntries = new HashMap<>();
+
     private String notes;
 
     public ContactEntry(String name, String address) {

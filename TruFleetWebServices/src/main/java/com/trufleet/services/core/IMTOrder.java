@@ -3,7 +3,6 @@ package com.trufleet.services.core;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.DateTime;
 
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -20,6 +19,7 @@ public class IMTOrder {
     private String orderType;
 
     //ID for TruFleet
+    //AutoGenerate?
     private String internalID;
 
     //ID given by Client
@@ -30,12 +30,11 @@ public class IMTOrder {
     //Rail to become own object later?
     private String railLine;
 
+    private ContactEntry pickupContact;
+    private ContactEntry dropoffContact;
 
-    private ContactEntry pickup;
-    private ContactEntry dropoff;
-
-    private DateTime windowStart;
-    private DateTime windowClose;
+    private DateTime deliveryWindowOpen;
+    private DateTime deliveryWindowClose;
 
     public IMTOrder(String containerid, String orderType) {
         this.container = new IntermodalContainer(containerid);
@@ -87,35 +86,35 @@ public class IMTOrder {
         this.railLine = railLine;
     }
 
-    public ContactEntry getPickup() {
-        return pickup;
+    public ContactEntry getPickupContact() {
+        return pickupContact;
     }
 
-    public void setPickup(ContactEntry pickup) {
-        this.pickup = pickup;
+    public void setPickupContact(ContactEntry pickupContact) {
+        this.pickupContact = pickupContact;
     }
 
-    public ContactEntry getDropoff() {
-        return dropoff;
+    public ContactEntry getDropoffContact() {
+        return dropoffContact;
     }
 
-    public void setDropoff(ContactEntry dropoff) {
-        this.dropoff = dropoff;
+    public void setDropoffContact(ContactEntry dropoffContact) {
+        this.dropoffContact = dropoffContact;
     }
 
-    public DateTime getWindowStart() {
-        return windowStart;
+    public DateTime getDeliveryWindowOpen() {
+        return deliveryWindowOpen;
     }
 
-    public void setWindowStart(DateTime windowStart) {
-        this.windowStart = windowStart;
+    public void setDeliveryWindowOpen(DateTime deliveryWindowOpen) {
+        this.deliveryWindowOpen = deliveryWindowOpen;
     }
 
-    public DateTime getWindowClose() {
-        return windowClose;
+    public DateTime getDeliveryWindowClose() {
+        return deliveryWindowClose;
     }
 
-    public void setWindowClose(DateTime windowClose) {
-        this.windowClose = windowClose;
+    public void setDeliveryWindowClose(DateTime deliveryWindowClose) {
+        this.deliveryWindowClose = deliveryWindowClose;
     }
 }

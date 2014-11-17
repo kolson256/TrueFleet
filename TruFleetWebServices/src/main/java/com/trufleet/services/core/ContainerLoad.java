@@ -14,23 +14,24 @@ public class ContainerLoad {
 
     @NotNull
     @Valid
-    private IntermodalContainer container;
+    private String containerID;
 
     @NotNull
     private String seal;
 
     private int pieces;
     private int weight;
+
     private DateTime shipDate;
 
     @JsonCreator
-    public ContainerLoad(@JsonProperty("container")IntermodalContainer container,@JsonProperty("seal") String seal) {
-        this.container = container;
+    public ContainerLoad(@JsonProperty("containerid")String containerID ,@JsonProperty("seal") String seal) {
+        this.containerID = containerID;
         this.seal = seal;
     }
 
-    public IntermodalContainer getContainer() {
-        return container;
+    public String getContainer() {
+        return containerID;
     }
 
     public String getSeal() {
