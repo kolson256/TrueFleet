@@ -14,6 +14,10 @@ public class DriverUser  {
     @NotNull
     private String driverID;
 
+    //Android application ID
+    @JsonProperty
+    private String applicationID;
+
     @Valid
     @NotNull
     private AppUser appUser;
@@ -35,5 +39,15 @@ public class DriverUser  {
     public AppUser getAppUser() {
         return appUser;
     }
+
+    public String getApplicationID() {
+        return applicationID;
+    }
+
+    public void setApplicationID(String applicationID) {
+        this.applicationID = applicationID;
+    }
+
+
 
 }

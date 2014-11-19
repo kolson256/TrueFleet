@@ -22,6 +22,7 @@ public class ContainerLoad {
     private int pieces;
     private int weight;
 
+
     private DateTime shipDate;
 
     @JsonCreator

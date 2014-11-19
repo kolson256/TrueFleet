@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class WorkOrder {
 
     private String internalOrderId;
+
     //Enum later?
     @JsonProperty("status")
     private String status;

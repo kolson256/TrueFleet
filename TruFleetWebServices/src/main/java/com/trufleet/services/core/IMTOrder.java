@@ -1,6 +1,7 @@
 package com.trufleet.services.core;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.trufleet.services.core.util.ContactEntry;
 import org.joda.time.DateTime;
 
 import javax.validation.constraints.NotNull;
@@ -25,19 +26,21 @@ public class IMTOrder {
     //ID given by Client
     private String externalID;
 
-    private IntermodalContainer container;
+    private String container;
 
     //Rail to become own object later?
     private String railLine;
 
+    //Change to URI to contact resources?
     private ContactEntry pickupContact;
     private ContactEntry dropoffContact;
 
+    //
     private DateTime deliveryWindowOpen;
     private DateTime deliveryWindowClose;
 
     public IMTOrder(String containerid, String orderType) {
-        this.container = new IntermodalContainer(containerid);
+        this.container = containerid;
         this.orderType = orderType;
         this.receiptTimestamp = System.currentTimeMillis();
     }
@@ -70,11 +73,11 @@ public class IMTOrder {
         this.externalID = externalID;
     }
 
-    public IntermodalContainer getContainer() {
+    public String getContainer() {
         return container;
     }
 
-    public void setContainer(IntermodalContainer container) {
+    public void setContainer(String container) {
         this.container = container;
     }
 
