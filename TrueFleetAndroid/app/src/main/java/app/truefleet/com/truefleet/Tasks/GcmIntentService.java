@@ -1,6 +1,7 @@
 package app.truefleet.com.truefleet.Tasks;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -54,9 +55,7 @@ public class GcmIntentService extends IntentService {
              * extended in the future with new message types, just ignore any message types you're
              * not interested in, or that you don't recognize.
              */
-            msg = extras.getString("title");
 
-            showToast();
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
                 sendNotification("Send error: " + extras.toString());
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
@@ -65,8 +64,11 @@ public class GcmIntentService extends IntentService {
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
                 // Post notification of received message.
-                sendNotification("Received: " + extras.toString());
+                sendNotification("Received: " + extras.getString("title"));
+                String user = extras.getString("user");
                 Log.i(TAG, "Received: " + extras.toString());
+
+                //TODO: Send request to server to get order
             }
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
@@ -82,13 +84,12 @@ public class GcmIntentService extends IntentService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, HomeActivity.class), 0);
 
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
+        Notification.Builder mBuilder =
+                new Notification.Builder(this)
                         .setSmallIcon(R.drawable.ic_stat_gcm)
                         .setContentTitle("GCM Notification")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg))
                         .setContentText(msg);
+
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

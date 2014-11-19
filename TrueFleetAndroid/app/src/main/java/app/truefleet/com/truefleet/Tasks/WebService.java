@@ -19,14 +19,29 @@ public class WebService {
     private static final String genymotion = "http://10.0.3.2:8080/";
     private static final String androidEmulator = "http://10.0.2.2:8080/";
 
-    private static final String URL = androidEmulator;
+    private static final String URL = genymotion;
 
     public static WebServiceHelper invokeWSPost(String serviceName, String body) throws MalformedURLException, UnsupportedEncodingException {
-
 
         HttpPost post = new HttpPost(URL + serviceName);
         post.setHeader("Content-type", "application/json");
         post.setHeader("Accept", "application/json");
+
+        return invoke(serviceName, body, post);
+    }
+
+    public static WebServiceHelper invokeWSAuthorizationPost(String serviceName, String body, String token) throws MalformedURLException, UnsupportedEncodingException {
+
+        HttpPost post = new HttpPost(URL + serviceName);
+        post.setHeader("Content-type", "application/json");
+        post.setHeader("Accept", "application/json");
+        post.setHeader("authToken", token);
+
+        return invoke(serviceName, body, post);
+    }
+
+    private static WebServiceHelper invoke(String serviceName, String body, HttpPost post) throws MalformedURLException, UnsupportedEncodingException {
+
         post.setEntity(new StringEntity(body));
 
         try {
@@ -38,9 +53,8 @@ public class WebService {
             JSONObject json = new JSONObject(json_string);
             Log.v(LOG_TAG,"Received back: " + json_string);
 
-            //check for error
-            if (json.has("message"))
-                return new WebServiceHelper(true, json.getString("message"), false);
+            if (json.has("errorMessage"))
+                return new WebServiceHelper(true, json.getString("errorMessage"), false);
 
             return new WebServiceHelper(true, json_string, true);
 
@@ -56,5 +70,6 @@ public class WebService {
             e.printStackTrace();
             return new WebServiceHelper(false, "Received invalid response back from server", false);
         }
+
     }
 }

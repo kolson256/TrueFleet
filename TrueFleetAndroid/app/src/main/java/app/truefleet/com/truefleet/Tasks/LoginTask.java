@@ -79,7 +79,7 @@ public class LoginTask extends AsyncTask<String, Void, String[]> {
 
                 displayToast("Unable to connect to server");
             }
-            return new String[0];
+
             //TODO: Add relevent messages for catch's
 
         } catch (JSONException e) {
@@ -88,7 +88,7 @@ public class LoginTask extends AsyncTask<String, Void, String[]> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return new String[0];
     }
 
     public void invalidLoginAttempt(String username) {

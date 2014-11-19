@@ -39,9 +39,7 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
         activity = this;
         context = getApplicationContext();
-        LoginManager loginManager = new LoginManager(context);
-
-        System.out.println("REGISTRATION ID: " + loginManager.getRegistrationId());
+        loginManager = new LoginManager(context);
 
         gcmSetup();
 
@@ -51,24 +49,21 @@ public class HomeActivity extends Activity {
                     .commit();
         }
     }
-    private void gcmSetup() {
+    private synchronized void gcmSetup() {
         LoginManager loginManager = new LoginManager(context);
-
-        System.out.println("REGISTRATION ID: " + loginManager.getRegistrationId());
-
 
         if (checkPlayServices()) {
 
             gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
 
             regid = loginManager.getRegistrationId();
-            System.out.println("Registration id currently on device: " + regid);
+
             Log.i(LOG_TAG, "Current registration ID on device: " + regid);
 
             if (regid.isEmpty()|| regid == null) {
-                System.out.println("reg id empty");
                 registerInBackground();
             }
+
         }
         else {
             Log.i(LOG_TAG, "No valid Google Play Services APK found.");
@@ -84,18 +79,17 @@ public class HomeActivity extends Activity {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                String msg="t";
+                String msg="";
                 try {
                     if (gcm == null) {
-                        System.out.println("gcm was null");
                         gcm = GoogleCloudMessaging.getInstance(context);
                     }
-                    gcm.unregister();
+                  //  gcm.unregister();
                     regid = gcm.register(PROJECT_NUMBER);
 
                     msg = "Device registered, registration ID=" + regid;
-
-                    sendRegistrationIdToBackend();
+                    Log.i(LOG_TAG, msg);
+                   // sendRegistrationIdToBackend();
                     if (loginManager == null)
                         loginManager = new LoginManager(context);
                     loginManager.storeRegistrationId(regid);

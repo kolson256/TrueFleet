@@ -1,10 +1,7 @@
 package com.trufleet.services;
 
-import com.trufleet.services.resources.LoginResource;
-import com.trufleet.services.resources.NotificationResource;
+import com.trufleet.services.resources.*;
 
-import com.trufleet.services.resources.OrganizationResource;
-import com.trufleet.services.resources.ProvisionUserResource;
 import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
@@ -45,6 +42,7 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
         environment.jersey().register(new ProvisionUserResource(adminDBI, configuration, environment));
         environment.jersey().register(new OrganizationResource(adminDBI, configuration, environment));
         environment.jersey().register(new NotificationResource(adminDBI, configuration, environment));
+        environment.jersey().register(new GcmRegistrationResource(adminDBI, configuration, environment));
         configureCors(environment);
     }
 

@@ -57,7 +57,7 @@ public class NotificationResource extends BaseResource {
             Content content = new Content();
 
             //this would be unique to a user that could change for the user
-            content.addRegId("APA91bH9D4j86cYTBs4O_7m3yVai-FwLEEMKUKznByArDEHju-RBUgRAue_7YcGI190azqBZMopIG4xhTD6a1EQyURlUd3q_seAwVJTYgx3yx3YylmAeTVChjicAJxzAb00-Hu8R2nsy6dbomb29rlSxojrfzHQgz4SFGl-y2SDlbqJimA9TK4k");
+            content.addRegId("APA91bH2rBtzedZHSNASarU4U-kZPA8RVY9MV22DRqLjBH0PaHkzUVn48aYNyALKXNHPZ_5lBzV27SX_yEnoLl5Gp1aFvAqPjtFN1wVV6NY3TEqW9NtqFMBBrY_ncPyFkPodp76QvdeCXV5fZOQexDBEgSeNccfC8jbYDGszUPTkQjbXAiWxfaA");
             content.addData("title", "orderUpdate");
             content.addData("user","username");
 

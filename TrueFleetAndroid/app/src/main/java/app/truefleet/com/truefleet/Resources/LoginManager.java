@@ -9,6 +9,7 @@ import android.util.Log;
 
 import app.truefleet.com.truefleet.Activitieis.LoginActivity;
 import app.truefleet.com.truefleet.Models.User;
+import app.truefleet.com.truefleet.Tasks.RegisterServerTask;
 
 
 public class LoginManager {
@@ -44,7 +45,14 @@ public class LoginManager {
 
 
         //check if registration ID exists
-
+        String regid = getRegistrationId();
+        if (regid.isEmpty()|| regid == null) {
+            Log.e(LOG_TAG, "App not yet registered with GCM upon logging in");
+        }
+        else {
+            RegisterServerTask registerServerTask = new RegisterServerTask(context);
+            registerServerTask.execute();
+        }
         //if not obtain it
         editor.commit();
         Log.i(LOG_TAG, "Stored Login information in preferences");
