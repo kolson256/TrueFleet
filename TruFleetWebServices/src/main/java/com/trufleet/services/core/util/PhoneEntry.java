@@ -2,6 +2,7 @@ package com.trufleet.services.core.util;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,7 +12,10 @@ import javax.validation.constraints.Size;
  * Utility Class
  */
 
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class PhoneEntry {
+
+    private String id;
 
     /*
         Enum later?  Intention is that this field will have values such as
@@ -51,6 +55,10 @@ public class PhoneEntry {
         this.number = number;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return type + ": " + number;
@@ -63,6 +71,7 @@ public class PhoneEntry {
 
         PhoneEntry that = (PhoneEntry) o;
 
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (!number.equals(that.number)) return false;
         if (!type.equals(that.type)) return false;
 

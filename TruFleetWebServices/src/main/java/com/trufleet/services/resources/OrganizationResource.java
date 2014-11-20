@@ -55,7 +55,6 @@ public class OrganizationResource extends BaseResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Organization createOrganization(@Valid Organization organization) throws JSONException, IOException{
-        //Deserialize incoming JSON to Organization
 
         Organization org = organization;
 
@@ -63,6 +62,7 @@ public class OrganizationResource extends BaseResource {
         if (null == orgdao.findOrganizationByName(org.getName())) {
            orgdao.insertOrganization(org);
         }
+        //TODO add "else" Response
 
         //return Organization with tenant id
         return orgdao.findOrganizationByName(organization.getName());

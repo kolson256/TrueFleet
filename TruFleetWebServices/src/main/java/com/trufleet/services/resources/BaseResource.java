@@ -17,6 +17,8 @@ import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 import java.util.Date;
 
 /**
@@ -82,5 +84,8 @@ public abstract class BaseResource {
     protected DBI getTenantDb() { return tenantDb; }
     protected Organization getOrganization() { return organization; }
     protected AppUser getAppUser() { return appUser; }
+    protected String getVersion() {
+        return organization.getApiVersion();
+    }
 
 }
