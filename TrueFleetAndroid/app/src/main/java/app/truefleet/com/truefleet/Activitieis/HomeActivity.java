@@ -154,6 +154,10 @@ public class HomeActivity extends Activity {
         loginManager = new LoginManager(context);
          loginManager.logout();
     }
+    public void orders(View view) {
+        Intent i = new Intent(context, OrderActivity.class);
+        startActivity(i);
+    }
 
 
     @Override
