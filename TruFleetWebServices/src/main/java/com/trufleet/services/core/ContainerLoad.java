@@ -31,6 +31,14 @@ public class ContainerLoad {
         this.seal = seal;
     }
 
+    public ContainerLoad(String containerID, String seal, int pieces, int weight, DateTime shipDate) {
+        this.containerID = containerID;
+        this.seal = seal;
+        this.pieces = pieces;
+        this.weight = weight;
+        this.shipDate = shipDate;
+    }
+
     public String getContainer() {
         return containerID;
     }

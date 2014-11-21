@@ -15,9 +15,7 @@ import javax.validation.constraints.Size;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class PhoneEntry {
 
-    private String id;
-
-    /*
+     /*
         Enum later?  Intention is that this field will have values such as
         main, mobile, fax, office, home, etc.
      */
@@ -39,6 +37,7 @@ public class PhoneEntry {
     }
 
 
+
     public String getType() {
         return type;
     }
@@ -55,9 +54,6 @@ public class PhoneEntry {
         this.number = number;
     }
 
-    public String getId() {
-        return id;
-    }
 
     @Override
     public String toString() {
@@ -71,7 +67,6 @@ public class PhoneEntry {
 
         PhoneEntry that = (PhoneEntry) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (!number.equals(that.number)) return false;
         if (!type.equals(that.type)) return false;
 

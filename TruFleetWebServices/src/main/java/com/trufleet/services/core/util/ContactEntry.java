@@ -1,6 +1,7 @@
 package com.trufleet.services.core.util;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.validation.constraints.NotNull;
@@ -25,8 +26,14 @@ public class ContactEntry {
     @NotNull
     private String address;
 
+    /*
+        Needs to be JSON tree of format
+        { entries:
+            type: number
+            type: number}
+     */
     @JsonProperty("phone")
-    private List<PhoneEntry> phoneEntries = new ArrayList<>();
+    private String phoneEntries;
 
     @JsonProperty
     private String notes;
@@ -34,6 +41,14 @@ public class ContactEntry {
     public ContactEntry(@JsonProperty String name, @JsonProperty String address) {
         this.name = name;
         this.address = address;
+    }
+
+    public ContactEntry(String notes, String id, String name, String address, String phoneEntries) {
+        this.notes = notes;
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phoneEntries = phoneEntries;
     }
 
     public String getNotes() {
@@ -60,18 +75,12 @@ public class ContactEntry {
         this.address = address;
     }
 
-    public List<PhoneEntry> getPhoneEntries() {
+    public String getPhoneEntries() {
         return phoneEntries;
     }
 
-    public void addPhoneEntry(PhoneEntry entry) {
-        phoneEntries.add(entry);
+    public void setPhoneEntries(String entries) {
+        phoneEntries = entries;
     }
-
-    public void removePhoneEntry(PhoneEntry entry) {
-        phoneEntries.remove(entry);
-    }
-
-
 
 }

@@ -1,5 +1,6 @@
 package com.trufleet.services.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.trufleet.services.core.util.ContactEntry;
 import org.joda.time.DateTime;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
  * Created by Richard on 11/12/2014.
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class IMTOrder {
 
     //In milliseconds from epoch
@@ -26,7 +28,7 @@ public class IMTOrder {
     //ID given by Client
     private String externalID;
 
-    private String container;
+    private String containerid;
 
     //Rail to become own object later?
     private String railLine;
@@ -40,7 +42,7 @@ public class IMTOrder {
     private DateTime deliveryWindowClose;
 
     public IMTOrder(String containerid, String orderType) {
-        this.container = containerid;
+        this.containerid = containerid;
         this.orderType = orderType;
         this.receiptTimestamp = System.currentTimeMillis();
     }
@@ -73,12 +75,12 @@ public class IMTOrder {
         this.externalID = externalID;
     }
 
-    public String getContainer() {
-        return container;
+    public String getContainerid() {
+        return containerid;
     }
 
-    public void setContainer(String container) {
-        this.container = container;
+    public void setContainerid(String containerid) {
+        this.containerid = containerid;
     }
 
     public String getRailLine() {
