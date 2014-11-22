@@ -83,4 +83,7 @@ public class ContactEntry {
         phoneEntries = entries;
     }
 
+    public String getId() {
+        return id;
+    }
 }

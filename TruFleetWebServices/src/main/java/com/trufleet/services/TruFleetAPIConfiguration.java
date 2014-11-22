@@ -22,6 +22,14 @@ public class TruFleetAPIConfiguration extends Configuration {
     @JsonProperty
     private DataSourceFactory tenantDatabase = new DataSourceFactory();
 
+    /*
+      @NotNull
+      @JsonProperty
+      private String apiVersion
+
+      public String getApiVersion(){return apiVersion;}
+     */
+
     public DataSourceFactory getAdminDatabaseFactory() { return adminDatabase; }
 
     public DataSourceFactory getTenantDatabaseFactory() { return adminDatabase; }

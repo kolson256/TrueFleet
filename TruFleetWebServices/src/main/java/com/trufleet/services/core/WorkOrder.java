@@ -18,11 +18,17 @@ public class WorkOrder {
     private String status;
 
     @JsonProperty("driver")
-    private DriverUser assignedDriver;
+    private String driverId;
 
     @JsonCreator
     public WorkOrder(@JsonProperty("orderid") String internalOrderId){
         this.internalOrderId = internalOrderId;
+    }
+
+    public WorkOrder(String internalOrderId, String status, String driverId) {
+        this.internalOrderId = internalOrderId;
+        this.status = status;
+        this.driverId = driverId;
     }
 
     public String getInternalOrderId() {
@@ -37,11 +43,11 @@ public class WorkOrder {
         this.status = status;
     }
 
-    public DriverUser getAssignedDriver() {
-        return assignedDriver;
+    public String getAssignedDriver() {
+        return driverId;
     }
 
     public void setAssignedDriver(DriverUser assignedDriver) {
-        this.assignedDriver = assignedDriver;
+        this.driverId = driverId;
     }
 }
