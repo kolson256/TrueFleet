@@ -12,13 +12,15 @@ import java.sql.SQLException;
 /**
  * Created by Kyle Olson on 11/3/2014.
  */
-//public class LoadMapper implements ResultSetMapper<ContainerLoad> {
-//
-//    JodaDateTimeMapper map = new JodaDateTimeMapper();
-//
-//    public ContainerLoad map(int index, ResultSet r, StatementContext ctx) throws SQLException
-//      {
-//        return new ContainerLoad(r.getString("containerid"), r.getString("seal"),
-//                r.getInt("pieces"), r.getInt("weight"), r.("shipdate"));
-//      }
-//}
+public class LoadMapper implements ResultSetMapper<ContainerLoad> {
+
+    public ContainerLoad map(int index, ResultSet r, StatementContext ctx) throws SQLException
+      {
+        return new ContainerLoad(
+                r.getString("containerid"),
+                r.getString("seal"),
+                r.getInt("pieces"),
+                r.getInt("weight"),
+                r.getString("shipdate"));
+      }
+}

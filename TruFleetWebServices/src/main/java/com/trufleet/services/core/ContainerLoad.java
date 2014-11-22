@@ -2,7 +2,6 @@ package com.trufleet.services.core;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.joda.time.DateTime;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -22,8 +21,8 @@ public class ContainerLoad {
     private int pieces;
     private int weight;
 
-
-    private DateTime shipDate;
+    //TODO Change Datatype later.
+    private String shipDate;
 
     @JsonCreator
     public ContainerLoad(@JsonProperty("containerid")String containerID ,@JsonProperty("seal") String seal) {
@@ -31,7 +30,7 @@ public class ContainerLoad {
         this.seal = seal;
     }
 
-    public ContainerLoad(String containerID, String seal, int pieces, int weight, DateTime shipDate) {
+    public ContainerLoad(String containerID, String seal, int pieces, int weight, String shipDate) {
         this.containerID = containerID;
         this.seal = seal;
         this.pieces = pieces;
@@ -47,11 +46,11 @@ public class ContainerLoad {
         return seal;
     }
 
-    public DateTime getShipDate() {
+    public String getShipDate() {
         return shipDate;
     }
 
-    public void setShipDate(DateTime shipDate) {
+    public void setShipDate(String shipDate) {
         this.shipDate = shipDate;
     }
 

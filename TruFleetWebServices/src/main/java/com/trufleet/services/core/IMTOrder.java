@@ -2,8 +2,6 @@ package com.trufleet.services.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.trufleet.services.core.util.ContactEntry;
-import org.joda.time.DateTime;
 
 import javax.validation.constraints.NotNull;
 
@@ -33,18 +31,32 @@ public class IMTOrder {
     //Rail to become own object later?
     private String railLine;
 
+    //TODO: Change Data type later.
     //Change to URI to contact resources?
-    private ContactEntry pickupContact;
-    private ContactEntry dropoffContact;
+    private String pickupContact;
+    private String dropoffContact;
 
-    //
-    private DateTime deliveryWindowOpen;
-    private DateTime deliveryWindowClose;
+    //TODO: Change Data type later.
+    private String deliveryWindowOpen;
+    private String deliveryWindowClose;
 
     public IMTOrder(String containerid, String orderType) {
         this.containerid = containerid;
         this.orderType = orderType;
         this.receiptTimestamp = System.currentTimeMillis();
+    }
+
+    public IMTOrder(long receiptTimestamp, String orderType, String internalID, String externalID, String containerid, String railLine, String pickupContact, String dropoffContact, String deliveryWindowOpen, String deliveryWindowClose) {
+        this.receiptTimestamp = receiptTimestamp;
+        this.orderType = orderType;
+        this.internalID = internalID;
+        this.externalID = externalID;
+        this.containerid = containerid;
+        this.railLine = railLine;
+        this.pickupContact = pickupContact;
+        this.dropoffContact = dropoffContact;
+        this.deliveryWindowOpen = deliveryWindowOpen;
+        this.deliveryWindowClose = deliveryWindowClose;
     }
 
     public long getReceiptTimestamp() {
@@ -91,35 +103,35 @@ public class IMTOrder {
         this.railLine = railLine;
     }
 
-    public ContactEntry getPickupContact() {
+    public String getPickupContact() {
         return pickupContact;
     }
 
-    public void setPickupContact(ContactEntry pickupContact) {
+    public void setPickupContact(String pickupContact) {
         this.pickupContact = pickupContact;
     }
 
-    public ContactEntry getDropoffContact() {
+    public String getDropoffContact() {
         return dropoffContact;
     }
 
-    public void setDropoffContact(ContactEntry dropoffContact) {
+    public void setDropoffContact(String dropoffContact) {
         this.dropoffContact = dropoffContact;
     }
 
-    public DateTime getDeliveryWindowOpen() {
+    public String getDeliveryWindowOpen() {
         return deliveryWindowOpen;
     }
 
-    public void setDeliveryWindowOpen(DateTime deliveryWindowOpen) {
+    public void setDeliveryWindowOpen(String deliveryWindowOpen) {
         this.deliveryWindowOpen = deliveryWindowOpen;
     }
 
-    public DateTime getDeliveryWindowClose() {
+    public String getDeliveryWindowClose() {
         return deliveryWindowClose;
     }
 
-    public void setDeliveryWindowClose(DateTime deliveryWindowClose) {
+    public void setDeliveryWindowClose(String deliveryWindowClose) {
         this.deliveryWindowClose = deliveryWindowClose;
     }
 }
