@@ -41,6 +41,10 @@
             android:name="app.truefleet.com.truefleet.Activitieis.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
+        <activity
+            android:name="app.truefleet.com.truefleet.Activitieis.OrderActivitys"
+            android:label="@string/title_activity_order" >
+        </activity>
 
         <receiver
             android:name="app.truefleet.com.truefleet.Tasks.GcmBroadcastReceiver"
@@ -56,10 +60,6 @@
 
         <service android:name="app.truefleet.com.truefleet.Tasks.GcmIntentService" />
 
-        <activity
-            android:name="app.truefleet.com.truefleet.Activitieis.OrderActivity"
-            android:label="@string/title_activity_order" >
-        </activity>
     </application>
 
 </manifest>

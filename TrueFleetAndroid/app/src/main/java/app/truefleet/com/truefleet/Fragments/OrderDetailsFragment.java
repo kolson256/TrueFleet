@@ -13,15 +13,19 @@ import app.truefleet.com.truefleet.R;
 /**
  * Created by Chris Lacy on 11/21/2014.
  */
-public class MainPanelFragment extends Fragment {
+public class OrderDetailsFragment extends Fragment {
     private final String LOG_TAG = MainPanelFragment.class.getSimpleName();
 
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_panel, container, false);
-        System.out.println("IN MAIN PANEL");
+
+        View view = inflater.inflate(R.layout.fragment_order_detail, container, false);
+
         return view;
     }
     public void updateOrderView(int position) {
         Log.i(LOG_TAG, "Main panel fragment received update order from item selected");
     }
 }
+

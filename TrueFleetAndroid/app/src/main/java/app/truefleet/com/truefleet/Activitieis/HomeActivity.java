@@ -155,7 +155,7 @@ public class HomeActivity extends Activity {
          loginManager.logout();
     }
     public void orders(View view) {
-        Intent i = new Intent(context, OrderActivity.class);
+        Intent i = new Intent(context, OrderActivitys.class);
         startActivity(i);
     }
 
