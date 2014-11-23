@@ -1,14 +1,18 @@
 package app.truefleet.com.truefleet.Activitieis;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import app.truefleet.com.truefleet.Fragments.DeliveryFragment;
 import app.truefleet.com.truefleet.Fragments.OrderDetailsFragment;
@@ -28,19 +32,23 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_order);
-    orderFragment = new OrderDetailsFragment();
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        orderFragment = new OrderDetailsFragment();
     deliveryFragment = new DeliveryFragment();
     pickupFragment = new PickupFragment();
     sidePanelFragment = new SidePanelFragment();
+
+        getFragmentManager().beginTransaction().add(R.id.main_panel, orderFragment).commit();
+        getFragmentManager().beginTransaction().add(R.id.side_panel, sidePanelFragment).commit();
 
         int orientation = getResources().getConfiguration().orientation;
 
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             hideSidePanel();
         }
-        getFragmentManager().beginTransaction().replace(R.id.main_panel, orderFragment).addToBackStack(null).commit();
-        getFragmentManager().beginTransaction().replace(R.id.side_panel, sidePanelFragment).addToBackStack(null).commit();
      //   if (savedInstanceState == null) {
      //       getFragmentManager().beginTransaction()
       //              .add(R.id.container, new PlaceholderFragment())
@@ -66,11 +74,20 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+     //   int id = item.getItemId();
+      //  if (id == R.id.action_settings) {
+       //     return true;
+        //}
+     //   return super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
         }
         return super.onOptionsItemSelected(item);
+
     }
 
     @Override
@@ -99,6 +116,19 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
 
         if (status.equalsIgnoreCase("ACCEPT")) {
             //TODO: Send accept to server
+        }
+    }
+    public static class PlaceholderFragment extends Fragment {
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            return rootView;
         }
     }
 

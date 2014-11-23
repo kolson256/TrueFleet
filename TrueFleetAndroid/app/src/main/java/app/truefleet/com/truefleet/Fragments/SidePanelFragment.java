@@ -45,16 +45,16 @@ public class SidePanelFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_side_panel, container, false);
-        ArrayList<String> columns = new ArrayList<>();
-        columns.add("Order details");
-        columns.add("Pickup");
-        columns.add("Delivery");
+         ArrayList<String> columns = new ArrayList<>();
+         columns.add("Order details");
+         columns.add("Pickup");
+         columns.add("Delivery");
 
-        ArrayAdapter<String> columnAdapter = new ArrayAdapter<String>
-                (getActivity(), R.layout.fragment_order_detail, R.id.side_panel_column_textview, columns);
+                 ArrayAdapter<String> columnAdapter = new ArrayAdapter<String>
+                 (getActivity(), R.layout.side_panel_column, R.id.side_panel_column_textview, columns);
 
-        ListView lvColumn = (ListView) view.findViewById(R.id.listview_columns);
-        lvColumn.setAdapter(columnAdapter);
+                 ListView lvColumn = (ListView) view.findViewById(R.id.listview_columns);
+         lvColumn.setAdapter(columnAdapter);
 
         lvColumn.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
             @Override

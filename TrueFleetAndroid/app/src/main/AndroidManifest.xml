@@ -44,6 +44,9 @@
         <activity
             android:name="app.truefleet.com.truefleet.Activitieis.OrderActivitys"
             android:label="@string/title_activity_order" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.truefleet.com.truefleet.Activitieis.HomeActivity" />
         </activity>
 
         <receiver
