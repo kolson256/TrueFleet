@@ -40,6 +40,7 @@ public class LoginResource extends BaseResource {
 
         //  Extract the user name and password from the request
         String username;
+
         String password;
         try {
             JSONObject request = new JSONObject(body);

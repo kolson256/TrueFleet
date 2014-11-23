@@ -13,12 +13,14 @@ public class AppUser {
     private String userName;
     private String firstName;
     private String lastName;
+    private String registrationId;
 
-    public AppUser(long id, String userName, String firstName, String lastName) {
+    public AppUser(long id, String userName, String firstName, String lastName, String registrationId) {
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.registrationId = registrationId;
     }
 
     @JsonProperty
@@ -33,6 +35,8 @@ public class AppUser {
     @JsonProperty
     public String getLastName() { return lastName; }
 
+    @JsonProperty
+    public String getRegistrationId() { return registrationId;}
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

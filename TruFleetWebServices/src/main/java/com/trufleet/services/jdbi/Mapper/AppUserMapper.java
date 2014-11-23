@@ -13,6 +13,6 @@ import java.sql.SQLException;
 public class AppUserMapper implements ResultSetMapper<AppUser> {
     public AppUser map(int index, ResultSet r, StatementContext ctx) throws SQLException
     {
-        return new AppUser(r.getLong("id"), r.getString("username"), r.getString("firstname"), r.getString("lastname"));
+        return new AppUser(r.getLong("id"), r.getString("username"), r.getString("firstname"), r.getString("lastname"), r.getString("registrationid"));
     }
 }

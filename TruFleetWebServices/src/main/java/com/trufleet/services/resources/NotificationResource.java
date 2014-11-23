@@ -2,6 +2,10 @@ package com.trufleet.services.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trufleet.services.TruFleetAPIConfiguration;
+import com.trufleet.services.core.AppUser;
+import com.trufleet.services.core.UserLogin;
+import com.trufleet.services.jdbi.AppUserDAO;
+import com.trufleet.services.jdbi.UserLoginDAO;
 import io.dropwizard.setup.Environment;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,12 +42,46 @@ public class NotificationResource extends BaseResource {
 
     @POST
     public String notification(String body) throws ClassNotFoundException, JSONException, MalformedURLException {
+        JSONObject response = new JSONObject();
         JSONObject returnObj = new JSONObject();
-        System.out.println("in notification");
+
+        String tenantId;
+        String username;
+        UserLoginDAO userLoginDAO = getAdminDb().onDemand(UserLoginDAO.class);
+
+        try {
+            JSONObject request = new JSONObject(body);
+            username = request.getString("username");
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            response.put("errorMessage", e.getMessage());
+            return response.toString();
+        }
+        //  Query for the username, and check that the credentials are valid
+        UserLogin userLogin = userLoginDAO.findUserLoginbyUserName(username);
+        if (userLogin == null) {
+            response.put("errorMessage", "Username Not Found");
+            return response.toString();
+        }
+        tenantId = userLogin.getTenantId();
+        try {
+            buildTenantDb(tenantId);
+        } catch (Exception e) {
+            response.put("errorMessage", e.getMessage());
+            return response.toString();
+        }
+        AppUserDAO appUserDAO = getTenantDb().onDemand(AppUserDAO.class);
+
+        AppUser appUser = appUserDAO.findAppUserbyUserName(username);
 
         try
         {
             URL url = new URL(GCM_URL);
+
+
+
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -57,7 +95,9 @@ public class NotificationResource extends BaseResource {
             Content content = new Content();
 
             //this would be unique to a user that could change for the user
-            content.addRegId("APA91bH2rBtzedZHSNASarU4U-kZPA8RVY9MV22DRqLjBH0PaHkzUVn48aYNyALKXNHPZ_5lBzV27SX_yEnoLl5Gp1aFvAqPjtFN1wVV6NY3TEqW9NtqFMBBrY_ncPyFkPodp76QvdeCXV5fZOQexDBEgSeNccfC8jbYDGszUPTkQjbXAiWxfaA");
+
+           // content.addRegId("APA91bH2rBtzedZHSNASarU4U-kZPA8RVY9MV22DRqLjBH0PaHkzUVn48aYNyALKXNHPZ_5lBzV27SX_yEnoLl5Gp1aFvAqPjtFN1wVV6NY3TEqW9NtqFMBBrY_ncPyFkPodp76QvdeCXV5fZOQexDBEgSeNccfC8jbYDGszUPTkQjbXAiWxfaA");
+            content.addRegId(appUser.getRegistrationId());
             content.addData("title", "orderUpdate");
             content.addData("user","username");
 

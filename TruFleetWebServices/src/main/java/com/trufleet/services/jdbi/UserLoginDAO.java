@@ -38,5 +38,6 @@ public interface UserLoginDAO extends Transactional<AppUserDAO> {
     void insert(@Bind("name") String name, @Bind("pw") String pw, @Bind("orgid") String orgid);
 
 
+
 }
 

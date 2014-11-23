@@ -33,6 +33,7 @@ public class GcmRegistrationResource extends BaseResource {
         JSONObject response = new JSONObject();
         UserLoginDAO userLoginDAO = getAdminDb().onDemand(UserLoginDAO.class);
 
+
         String username;
         long userId;
         String tenantId;
@@ -66,7 +67,7 @@ public class GcmRegistrationResource extends BaseResource {
 
         AuthTokenDAO authTokenDAO = getTenantDb().onDemand(AuthTokenDAO.class);
         AuthToken authTokenObj = authTokenDAO.findAuthToken(authToken);
-
+        AppUserDAO appUserDAO = getTenantDb().onDemand(AppUserDAO.class);
         if (authTokenObj == null) {
             response.put("errorMessage", "AuthToken Not Found");
             return response.toString();
@@ -78,7 +79,7 @@ public class GcmRegistrationResource extends BaseResource {
                 response.put("errorMessage", "AuthToken expired");
             }
 
-            //TODO: Add to database when exists
+            appUserDAO.updateRegistrationId(username, registrationId);
             response.put("message", "success");
         }
         return response.toString();

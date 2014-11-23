@@ -15,14 +15,19 @@ import org.skife.jdbi.v2.sqlobject.mixins.Transactional;
 public interface AppUserDAO extends Transactional<AppUserDAO> {
 
     //find User by username
-    @SqlQuery("select id, username, firstname, lastname from appuser where username = :user")
+    @SqlQuery("select id, username, firstname, lastname, registrationid from appuser where username = :user")
     public AppUser findAppUserbyUserName(@Bind("user") String username);
 
     //find User by Id
-    @SqlQuery("select id, username, firstname, lastname from appuser where id = :id")
+    @SqlQuery("select id, username, firstname, lastname, registrationid from appuser where id = :id")
     public AppUser findAppUserbyId(@Bind("id") long id);
 
-    @SqlUpdate("insert into appuser (username, firstname, lastname) values (:username, :firstName, :lastName)")
+    @SqlUpdate("insert into appuser (username, firstname, lastname, registrationid) values (:username, :firstName, :lastName, )")
     void insert(@Bind("username") String username, @Bind("firstName") String firstName, @Bind("lastName") String lastName);
+
+    @SqlUpdate("update appuser set " +
+            "registrationid = :registrationId " +
+            "where username = :username")
+    public int updateRegistrationId(@Bind("username") String username, @Bind("registrationId") String registrationId);
 
 }
