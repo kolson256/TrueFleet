@@ -38,7 +38,7 @@ public class LoginActivity extends Activity {
 
         cd = new ConnectionDetector(getApplicationContext());
 
-        username = (EditText)findViewById(R.id.textUsername);
+        username = (EditText)findViewById(R.id.textRailLine);
         password = (EditText)findViewById(R.id.textPassword);
         attempts = (TextView)findViewById(R.id.textView5);
         attempts.setText(Integer.toString(counter));

@@ -34,4 +34,6 @@ public class User {
     public String getauthenticationToken() {
         return authenticationToken;
     }
+
+
 }

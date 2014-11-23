@@ -48,6 +48,4 @@ public class DriverUser  {
         this.applicationID = applicationID;
     }
 
-
-
 }

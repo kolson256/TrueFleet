@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
  * Created by Chris Lacy on 11/19/2014.
  */
 public class IMTOrder {
+    private static volatile IMTOrder instance = null;
+
 
     //In milliseconds from epoch
     @NotNull
@@ -35,11 +37,23 @@ public class IMTOrder {
     private DateTime deliveryWindowOpen;
     private DateTime deliveryWindowClose;
 
-    public IMTOrder(String containerid, String orderType) {
-        this.container = containerid;
-        this.orderType = orderType;
-        this.receiptTimestamp = System.currentTimeMillis();
+    private String orderStatus;
+
+    public static IMTOrder getInstance() {
+        if (instance == null) {
+            synchronized (IMTOrder.class) {
+                if (instance == null) {
+                    instance = new IMTOrder();
+                }
+            }
+        }
+        return instance;
     }
+ //   public IMTOrder(String containerid, String orderType) {
+  //      this.container = containerid;
+   //     this.orderType = orderType;
+    //    this.receiptTimestamp = System.currentTimeMillis();
+    //}
 
     public long getReceiptTimestamp() {
         return receiptTimestamp;
@@ -115,5 +129,13 @@ public class IMTOrder {
 
     public void setDeliveryWindowClose(DateTime deliveryWindowClose) {
         this.deliveryWindowClose = deliveryWindowClose;
+    }
+    public String getOrderStatus() { return this.orderStatus; }
+
+    @Override public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(receiptTimestamp + " - " + orderType);
+
+        return result.toString();
     }
 }

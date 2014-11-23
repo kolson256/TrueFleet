@@ -51,7 +51,7 @@ public class SidePanelFragment extends Fragment {
         columns.add("Delivery");
 
         ArrayAdapter<String> columnAdapter = new ArrayAdapter<String>
-                (getActivity(), R.layout.side_panel_column, R.id.side_panel_column_textview, columns);
+                (getActivity(), R.layout.fragment_order_detail, R.id.side_panel_column_textview, columns);
 
         ListView lvColumn = (ListView) view.findViewById(R.id.listview_columns);
         lvColumn.setAdapter(columnAdapter);

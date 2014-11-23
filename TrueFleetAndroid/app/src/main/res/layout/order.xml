@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-    android:id="@+id/textTrailerLocation"
+    android:id="@+id/railLine"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentLeft="true"
@@ -24,21 +24,21 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textUsername"
+        android:id="@+id/textRailLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textTrailerLocation"
+        android:layout_alignBottom="@+id/railLine"
         android:text="Trailer Location: "
         android:layout_marginLeft="32dp"
-        android:layout_toRightOf="@+id/textTrailerLocation"
+        android:layout_toRightOf="@+id/railLine"
         android:ems="20" />
 
     <TextView
-        android:id="@+id/textTrailerNumberTitle"
+        android:id="@+id/pickupContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textTrailerLocation"
-        android:layout_below="@+id/textTrailerLocation"
+        android:layout_alignLeft="@+id/railLine"
+        android:layout_below="@+id/railLine"
         android:layout_marginTop="38dp"
         android:text="Trailer Number: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -47,18 +47,18 @@
         android:id="@+id/textTrailerNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textTrailerNumberTitle"
+        android:layout_alignBottom="@+id/pickupContact"
         android:text="Trailer Number: "
         android:layout_marginLeft="32dp"
-        android:layout_toRightOf="@+id/textTrailerLocation"
+        android:layout_toRightOf="@+id/railLine"
         android:ems="20" />
 
     <TextView
         android:id="@+id/releaseNumberTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textTrailerLocation"
-        android:layout_below="@+id/textTrailerNumberTitle"
+        android:layout_alignLeft="@+id/railLine"
+        android:layout_below="@+id/pickupContact"
         android:layout_marginTop="38dp"
         android:text="Release Number: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -70,7 +70,7 @@
         android:layout_alignBottom="@+id/releaseNumberTitle"
         android:text="Release Number "
         android:layout_marginLeft="32dp"
-        android:layout_toRightOf="@+id/textTrailerLocation"
+        android:layout_toRightOf="@+id/railLine"
         android:ems="20" />
     <TextView
         android:id="@+id/deliverypickup"
@@ -83,7 +83,7 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/orderTypeTitle"
+        android:id="@+id/deliveryWindow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="61dp"
@@ -96,18 +96,18 @@
         android:id="@+id/orderType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/orderTypeTitle"
+        android:layout_alignBottom="@+id/deliveryWindow"
         android:text="Deliver/Pickup"
         android:layout_marginLeft="32dp"
-        android:layout_toRightOf="@+id/textTrailerLocation"
+        android:layout_toRightOf="@+id/railLine"
         android:ems="20" />
 
     <TextView
         android:id="@+id/pickupNumbersTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textTrailerLocation"
-        android:layout_below="@+id/orderTypeTitle"
+        android:layout_alignLeft="@+id/railLine"
+        android:layout_below="@+id/deliveryWindow"
         android:layout_marginTop="38dp"
         android:text="Pickup Numbers: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -136,7 +136,7 @@
         android:id="@+id/specialInstructions"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textTrailerLocation"
+        android:layout_alignLeft="@+id/railLine"
         android:layout_below="@+id/specialInstructionsTitle"
         android:layout_marginTop="38dp"
         android:text="No special instructions."

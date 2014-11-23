@@ -6,24 +6,21 @@
     android:animateLayoutChanges="true"
     tools:context="app.truefleet.com.truefleet.Activitieis.OrderActivitys">
 
+    <FrameLayout
 
-
-    <fragment
-
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="match_parent"
         android:id="@+id/side_panel"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        class="app.truefleet.com.truefleet.Fragments.SidePanelFragment" />
+        android:layout_alignParentTop="true" />
 
-    <fragment
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main_panel"
-        android:layout_toRightOf="@+id/main_panel"
-        android:layout_alignParentLeft="true"
+
         android:layout_alignParentTop="true"
-        class="app.truefleet.com.truefleet.Fragments.MainPanelFragment" />
+        android:layout_toRightOf="@+id/side_panel"
+        android:layout_toEndOf="@+id/side_panel" />
 
 </RelativeLayout>

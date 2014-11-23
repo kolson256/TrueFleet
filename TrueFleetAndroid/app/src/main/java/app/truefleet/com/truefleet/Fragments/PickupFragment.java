@@ -15,7 +15,7 @@ public class PickupFragment extends Fragment {
     private final String LOG_TAG = PickupFragment.class.getSimpleName();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_delivery, container, false);
+        View view = inflater.inflate(R.layout.fragment_pickup, container, false);
 
         return view;
     }

@@ -2,37 +2,36 @@ package app.truefleet.com.truefleet.Activitieis;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 
-import app.truefleet.com.truefleet.Models.User;
+import app.truefleet.com.truefleet.Fragments.OrderListFragment;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Resources.GooglePlayServicesCheck;
 import app.truefleet.com.truefleet.Resources.LoginManager;
 
 public class HomeActivity extends Activity {
-    private final String LOG_TAG = HomeActivity.class.getSimpleName();
+
+    private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     LoginManager loginManager;
+    OrderListFragment orderListFragment;
     GoogleCloudMessaging gcm;
     String regid;
     private final String PROJECT_NUMBER = "171359155716";
     Context context;
     Activity activity;
+    HomeFragment homeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +42,11 @@ public class HomeActivity extends Activity {
 
         gcmSetup();
 
+
         if (savedInstanceState == null) {
+
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new HomeFragment())
                     .commit();
         }
     }
@@ -182,35 +183,6 @@ public class HomeActivity extends Activity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
 
-        public PlaceholderFragment() {
-        }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            LoginManager loginManager = new LoginManager(getActivity().getApplicationContext());
-            Intent intent = getActivity().getIntent();
-
-            if (loginManager.checkLogin())
-                getActivity().finish();
-
-            User user  = loginManager.getUser();
-            View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-            TextView tvWelcome = (TextView) rootView.findViewById(R.id.welcome_text);
-            LoginManager lm = new LoginManager(getActivity().getApplicationContext());
-            tvWelcome.setText("Welcome, " + user.getUsername() + "!" + lm.getRegistrationId());
-
-    /*
-            if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-                String welcome = intent.getStringExtra(Intent.EXTRA_TEXT);
-                System.out.println(welcome);
-                TextView tvWelcome = (TextView) rootView.findViewById(R.id.welcome_text);
-                tvWelcome.setText(welcome);
-            }*/
-
-            return rootView;
-        }
-    }
 }
