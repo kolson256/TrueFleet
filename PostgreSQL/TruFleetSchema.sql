@@ -250,16 +250,6 @@ ALTER TABLE ONLY approle ALTER COLUMN id SET DEFAULT nextval('approle_id_seq'::r
 ALTER TABLE ONLY appuser ALTER COLUMN id SET DEFAULT nextval('appuser_id_seq'::regclass);
 
 
---
--- TOC entry 2006 (class 0 OID 41682)
--- Dependencies: 170
--- Data for Name: approle; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY approle (id, name) FROM stdin;
-1	test
-\.
-
 
 --
 -- TOC entry 2028 (class 0 OID 0)
@@ -270,15 +260,6 @@ COPY approle (id, name) FROM stdin;
 SELECT pg_catalog.setval('approle_id_seq', 1, false);
 
 
---
--- TOC entry 2008 (class 0 OID 41690)
--- Dependencies: 172
--- Data for Name: appuser; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY appuser (id, firstname, lastname, username, registrationid) FROM stdin;
-1	test	test	test	APA91bHdmTV0NcCkIgFEwcyGIuPXadNKxPeu0P1tyg6wwqT6QeVwXnXxx3OmlEPGQ2y-ivCo4zEwNHuoTQzJ_dD7w8MfJr4ujqtP8ThnCtj_bW_kYL6Xv635LHdUsEWrFJUXjUOE-mjSLjWvD0YVQZCz-n3x01Aj_sn71_vPDmMxmhtjt_8MGkc
-\.
 
 
 --
@@ -288,82 +269,6 @@ COPY appuser (id, firstname, lastname, username, registrationid) FROM stdin;
 --
 
 SELECT pg_catalog.setval('appuser_id_seq', 1, false);
-
-
---
--- TOC entry 2010 (class 0 OID 41698)
--- Dependencies: 174
--- Data for Name: appuserrole; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY appuserrole (appuserid, approleid) FROM stdin;
-1	1
-\.
-
-
---
--- TOC entry 2011 (class 0 OID 41701)
--- Dependencies: 175
--- Data for Name: authtoken; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY authtoken (appuserid, token, expirationdate) FROM stdin;
-1	1	2015-12-31 00:00:00-06
-\.
-
-
---
--- TOC entry 2012 (class 0 OID 41707)
--- Dependencies: 176
--- Data for Name: contactentry; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY contactentry (id, name, address, notes) FROM stdin;
-a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a14	test	address	notes
-\.
-
-
---
--- TOC entry 2013 (class 0 OID 41713)
--- Dependencies: 177
--- Data for Name: containerload; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY containerload (containerid, seal, pieces, weight, shipdate) FROM stdin;
-a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	seal	5	50	10/20/2014
-\.
-
-
---
--- TOC entry 2014 (class 0 OID 41719)
--- Dependencies: 178
--- Data for Name: imtorder; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY imtorder (internalid, externalid, containerid, receipttime, ordertype, railline, pickupcontact, dropoffcontact, deliverywindowopen, deliverywindowclose) FROM stdin;
-a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a10	asdf	a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11	2135	type	rail	pickup	dropoff	10/20/2014	10/21/2014
-\.
-
-
---
--- TOC entry 2015 (class 0 OID 41725)
--- Dependencies: 179
--- Data for Name: intermodalcontainer; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY intermodalcontainer (id) FROM stdin;
-1
-\.
-
-
---
--- TOC entry 2016 (class 0 OID 41731)
--- Dependencies: 180
--- Data for Name: phoneentry; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY phoneentry (type, number) FROM stdin;
-\.
 
 
 --
