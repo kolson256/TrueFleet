@@ -11,11 +11,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skife.jdbi.v2.DBI;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 
 import java.io.*;
@@ -40,15 +39,24 @@ public class NotificationResource extends BaseResource {
         super(adminDBI, configuration, environment);
     }
 
+    /*
+        JSON Body requires an username of the person to be notified.
+        and the internalOrderID of the order that user was assigned.
+     */
     @POST
-    public String notification(String body) throws ClassNotFoundException, JSONException, MalformedURLException {
+    public Response notification( @HeaderParam("authToken") String authToken,
+                                  @HeaderParam("tenantId") String tenantId,
+                                  String body) throws ClassNotFoundException, JSONException, MalformedURLException {
+
         JSONObject response = new JSONObject();
         JSONObject returnObj = new JSONObject();
 
-        String tenantId;
+        //UserName of person to be notified.  not of the user initiating the notification.
         String username;
-        UserLoginDAO userLoginDAO = getAdminDb().onDemand(UserLoginDAO.class);
+
+        //UserLoginDAO userLoginDAO = getAdminDb().onDemand(UserLoginDAO.class);
         String internalId;
+
         try {
             JSONObject request = new JSONObject(body);
             username = request.getString("username");
@@ -57,21 +65,25 @@ public class NotificationResource extends BaseResource {
         } catch (JSONException e) {
             e.printStackTrace();
             response.put("errorMessage", e.getMessage());
-            return response.toString();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("JSON serialization error: " + Arrays.toString(e.getStackTrace()))
+                    .build();
         }
         //  Query for the username, and check that the credentials are valid
-        UserLogin userLogin = userLoginDAO.findUserLoginbyUserName(username);
+        /*UserLogin userLogin = userLoginDAO.findUserLoginbyUserName(username);
         if (userLogin == null) {
             response.put("errorMessage", "Username Not Found");
             return response.toString();
-        }
-        tenantId = userLogin.getTenantId();
+        }*/
+
         try {
             buildTenantDb(tenantId);
         } catch (Exception e) {
-            response.put("errorMessage", e.getMessage());
-            return response.toString();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Build tenant DB failed: " + Arrays.toString(e.getStackTrace()))
+                    .build();
         }
+
         AppUserDAO appUserDAO = getTenantDb().onDemand(AppUserDAO.class);
 
         AppUser appUser = appUserDAO.findAppUserbyUserName(username);
@@ -81,10 +93,10 @@ public class NotificationResource extends BaseResource {
             URL url = new URL(GCM_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setRequestProperty("Authorization", "key="+API_KEY);
-        conn.setDoOutput(true);
-       DataOutputStream dataOutputStream = new DataOutputStream(conn.getOutputStream());
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Authorization", "key="+API_KEY);
+            conn.setDoOutput(true);
+            DataOutputStream dataOutputStream = new DataOutputStream(conn.getOutputStream());
             ObjectMapper mapper = new ObjectMapper();
 
             Content content = new Content();
@@ -101,18 +113,20 @@ public class NotificationResource extends BaseResource {
             //Getting and displaying response for testing..
             int responseCode = conn.getResponseCode();
             if (responseCode!= 200) {
-                returnObj.put("errorMessage", "Unable to send GCM Message");
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                        .entity("GCM failed getting to Google.")
+                        .build();
             }
             else
-                returnObj.put("message", "success");
+                return Response.ok().build();
 
-            return returnObj.toString();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return returnObj.toString();
+        return Response.serverError()
+                .entity("Undetermined Error").build();
     }
 
 }
