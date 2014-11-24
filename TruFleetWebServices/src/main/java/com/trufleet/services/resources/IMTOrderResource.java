@@ -55,6 +55,17 @@ public class IMTOrderResource extends BaseResource {
     }
 
     @GET
+    @Path ("/assigned")
+    public IMTOrder getOrderByUsername() {
+
+        //returning temporary order for now..
+        IMTOrder order = new IMTOrder(1416785460, "Pickup order", "123456", "23456", "123456", "Red railline", "Joseph Rails", "Joes Shop", "10/20/2014", "10/21/2014");
+        return order;
+        //TODO: return real order, take username as argument/body to look up assigned order in DB
+    }
+
+
+    @GET
     @Path("/{internalid}")
     public Response getOrderByInternalId( @HeaderParam("authToken") String authToken,
                                           @HeaderParam("tenantId") String tenantId,

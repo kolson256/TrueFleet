@@ -32,7 +32,7 @@ public interface IMTOrderDAO extends Transactional<IMTOrderDAO>{
 
     @SqlUpdate("insert into imtorder (containerid, ordertype, receipttime) values (:containerid, :orderType, :receiptTimestamp)")
     @GetGeneratedKeys
-    public String insertOrganization(@BindBean IMTOrder order);
+    public String insertOrder(@BindBean IMTOrder order);
 
     /* Note: COALESCE will return whichever value is not null, before entering a null.
         This allows an Organization object that contains null values for some values to be used to update
@@ -48,10 +48,10 @@ public interface IMTOrderDAO extends Transactional<IMTOrderDAO>{
             "deliverywindowopen = COALESCE( :deliveryWindowOpen, deliverywindowopen) " +
             "deliverywindowclosed = COALESCE( :deliveryWindowOpen, deliverywindowclosed) " +
             "where internalid = :internalID")
-    public int updateOrganization(@BindBean IMTOrder order);
+    public int updateOrder(@BindBean IMTOrder order);
 
     @SqlUpdate("delete from imtorder * where internalid = :internalid")
-    public void removeOrganization(@BindBean IMTOrder order);
+    public void removeOrder(@BindBean IMTOrder order);
 
 
 
