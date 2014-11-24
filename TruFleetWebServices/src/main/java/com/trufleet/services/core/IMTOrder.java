@@ -20,6 +20,7 @@ public class IMTOrder {
     private String orderType;
 
     //ID for TruFleet
+    //AutoGenerate?
     private String internalID;
 
     //ID given by Client

@@ -30,9 +30,6 @@ public abstract class BaseResource {
     private final TruFleetAPIConfiguration configuration;
     private final Environment environment;
 
-    @Context
-    UriInfo uriInfo;
-
     private DBI adminDb;
     private DBI tenantDb;
     private Organization organization;
