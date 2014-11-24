@@ -1,6 +1,7 @@
 package app.truefleet.com.truefleet.Models;
 
-import org.joda.time.DateTime;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 /**
@@ -30,12 +31,12 @@ public class IMTOrder {
     private String railLine;
 
     //Change to URI to contact resources?
-    private ContactEntry pickupContact;
-    private ContactEntry dropoffContact;
+    private String pickupContact;
+    private String dropoffContact;
 
     //
-    private DateTime deliveryWindowOpen;
-    private DateTime deliveryWindowClose;
+    private String deliveryWindowOpen;
+    private String deliveryWindowClose;
 
     private String orderStatus;
 
@@ -59,6 +60,7 @@ public class IMTOrder {
         return receiptTimestamp;
     }
 
+    public void setReceiptTimestamp(long timestamp) { this.receiptTimestamp = timestamp; }
     public String getOrderType() {
         return orderType;
     }
@@ -99,42 +101,46 @@ public class IMTOrder {
         this.railLine = railLine;
     }
 
-    public ContactEntry getPickupContact() {
+    public String getPickupContact() {
         return pickupContact;
     }
 
-    public void setPickupContact(ContactEntry pickupContact) {
+    public void setPickupContact(String pickupContact) {
         this.pickupContact = pickupContact;
     }
 
-    public ContactEntry getDropoffContact() {
+    public String getDropoffContact() {
         return dropoffContact;
     }
 
-    public void setDropoffContact(ContactEntry dropoffContact) {
+    public void setDropoffContact(String dropoffContact) {
         this.dropoffContact = dropoffContact;
     }
 
-    public DateTime getDeliveryWindowOpen() {
+    public String getDeliveryWindowOpen() {
         return deliveryWindowOpen;
     }
 
-    public void setDeliveryWindowOpen(DateTime deliveryWindowOpen) {
+    public void setDeliveryWindowOpen(String deliveryWindowOpen) {
         this.deliveryWindowOpen = deliveryWindowOpen;
     }
 
-    public DateTime getDeliveryWindowClose() {
+
+    public String getDeliveryWindowClose() {
         return deliveryWindowClose;
     }
 
-    public void setDeliveryWindowClose(DateTime deliveryWindowClose) {
+    public void setDeliveryWindowClose(String deliveryWindowClose) {
         this.deliveryWindowClose = deliveryWindowClose;
     }
     public String getOrderStatus() { return this.orderStatus; }
 
     @Override public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(receiptTimestamp + " - " + orderType);
+        Date d = new Date(receiptTimestamp);
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
+
+        result.append(format.format(d) + " - " + orderType);
 
         return result.toString();
     }

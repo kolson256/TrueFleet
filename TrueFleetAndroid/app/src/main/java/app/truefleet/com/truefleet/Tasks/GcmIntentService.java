@@ -14,8 +14,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
 import app.truefleet.com.truefleet.Activitieis.HomeActivity;
+import app.truefleet.com.truefleet.Models.IMTOrder;
+import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Resources.LoginManager;
 
 /**
  * Created by Chris Lacy on 11/15/2014.
@@ -66,12 +75,65 @@ public class GcmIntentService extends IntentService {
                 // Post notification of received message.
                 sendNotification("Received: " + extras.getString("title"));
                 String user = extras.getString("user");
+                String internalId = extras.getString("internalId");
                 Log.i(TAG, "Received: " + extras.toString());
 
                 //TODO: Send request to server to get order
+               getOrders(internalId);
             }
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
+    }
+
+    public void getOrders(String internalId) {
+        String result = "";
+        LoginManager loginManager = new LoginManager(getApplicationContext());
+        User user = loginManager.getUser();
+        JSONObject obj = new JSONObject();
+        WebServiceHelper wsHelper;
+        try {
+            obj.put("username", loginManager.getUser().getUsername());
+            obj.put("tenantId", loginManager.getUser().getTenantId());
+            obj.put("internalId", internalId);
+             wsHelper = WebService.invokeWSGet("0.1/orders/assigned", obj.toString(), user);
+
+            //TODO: propegate update
+            if (wsHelper.getConnectionSuccess() && wsHelper.getConnectionSuccess()) {
+                JSONObject jo = new JSONObject(wsHelper.getBody());
+                long receiptTime = jo.getLong("receiptTimestamp");
+                String orderType = jo.getString("orderType");
+                String internalID = jo.getString("internalID");
+                String externalID = jo.getString("externalID");
+                String containerID = jo.getString("containerid");
+                String railLine = jo.getString("railLine");
+                String pickupContact = jo.getString("pickupContact");
+                String dropoffContact = jo.getString("dropoffContact");
+                String deliveryWindowOpen = jo.getString("deliveryWindowOpen");
+                String deliveryWindowClose = jo.getString("deliveryWindowClose");
+
+                IMTOrder order = IMTOrder.getInstance();
+                order.setReceiptTimestamp(receiptTime);
+                order.setOrderType(orderType);
+                order.setInternalID(internalID);
+                order.setExternalID(externalID);
+                order.setContainer(containerID);
+                order.setRailLine(railLine);
+                order.setPickupContact(pickupContact);
+                order.setDropoffContact(dropoffContact);
+                order.setDeliveryWindowOpen(deliveryWindowOpen);
+                order.setDeliveryWindowClose(deliveryWindowClose);
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+
+
+        }
     }
 
     // Put the message into a notification and post it.

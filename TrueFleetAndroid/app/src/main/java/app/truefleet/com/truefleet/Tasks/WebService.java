@@ -2,7 +2,11 @@ package app.truefleet.com.truefleet.Tasks;
 
 import android.util.Log;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -14,13 +18,15 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
+import app.truefleet.com.truefleet.Models.User;
+
 public class WebService {
     private static final String LOG_TAG = WebService.class.getSimpleName();
     private static final String genymotion = "http://10.0.3.2:8080/";
     private static final String androidEmulator = "http://10.0.2.2:8080/";
     private static final String SERVER = "http://140.192.30.205:8080/";
 
-    private static final String URL = SERVER;
+    private static final String URL = genymotion;
 
     public static WebServiceHelper invokeWSPost(String serviceName, String body) throws MalformedURLException, UnsupportedEncodingException {
 
@@ -30,13 +36,54 @@ public class WebService {
 
         return invoke(serviceName, body, post);
     }
+    public static WebServiceHelper invokeWSGet(String serviceName, String body, User user) throws MalformedURLException, UnsupportedEncodingException {
 
-    public static WebServiceHelper invokeWSAuthorizationPost(String serviceName, String body, String token) throws MalformedURLException, UnsupportedEncodingException {
+        HttpClient client = new DefaultHttpClient();
+        HttpGet get = new HttpGet(URL + serviceName);
+
+        get.setHeader("Content-type", "application/json");
+        get.setHeader("authToken", user.getauthenticationToken());
+        get.setHeader("tenantId", user.getTenantId());
+        HttpResponse response;
+        String result = null;
+
+        try {
+            response = client.execute(get);
+            HttpEntity entity = response.getEntity();
+
+            if (entity != null) {
+                result= EntityUtils.toString(response.getEntity());
+                Log.i("LOG_TAG", "Received back from GET: " + result);
+                if (checkResponse(response)) {
+                    return new WebServiceHelper(true, result, true);
+                }
+                return new WebServiceHelper(true, result, false);
+
+                }
+
+            } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new WebServiceHelper(false, "", false);
+    }
+    public static boolean checkResponse (HttpResponse response) {
+        int code = response.getStatusLine().getStatusCode();
+
+        if (code!=200) {
+            return false;
+        }
+        return true;
+    }
+    public static WebServiceHelper invokeWSAuthorizationPost(String serviceName, String body, String token, String tenantId) throws MalformedURLException, UnsupportedEncodingException {
 
         HttpPost post = new HttpPost(URL + serviceName);
         post.setHeader("Content-type", "application/json");
         post.setHeader("Accept", "application/json");
         post.setHeader("authToken", token);
+        post.setHeader("tenantId", tenantId);
 
         return invoke(serviceName, body, post);
     }

@@ -47,7 +47,7 @@ public class RegisterServerTask extends AsyncTask<String, Void, String[]> {
             toRegister.put("registrationId", registrationId);
             toRegister.put("username", username);
 
-            WebServiceHelper wsResult = WebService.invokeWSAuthorizationPost("GcmRegistration", toRegister.toString(), authToken);
+            WebServiceHelper wsResult = WebService.invokeWSAuthorizationPost("GcmRegistration", toRegister.toString(), authToken,loginManager.getUser().getTenantId());
 
             if (wsResult.getConnectionSuccess()) {
 
