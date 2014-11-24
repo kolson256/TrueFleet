@@ -49,7 +49,7 @@ public class IMTOrderResource extends BaseResource {
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new StatusJson("errorMessage",
-                            new String("Tenant DB connection failed: " +e.getMessage()))).build();
+                            "Tenant DB connection failed: " + e.getMessage())).build();
         }
         return Response.ok(orderDAO.findAllOrders()).build();
     }
@@ -59,8 +59,7 @@ public class IMTOrderResource extends BaseResource {
     public IMTOrder getOrderByUsername() {
 
         //returning temporary order for now..
-        IMTOrder order = new IMTOrder(1416785460, "Pickup order", "123456", "23456", "123456", "Red railline", "Joseph Rails", "Joes Shop", "10/20/2014", "10/21/2014");
-        return order;
+        return new IMTOrder(1416785460, "Pickup order", "123456", "23456", "123456", "Red railline", "Joseph Rails", "Joes Shop", "10/20/2014", "10/21/2014");
         //TODO: return real order, take username as argument/body to look up assigned order in DB
     }
 
@@ -75,7 +74,7 @@ public class IMTOrderResource extends BaseResource {
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new StatusJson("errorMessage",
-                            new String("Tenant DB connection failed: " +e.getMessage()))).build();
+                            "Tenant DB connection failed: " + e.getMessage())).build();
         }
 
         return Response.ok(orderDAO.findOrderByInternalId(id)).build();
@@ -92,22 +91,20 @@ public class IMTOrderResource extends BaseResource {
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new StatusJson("errorMessage",
-                            new String("Tenant DB connection failed: " +e.getMessage()))).build();
+                            "Tenant DB connection failed: " + e.getMessage())).build();
         }
 
-        IMTOrder order = imtorder;
-        IMTOrder check = orderDAO.findOrderByContainerId(order.getContainerid());
+        IMTOrder check = orderDAO.findOrderByContainerId(imtorder.getContainerid());
 
         String uuid;
         //verify order with container does not already exist. Then call insert.
         //Verify that ordertype is not the same
-        if ( null != check && !check.getContainerid().equalsIgnoreCase("") ) {
-            uuid = orderDAO.insertOrder(order);
+        if ( check != null ) {
+            uuid = orderDAO.insertOrder(imtorder);
 
-
-        }else if( !(check.getOrderType().equalsIgnoreCase( order.getOrderType() ) ) )
+        }else if( !(check.getOrderType().equalsIgnoreCase( imtorder.getOrderType() ) ) )
         {
-            uuid = orderDAO.insertOrder(order);
+            uuid = orderDAO.insertOrder(imtorder);
 
         }else{
             return Response.status(Response.Status.CONFLICT)
@@ -134,24 +131,23 @@ public class IMTOrderResource extends BaseResource {
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new StatusJson("errorMessage",
-                            new String("Tenant DB connection failed: " +e.getMessage()))).build();
+                            "Tenant DB connection failed: " + e.getMessage())).build();
         }
 
-        IMTOrder order = imtorder;
-        IMTOrder check = orderDAO.findOrderByContainerId(order.getInternalID());
+        IMTOrder check = orderDAO.findOrderByContainerId(imtorder.getInternalID());
 
         //verify order with container does not already exist. Then call insert.
         if ( null == check ) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Order with Internal ID of: " + order.getInternalID() +" not found." )
+                    .entity("Order with Internal ID of: " + imtorder.getInternalID() +" not found." )
                     .build();
         }
 
-        orderDAO.updateOrder(order);
+        orderDAO.updateOrder(imtorder);
 
         //return Response with URI to created resource.
         UriBuilder ub = uriInfo.getAbsolutePathBuilder();
-        URI orderUri = ub.path(order.getInternalID()).build();
+        URI orderUri = ub.path(imtorder.getInternalID()).build();
 
         return Response.ok( orderUri ).build();
 
@@ -169,27 +165,26 @@ public class IMTOrderResource extends BaseResource {
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new StatusJson("errorMessage",
-                            new String("Tenant DB connection failed: " +e.getMessage()))).build();
+                            "Tenant DB connection failed: " + e.getMessage())).build();
         }
 
-        IMTOrder order = imtorder;
-        IMTOrder check = orderDAO.findOrderByContainerId(order.getInternalID());
+        IMTOrder check = orderDAO.findOrderByContainerId(imtorder.getInternalID());
 
         //verify order with container does not already exist. Then call insert.
         if ( null == check ) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity( new StatusJson("errorMessage",
-                             new String("Order with Internal ID of: " + order.getInternalID() +" not found." )))
+                            "Order with Internal ID of: " + imtorder.getInternalID() + " not found."))
                     .build();
 
         }
 
-        orderDAO.removeOrder(order);
+        orderDAO.removeOrder(imtorder);
 
-        if( null != orderDAO.findOrderByInternalId(order.getInternalID())){
+        if( null != orderDAO.findOrderByInternalId(imtorder.getInternalID())){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(new StatusJson("errorMessage",
-                            new String("Order with Internal ID of: " + order.getInternalID() +" was not removed from Database." )))
+                            "Order with Internal ID of: " + imtorder.getInternalID() + " was not removed from Database."))
                     .build();
         }else{
             return Response.ok().build();

@@ -17,6 +17,7 @@ public class IMTOrder {
     private long receiptTimestamp;
 
     //Likely to become Enum later
+    @NotNull
     private String orderType;
 
     //ID for TruFleet
@@ -26,6 +27,7 @@ public class IMTOrder {
     //ID given by Client
     private String externalID;
 
+    @NotNull
     private String containerid;
 
     //Rail to become own object later?
