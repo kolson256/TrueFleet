@@ -44,6 +44,7 @@ public class IntermodalContainerResource extends BaseResource{
 
     public IntermodalContainerResource(DBI adminDBI, TruFleetAPIConfiguration configuration, Environment environment) throws ClassNotFoundException {
         super(adminDBI, configuration, environment);
+        logger.debug(">>>>inside Constructor of IntermodalContainerResource.");
     }
 
     @GET

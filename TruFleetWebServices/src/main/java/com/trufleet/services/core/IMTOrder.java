@@ -49,7 +49,6 @@ public class IMTOrder {
         this.receiptTimestamp = System.currentTimeMillis();
     }
 
-/*
     public IMTOrder(long receiptTimestamp, String orderType, String internalID, String externalID, String containerid, String railLine, String pickupContact, String dropoffContact, String deliveryWindowOpen, String deliveryWindowClose) {
         this.receiptTimestamp = receiptTimestamp;
         this.orderType = orderType;
@@ -62,7 +61,6 @@ public class IMTOrder {
         this.deliveryWindowOpen = deliveryWindowOpen;
         this.deliveryWindowClose = deliveryWindowClose;
     }
-*/
 
     public long getReceiptTimestamp() {
         return receiptTimestamp;
