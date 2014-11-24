@@ -22,7 +22,7 @@ public interface AppUserDAO extends Transactional<AppUserDAO> {
     @SqlQuery("select id, username, firstname, lastname, registrationid from appuser where id = :id")
     public AppUser findAppUserbyId(@Bind("id") long id);
 
-    @SqlUpdate("insert into appuser (username, firstname, lastname, registrationid) values (:username, :firstName, :lastName, )")
+    @SqlUpdate("insert into appuser (username, firstname, lastname, registrationid) values (:username, :firstName, :lastName)")
     void insert(@Bind("username") String username, @Bind("firstName") String firstName, @Bind("lastName") String lastName);
 
     @SqlUpdate("update appuser set " +

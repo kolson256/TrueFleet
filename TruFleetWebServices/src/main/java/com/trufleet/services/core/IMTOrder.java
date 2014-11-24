@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 public class IMTOrder {
 
     //In milliseconds from epoch
-    @NotNull
     private long receiptTimestamp;
 
     //Likely to become Enum later
@@ -42,12 +41,15 @@ public class IMTOrder {
     private String deliveryWindowOpen;
     private String deliveryWindowClose;
 
+    public IMTOrder(){}
+
     public IMTOrder(String containerid, String orderType) {
         this.containerid = containerid;
         this.orderType = orderType;
         this.receiptTimestamp = System.currentTimeMillis();
     }
 
+/*
     public IMTOrder(long receiptTimestamp, String orderType, String internalID, String externalID, String containerid, String railLine, String pickupContact, String dropoffContact, String deliveryWindowOpen, String deliveryWindowClose) {
         this.receiptTimestamp = receiptTimestamp;
         this.orderType = orderType;
@@ -60,6 +62,7 @@ public class IMTOrder {
         this.deliveryWindowOpen = deliveryWindowOpen;
         this.deliveryWindowClose = deliveryWindowClose;
     }
+*/
 
     public long getReceiptTimestamp() {
         return receiptTimestamp;

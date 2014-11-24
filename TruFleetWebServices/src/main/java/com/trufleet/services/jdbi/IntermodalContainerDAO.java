@@ -23,7 +23,7 @@ public interface IntermodalContainerDAO extends Transactional<IntermodalContaine
     @SqlQuery("select * from intermodalcontainer where id = :id")
     public IntermodalContainer findContainerById(@Bind("id") String id);
 
-    @SqlUpdate("insert into intermodalcontainer id = :id")
+    @SqlUpdate("insert into intermodalcontainer (id) values (:id)")
     public void insertContainer(@BindBean IntermodalContainer container);
 
 

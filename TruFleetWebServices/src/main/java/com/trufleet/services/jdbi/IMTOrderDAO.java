@@ -27,7 +27,7 @@ public interface IMTOrderDAO extends Transactional<IMTOrderDAO>{
     public IMTOrder findOrderByExternalId(@Bind("externalid") String externalid );
 
     //find
-    @SqlQuery("select * from  imtorder where tenantid = :tenantid")
+    @SqlQuery("select * from  imtorder where containerid = :containerid")
     public IMTOrder findOrderByContainerId(@Bind("containerid") String containerid);
 
     @SqlUpdate("insert into imtorder (containerid, ordertype, receipttime) values (:containerid, :orderType, :receiptTimestamp)")

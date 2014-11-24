@@ -104,6 +104,18 @@ public class IntermodalContainerResource extends BaseResource{
                                     @HeaderParam("tenantId") String tenantId,
                                     @Valid IntermodalContainer cont) throws JSONException, IOException{
 
+        logger.info(">>>>>> The passed Auth token is: " + authToken
+                        + "\nThe passed Tenant ID is: " + tenantId);
+
+        try {
+            imtdao = getDAO(authToken, tenantId);
+        }catch (Exception e){
+            logger.error("Get tenant DB failed.", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(new StatusJson("errormessage",
+                            "Get tenant DB failed. " + Arrays.toString(e.getStackTrace())))
+                    .build();
+        }
 
         if( null == imtdao.findContainerById(cont.getId())){
             imtdao.insertContainer(cont);
@@ -152,7 +164,17 @@ public class IntermodalContainerResource extends BaseResource{
     public Response removeContainer(@HeaderParam("authToken") String authToken,
                                     @HeaderParam("tenantId") String tenantId,
                                     @PathParam("id") String id, @Valid IntermodalContainer imc)
-            throws JSONException, IOException{
+                                        throws JSONException, IOException{
+
+        try {
+            imtdao = getDAO(authToken, tenantId);
+        }catch (Exception e){
+            logger.error("Get tenant DB failed.", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(new StatusJson("errormessage",
+                            "Get tenant DB failed. " + Arrays.toString(e.getStackTrace())))
+                    .build();
+        }
 
         //verify that org exists
         IntermodalContainer checkImt = imtdao.findContainerById(imc.getId());
