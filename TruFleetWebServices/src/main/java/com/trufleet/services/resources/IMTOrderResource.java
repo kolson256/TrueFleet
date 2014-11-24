@@ -31,10 +31,10 @@ import java.util.List;
 @Consumes( MediaType.APPLICATION_JSON )
 public class IMTOrderResource extends BaseResource {
 
-    static Logger logger = LoggerFactory.getLogger(IMTOrderResource.class);
-    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
+    private static Logger logger = LoggerFactory.getLogger(IMTOrderResource.class);
+    //private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
-    private final IMTOrderDAO orderDAO =  getAdminDb().onDemand(IMTOrderDAO.class);
+    private IMTOrderDAO orderDAO;
 
     public IMTOrderResource(DBI adminDBI, TruFleetAPIConfiguration configuration, Environment environment) throws ClassNotFoundException {
         super(adminDBI, configuration, environment);
@@ -46,6 +46,7 @@ public class IMTOrderResource extends BaseResource {
 
         try {
             buildTenantDb(tenantId, authToken);
+            orderDAO = getTenantDb().onDemand(IMTOrderDAO.class);
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new StatusJson("errorMessage",
@@ -71,6 +72,7 @@ public class IMTOrderResource extends BaseResource {
                                           @PathParam("internalid") String id) {
         try {
             buildTenantDb(tenantId, authToken);
+            orderDAO = getTenantDb().onDemand(IMTOrderDAO.class);
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new StatusJson("errorMessage",
@@ -88,6 +90,7 @@ public class IMTOrderResource extends BaseResource {
 
         try {
             buildTenantDb(tenantId, authToken);
+            orderDAO = getTenantDb().onDemand(IMTOrderDAO.class);
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new StatusJson("errorMessage",
@@ -98,17 +101,12 @@ public class IMTOrderResource extends BaseResource {
 
         String uuid;
         //verify order with container does not already exist. Then call insert.
-        //Verify that ordertype is not the same
-        if ( check != null ) {
+        if (check == null) {
             uuid = orderDAO.insertOrder(imtorder);
 
-        }else if( !(check.getOrderType().equalsIgnoreCase( imtorder.getOrderType() ) ) )
-        {
-            uuid = orderDAO.insertOrder(imtorder);
-
-        }else{
+        } else {
             return Response.status(Response.Status.CONFLICT)
-                    .entity("Order with same Container and Order Type already exists.")
+                    .entity("Order with Container ID of: " + imtorder.getContainerid() + " already exists.")
                     .build();
         }
 
@@ -128,6 +126,7 @@ public class IMTOrderResource extends BaseResource {
 
         try {
             buildTenantDb(tenantId, authToken);
+            orderDAO = getTenantDb().onDemand(IMTOrderDAO.class);
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new StatusJson("errorMessage",
@@ -162,6 +161,7 @@ public class IMTOrderResource extends BaseResource {
 
         try {
             buildTenantDb(tenantId, authToken);
+            orderDAO = getTenantDb().onDemand(IMTOrderDAO.class);
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new StatusJson("errorMessage",

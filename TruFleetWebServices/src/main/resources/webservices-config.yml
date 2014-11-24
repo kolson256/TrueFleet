@@ -22,4 +22,4 @@ tenantDatabase:
   password: password
 
   # the JDBC URL, this will be changed
-  url: jdbc:postgresql://xxxx/TruFleetAdmin
+  url: jdbc:postgresql://localhost:5432/TruFleet
