@@ -1,0 +1,14 @@
+<div>
+    <form name="form1">
+        <div>
+            <p>Welcome : {{user.username}}</p>
+            <label for="usernameInput">Username</label>
+            <input id="usernameInput" type="text" placeholder="Enter username" required ng-model="user.username" />
+        </div>
+        <div>
+            <label for="passwordInput">Password</label>
+            <input id="passwordInput" type="password" placeholder="Password" required ng-model="user.password" />
+        </div>
+        <button type="submit" ng-disabled="form1.$invalid" ng-click="login(user)">Submit</button>
+    </form>
+</div>
