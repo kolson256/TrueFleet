@@ -2,9 +2,13 @@ package com.trufleet.services.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trufleet.services.TruFleetAPIConfiguration;
+import com.trufleet.services.auth.InvalidTenantIdException;
+import com.trufleet.services.core.AppUser;
 import com.trufleet.services.core.IMTOrder;
+import com.trufleet.services.core.UserLogin;
 import com.trufleet.services.jdbi.IMTOrderDAO;
 
+import com.trufleet.services.jdbi.UserLoginDAO;
 import io.dropwizard.jackson.Jackson;
 import io.dropwizard.setup.Environment;
 import org.json.JSONException;
@@ -40,9 +44,20 @@ public class IMTOrderResource extends BaseResource {
     }
 
     @GET
+    @Path ("/assigned")
+    public IMTOrder getOrderByUsername() {
+
+        //returning temporary order for now..
+        IMTOrder order = new IMTOrder(1416785460, "Pickup order", "123456", "23456", "123456", "Red railline", "Joseph Rails", "Joes Shop", "10/20/2014", "10/21/2014");
+        return order;
+        //TODO: return real order, take username as argument/body to look up assigned order in DB
+    }
+    @GET
     @Path("/{internalid}")
     public IMTOrder getOrderByInternalId(@PathParam("internalid") String id) {
-        return orderDAO.findOrderByInternalId(id);
+
+
+             return orderDAO.findOrderByInternalId(id);
     }
 
     @POST
