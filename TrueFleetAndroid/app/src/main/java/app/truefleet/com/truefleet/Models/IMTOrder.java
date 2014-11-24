@@ -17,7 +17,7 @@ public class IMTOrder {
 
     //Likely to become Enum later
     private String orderType;
-
+    private String status;
     //ID for TruFleet
     //AutoGenerate?
     private String internalID;
@@ -38,7 +38,7 @@ public class IMTOrder {
     private String deliveryWindowOpen;
     private String deliveryWindowClose;
 
-    private String orderStatus;
+
 
     public static IMTOrder getInstance() {
         if (instance == null) {
@@ -55,7 +55,8 @@ public class IMTOrder {
    //     this.orderType = orderType;
     //    this.receiptTimestamp = System.currentTimeMillis();
     //}
-
+    public void setStatus(String status) { this.status = status; }
+    public String getStatus() { return status; }
     public long getReceiptTimestamp() {
         return receiptTimestamp;
     }
@@ -133,14 +134,13 @@ public class IMTOrder {
     public void setDeliveryWindowClose(String deliveryWindowClose) {
         this.deliveryWindowClose = deliveryWindowClose;
     }
-    public String getOrderStatus() { return this.orderStatus; }
 
     @Override public String toString() {
         StringBuilder result = new StringBuilder();
         Date d = new Date(receiptTimestamp);
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
 
-        result.append(format.format(d) + " - " + orderType);
+        result.append(format.format(d) + " - " + orderType + " - " + status);
 
         return result.toString();
     }

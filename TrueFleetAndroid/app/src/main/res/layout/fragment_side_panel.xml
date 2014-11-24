@@ -14,7 +14,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/holo_blue_dark"
+        android:divider="@android:color/darker_gray"
         android:dividerHeight="0.2dp"
         android:textColor="@android:color/white"
         android:listSelector="@drawable/bg_key" />

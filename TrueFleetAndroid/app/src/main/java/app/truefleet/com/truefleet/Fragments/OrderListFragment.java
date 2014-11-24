@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import app.truefleet.com.truefleet.Activitieis.HomeActivity;
 import app.truefleet.com.truefleet.Models.IMTOrder;
 import app.truefleet.com.truefleet.R;
 
@@ -32,13 +33,14 @@ public class OrderListFragment extends Fragment {
         orders = new ArrayList<>();
          order = IMTOrder.getInstance();
 
-
-        if (order != null) {
-            Log.i(LOG_TAG, "Creating non null order");
-            orders.add(order.toString());
+        String toAdd = "No orders";
+        if (order.getOrderType() != null) {
+            toAdd = order.toString();
+        }
+            orders.add(toAdd);
 
             columnAdapter = new ArrayAdapter<String>
-                    (getActivity(), R.layout.side_panel_column, R.id.side_panel_column_textview, orders);
+                    (getActivity(), R.layout.order_column, R.id.order_column_textview, orders);
 
             ListView lvColumn = (ListView) view.findViewById(R.id.orderList);
             lvColumn.setAdapter(columnAdapter);
@@ -49,14 +51,9 @@ public class OrderListFragment extends Fragment {
                                         int position, long id) {
                     view.setSelected(true);
                     Log.i(LOG_TAG, "Listview index: " + position + " clicked");
-                    //mCallback.onColumnSelected(position);
+                    ((HomeActivity)getActivity()).showOrders();
                 }
             });
-        }
-        else {
-            orders.add("No orders");
-            Log.i(LOG_TAG, "Order was null");
-        }
 
         return view;
     }
@@ -67,4 +64,6 @@ public class OrderListFragment extends Fragment {
             orders.add(order.toString());
         }
     };
+
+
 }

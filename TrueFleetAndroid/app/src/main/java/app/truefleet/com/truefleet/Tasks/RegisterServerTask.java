@@ -50,10 +50,10 @@ public class RegisterServerTask extends AsyncTask<String, Void, String[]> {
             WebServiceHelper wsResult = WebService.invokeWSAuthorizationPost("GcmRegistration", toRegister.toString(), authToken,loginManager.getUser().getTenantId());
 
             if (wsResult.getConnectionSuccess()) {
-
+                Log.i(LOG_TAG, "Received GCM registration with server response back");
                 if (!wsResult.getResponseSuccess()) {
                     //TODO: Handle error message returned by webservice - invalid authtoken, username, etc..
-
+                    Log.i(LOG_TAG, "Error returned sending register id to server");
                 } else {
                     String json_string = wsResult.getBody();
                     JSONObject registerObj = new JSONObject(json_string);

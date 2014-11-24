@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -13,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import app.truefleet.com.truefleet.Fragments.DeliveryFragment;
 import app.truefleet.com.truefleet.Fragments.OrderDetailsFragment;
@@ -20,6 +25,7 @@ import app.truefleet.com.truefleet.Fragments.PickupFragment;
 import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
 import app.truefleet.com.truefleet.Models.IMTOrder;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Tasks.SendStatusTask;
 
 public class OrderActivitys extends Activity implements SidePanelFragment.OnColumnSelectedListener {
     private final String LOG_TAG = OrderActivitys.class.getSimpleName();
@@ -28,11 +34,41 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
     PickupFragment pickupFragment;
     SidePanelFragment sidePanelFragment;
     int id;
+    private BroadcastReceiver broadcastReceiver;
+
+    public class FragmentReceiverOrderDetails extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            boolean value = intent.getBooleanExtra("STATUS", false);
+            if (value) {
+                displayToast("Status sent to server successfully");
+            }
+            else {
+                displayToast("Failed sending status to server");
+            }
+
+        }
+    }
+    public void displayToast(String message) {
+        final String msg = message;
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(getApplicationContext(), msg,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        broadcastReceiver = new FragmentReceiverOrderDetails();
+        registerReceiver(broadcastReceiver, new IntentFilter("orderstatus"));
+
+        setTitle("Order Details");
+        getActionBar().setIcon(R.drawable.orders);
         setContentView(R.layout.activity_order);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -110,14 +146,16 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
     public void statusUpdate(View view) {
         IMTOrder order = IMTOrder.getInstance();
-        String status = order.getOrderStatus();
-
-        if (status.equalsIgnoreCase("ACCEPT")) {
-            //TODO: Send accept to server
-        }
+        String status = order.getStatus();
+        //TODO: HANDLE OTHER STATUS
+        Log.i(LOG_TAG, "Status button clicked");
+        SendStatusTask sendStatusTask = new SendStatusTask(this);
+        sendStatusTask.execute("ACCEPT");
     }
+
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
@@ -130,6 +168,13 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
 
             return rootView;
         }
+    }
+//Stop receiver from leakeing
+    @Override
+    public void onStop()
+    {
+       unregisterReceiver(broadcastReceiver);
+        super.onStop();
     }
 
 }

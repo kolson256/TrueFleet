@@ -1,7 +1,10 @@
 package app.truefleet.com.truefleet.Activitieis;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +28,9 @@ import app.truefleet.com.truefleet.Resources.LoginManager;
 public class HomeFragment extends Fragment {
     ArrayAdapter<String> columnAdapter;
     private TextView ordersReceived = null;
-
+    private ListView orderList = null;
+    BroadcastReceiver broadcastReceiver;
+    private final String LOG_TAG = HomeFragment.class.getSimpleName();
     public HomeFragment() {
     }
 
@@ -33,6 +38,12 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+    public class FragmentReceiverHome extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateUI();
+        }
     }
 
     @Override
@@ -43,11 +54,15 @@ public class HomeFragment extends Fragment {
 
         if (loginManager.checkLogin())
             getActivity().finish();
+        broadcastReceiver = new FragmentReceiverHome();
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter("fragmentupdater"));
 
         User user = loginManager.getUser();
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         TextView tvWelcome = (TextView) rootView.findViewById(R.id.welcome_text);
         LoginManager lm = new LoginManager(getActivity().getApplicationContext());
+
+
         tvWelcome.setText("Welcome, " + user.getUsername() + "!");
         ordersReceived = (TextView) rootView.findViewById(R.id.orderreceived_text);
         updateUI();
@@ -67,13 +82,17 @@ public class HomeFragment extends Fragment {
         ArrayList<String> orders = new ArrayList<>();
         IMTOrder order = IMTOrder.getInstance();
         columnAdapter = new ArrayAdapter<String>
-                (getActivity(), R.layout.side_panel_column, R.id.side_panel_column_textview, orders);
+                (getActivity(), R.layout.order_column, R.id.order_column_textview, orders);
         ListView lvColumn = (ListView) rootView.findViewById(R.id.listViewOrders);
 
         if (order.getOrderType() != null) {
-            Log.i("ASDF", "Creating non null order");
+            Log.i(LOG_TAG, "Creating non null order");
             orders.add(order.toString());
-
+        } else {
+            orders.add("No orders");
+            lvColumn.setAdapter(columnAdapter);
+            Log.i(LOG_TAG, "Order was null");
+        }
 
             lvColumn.setAdapter(columnAdapter);
 
@@ -82,22 +101,18 @@ public class HomeFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
                     view.setSelected(true);
-                    Log.i("ASDF", "Listview index: " + position + " clicked");
-                    //mCallback.onColumnSelected(position);
+                    Log.i(LOG_TAG, "Listview index: " + position + " clicked");
+                    ((HomeActivity)getActivity()).showOrders();
                 }
             });
-        } else {
-            orders.add("No orders");
-            lvColumn.setAdapter(columnAdapter);
-            Log.i("ASDF", "Order was null");
-        }
-
 
     }
 
     public void updateAdapter() {
-        columnAdapter.clear();
-        columnAdapter.add(IMTOrder.getInstance().toString());
+        if (columnAdapter != null) {
+            columnAdapter.clear();
+            columnAdapter.add(IMTOrder.getInstance().toString());
+        }
     }
 
     public void updateUI() {
@@ -105,8 +120,16 @@ public class HomeFragment extends Fragment {
 
         if (order.getOrderType() != null) {
             ordersReceived.setText("One order received.");
+            updateAdapter();
         } else {
             ordersReceived.setText("No orders received.");
         }
     }
+    @Override
+    public void onStop()
+    {
+        getActivity().unregisterReceiver(broadcastReceiver);
+        super.onStop();
+    }
+
 }

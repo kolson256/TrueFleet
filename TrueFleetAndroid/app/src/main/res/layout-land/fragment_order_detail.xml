@@ -12,6 +12,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_above="@+id/textRailLine"
         android:layout_alignRight="@+id/pickupContact"
+        android:layout_alignLeft="@id/railLine"
         android:layout_alignEnd="@+id/pickupContact" />
 
     <TextView
@@ -50,8 +51,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/railLine"
         android:text="RailLine "
+        android:layout_alignLeft="@id/endDelivery"
         android:layout_toRightOf="@+id/railLine"
-        android:layout_alignLeft="@+id/endDelivery"
         android:ems="20" />
     <View
         android:id="@+id/lineTwo"
@@ -151,7 +152,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/startDelivery"
         android:text="EndDelvieryTime"
-        android:layout_marginLeft="32dp"
+        android:layout_marginLeft="50dp"
         android:layout_toRightOf="@+id/startDelivery"
         android:ems="20"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -161,7 +162,7 @@
         android:layout_alignLeft="@+id/railLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="15dp"
         android:text="Special Instructions"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_below="@+id/endDelivery"
@@ -169,7 +170,7 @@
 
     <TextView
         android:id="@+id/specialInstructions"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/specialInstructionsTitle"
         android:layout_alignBottom="@+id/specialInstructionsTitle"
@@ -190,7 +191,8 @@
         android:shadowDy="0"
         android:shadowRadius="5"
         android:text="Accept"
-        android:layout_below="@id/specialInstructions"
+        android:layout_toRightOf="@+id/specialInstructions"
+        android:layout_alignBottom="@+id/specialInstructions"
         android:layout_centerHorizontal="true"></Button>
 
 </RelativeLayout>

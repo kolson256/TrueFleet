@@ -2,6 +2,7 @@ package app.truefleet.com.truefleet.Fragments;
 
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import java.util.Date;
 
 import app.truefleet.com.truefleet.Models.IMTOrder;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Tasks.SendStatusTask;
 
 /**
  * Created by Chris Lacy on 11/21/2014.
@@ -28,8 +30,12 @@ public class OrderDetailsFragment extends Fragment {
     private TextView startDeliveryTime = null;
     private TextView endDeliveryTime = null;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
 
         View view = inflater.inflate(R.layout.fragment_order_detail, container, false);
 
@@ -64,5 +70,13 @@ public class OrderDetailsFragment extends Fragment {
             endDeliveryTime.setText(order.getDeliveryWindowClose());
         }
     }
+
+    public void statusUpdate(View view) {
+        Log.i(LOG_TAG, "Status button clicked");
+        SendStatusTask sendStatusTask = new SendStatusTask(getActivity());
+        sendStatusTask.execute("ACCEPT");
+    }
+
+
 }
 

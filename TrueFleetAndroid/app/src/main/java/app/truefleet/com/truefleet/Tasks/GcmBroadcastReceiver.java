@@ -14,7 +14,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
     private final String LOG_TAG = GcmBroadcastReceiver.class.getSimpleName();
     @Override
     public void onReceive(Context context, Intent intent) {
-        System.out.println("Received gcm broadcast");
+
         Log.i(LOG_TAG, "Received gcm broadcast");
 
         ComponentName comp = new ComponentName(context.getPackageName(),

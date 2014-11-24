@@ -17,6 +17,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import java.io.IOException;
 
 import app.truefleet.com.truefleet.Fragments.OrderListFragment;
+import app.truefleet.com.truefleet.Models.IMTOrder;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Resources.GooglePlayServicesCheck;
 import app.truefleet.com.truefleet.Resources.LoginManager;
@@ -33,6 +34,7 @@ public class HomeActivity extends Activity {
     Activity activity;
     HomeFragment homeFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,8 @@ public class HomeActivity extends Activity {
         activity = this;
         context = getApplicationContext();
         loginManager = new LoginManager(context);
-
+        setTitle("Home");
+        getActionBar().setIcon(R.drawable.orders);
         gcmSetup();
 
 
@@ -161,8 +164,15 @@ public class HomeActivity extends Activity {
          loginManager.logout();
     }
     public void orders(View view) {
-        Intent i = new Intent(context, OrderActivitys.class);
-        startActivity(i);
+        showOrders();
+    }
+    public void showOrders() {
+        IMTOrder order = IMTOrder.getInstance();
+
+        if (order.getOrderType() != null) {
+            Intent i = new Intent(context, OrderActivitys.class);
+            startActivity(i);
+        }
     }
 
 

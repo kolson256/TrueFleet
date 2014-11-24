@@ -1,8 +1,8 @@
 package app.truefleet.com.truefleet.Tasks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +25,7 @@ public class SendStatusTask extends AsyncTask<String, Void, String[]> {
 
         super();
         context = ctx;
+
         loginManager = new LoginManager(ctx);
     }
 
@@ -43,21 +44,17 @@ public class SendStatusTask extends AsyncTask<String, Void, String[]> {
             statusObj.put("status", params[0]);
             WebServiceHelper wsResult = WebService.invokeWSAuthorizationPost("status", statusObj.toString(), authToken, loginManager.getUser().getTenantId());
 
-            if (wsResult.getConnectionSuccess()) {
-
-                if (!wsResult.getResponseSuccess()) {
-                    //TODO: Handle error message returned by webservice - invalid authtoken, username, etc..
-
-                } else {
-                    String json_string = wsResult.getBody();
-                    JSONObject registerObj = new JSONObject(json_string);
-                    Log.i(LOG_TAG, "Result from server: " + registerObj.toString());
-                    if (wsResult.getConnectionSuccess() && wsResult.getResponseSuccess()) {
-                        //TODO: Handle status sucessfully updated in server
-                    }
-                }
-            } else {
-
+            if (wsResult.getConnectionSuccess() && wsResult.getResponseSuccess()) {
+                //TODO: Handle status sucessfully updated in server
+                Intent intent = new Intent("orderstatus");
+                intent.putExtra("STATUS", true);
+                context.getApplicationContext().sendBroadcast(intent);
+            }
+            else {
+                //TODO: Handle bad response from server
+                Intent intent = new Intent("orderstatus");
+                intent.putExtra("STATUS", false);
+                context.getApplicationContext().sendBroadcast(intent);
             }
         } catch (MalformedURLException e) {
         e.printStackTrace();

@@ -34,7 +34,8 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        setTitle("Login");
+        getActionBar().setIcon(R.drawable.orders);
 
         cd = new ConnectionDetector(getApplicationContext());
 
@@ -79,7 +80,6 @@ public class LoginActivity extends Activity {
                 else
                 {
                     LoginTask loginTask = new LoginTask(this);
-                    //FetchLogin loginTask = new FetchLogin();
                     loginTask.execute(user, pass);
 
                 }

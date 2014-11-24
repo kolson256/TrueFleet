@@ -104,7 +104,10 @@ public class WebService {
             if (json.has("errorMessage"))
                 return new WebServiceHelper(true, json.getString("errorMessage"), false);
 
-            return new WebServiceHelper(true, json_string, true);
+            if (checkResponse(response))
+             return new WebServiceHelper(true, json_string, true);
+            else
+                return new WebServiceHelper(true, json.getString("errorMessage"), false);
 
         } catch (IOException e) {
 

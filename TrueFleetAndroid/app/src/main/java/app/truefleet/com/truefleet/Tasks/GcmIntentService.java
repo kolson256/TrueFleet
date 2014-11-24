@@ -122,6 +122,10 @@ public class GcmIntentService extends IntentService {
                 order.setDropoffContact(dropoffContact);
                 order.setDeliveryWindowOpen(deliveryWindowOpen);
                 order.setDeliveryWindowClose(deliveryWindowClose);
+                order.setStatus("OPEN");
+
+                Intent data = new Intent("fragmentupdater");
+                getApplicationContext().sendBroadcast(data);
             }
 
         } catch (MalformedURLException e) {
