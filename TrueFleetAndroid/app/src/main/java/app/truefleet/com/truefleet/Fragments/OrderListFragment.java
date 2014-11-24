@@ -1,6 +1,9 @@
 package app.truefleet.com.truefleet.Fragments;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,19 +23,21 @@ import app.truefleet.com.truefleet.R;
  */
 public class OrderListFragment extends Fragment {
     private final String LOG_TAG = OrderListFragment.class.getSimpleName();
-
+    ArrayAdapter<String> columnAdapter;
+    ArrayList<String> orders;
+    IMTOrder order;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_list, container, false);
 
-        ArrayList<String> orders = new ArrayList<>();
-        IMTOrder order = IMTOrder.getInstance();
+        orders = new ArrayList<>();
+         order = IMTOrder.getInstance();
 
 
         if (order != null) {
             Log.i(LOG_TAG, "Creating non null order");
             orders.add(order.toString());
 
-            ArrayAdapter<String> columnAdapter = new ArrayAdapter<String>
+            columnAdapter = new ArrayAdapter<String>
                     (getActivity(), R.layout.side_panel_column, R.id.side_panel_column_textview, orders);
 
             ListView lvColumn = (ListView) view.findViewById(R.id.orderList);
@@ -55,4 +60,11 @@ public class OrderListFragment extends Fragment {
 
         return view;
     }
+    public BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            orders.clear();
+            orders.add(order.toString());
+        }
+    };
 }

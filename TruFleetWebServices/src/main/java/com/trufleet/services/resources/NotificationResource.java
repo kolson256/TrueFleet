@@ -48,11 +48,11 @@ public class NotificationResource extends BaseResource {
         String tenantId;
         String username;
         UserLoginDAO userLoginDAO = getAdminDb().onDemand(UserLoginDAO.class);
-
+        String internalId;
         try {
             JSONObject request = new JSONObject(body);
             username = request.getString("username");
-
+            internalId = request.getString("internalId");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -79,27 +79,19 @@ public class NotificationResource extends BaseResource {
         try
         {
             URL url = new URL(GCM_URL);
-
-
-
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Authorization", "key="+API_KEY);
-
         conn.setDoOutput(true);
-
        DataOutputStream dataOutputStream = new DataOutputStream(conn.getOutputStream());
             ObjectMapper mapper = new ObjectMapper();
 
             Content content = new Content();
-
-            //this would be unique to a user that could change for the user
-
-           // content.addRegId("APA91bH2rBtzedZHSNASarU4U-kZPA8RVY9MV22DRqLjBH0PaHkzUVn48aYNyALKXNHPZ_5lBzV27SX_yEnoLl5Gp1aFvAqPjtFN1wVV6NY3TEqW9NtqFMBBrY_ncPyFkPodp76QvdeCXV5fZOQexDBEgSeNccfC8jbYDGszUPTkQjbXAiWxfaA");
             content.addRegId(appUser.getRegistrationId());
             content.addData("title", "orderUpdate");
             content.addData("user","username");
+            content.addData("internalId", internalId);
 
         mapper.writeValue(dataOutputStream, content);
 
@@ -108,19 +100,11 @@ public class NotificationResource extends BaseResource {
 
             //Getting and displaying response for testing..
             int responseCode = conn.getResponseCode();
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-            System.out.println(conn.getResponseMessage());
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream()));
-            String inputLine;
-            StringBuffer resp = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                resp.append(inputLine);
+            if (responseCode!= 200) {
+                returnObj.put("errorMessage", "Unable to send GCM Message");
             }
-            System.out.println(resp.toString());
-            in.close();
+            else
+                returnObj.put("message", "success");
 
             return returnObj.toString();
         } catch (MalformedURLException e) {

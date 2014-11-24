@@ -24,6 +24,7 @@ import app.truefleet.com.truefleet.Resources.LoginManager;
  */
 public class HomeFragment extends Fragment {
     ArrayAdapter<String> columnAdapter;
+    private TextView ordersReceived = null;
 
     public HomeFragment() {
     }
@@ -48,7 +49,8 @@ public class HomeFragment extends Fragment {
         TextView tvWelcome = (TextView) rootView.findViewById(R.id.welcome_text);
         LoginManager lm = new LoginManager(getActivity().getApplicationContext());
         tvWelcome.setText("Welcome, " + user.getUsername() + "!");
-
+        ordersReceived = (TextView) rootView.findViewById(R.id.orderreceived_text);
+        updateUI();
     /*
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
                 String welcome = intent.getStringExtra(Intent.EXTRA_TEXT);
@@ -64,7 +66,7 @@ public class HomeFragment extends Fragment {
     public void SetListViewOrders(View rootView) {
         ArrayList<String> orders = new ArrayList<>();
         IMTOrder order = IMTOrder.getInstance();
-       columnAdapter = new ArrayAdapter<String>
+        columnAdapter = new ArrayAdapter<String>
                 (getActivity(), R.layout.side_panel_column, R.id.side_panel_column_textview, orders);
         ListView lvColumn = (ListView) rootView.findViewById(R.id.listViewOrders);
 
@@ -92,8 +94,19 @@ public class HomeFragment extends Fragment {
 
 
     }
+
     public void updateAdapter() {
         columnAdapter.clear();
         columnAdapter.add(IMTOrder.getInstance().toString());
+    }
+
+    public void updateUI() {
+        IMTOrder order = IMTOrder.getInstance();
+
+        if (order.getOrderType() != null) {
+            ordersReceived.setText("One order received.");
+        } else {
+            ordersReceived.setText("No orders received.");
+        }
     }
 }

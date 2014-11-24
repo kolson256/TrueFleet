@@ -28,6 +28,8 @@ public class LoginManager {
     public static final String KEY_LAST_USER = "lastUser"; // so we know who the last user was even if they log out to send notifications correctly
     public static final String KEY_REGISTRATION_ID = "registrationId";
     private static final String KEY_APP_VERSION = "appVersion";
+    private static final String KEY_TENANT_ID = "tenantId";
+
 
     public LoginManager(Context context) {
         this.context = context;
@@ -42,7 +44,7 @@ public class LoginManager {
         editor.putString(KEY_TENANTID, user.getTenantId());
         editor.putString(KEY_APIVERSION, user.getApiVersion());
         editor.putString(KEY_LAST_USER,  user.getUsername());
-
+        editor.putString(KEY_TENANT_ID, user.getTenantId());
 
         //check if registration ID exists
         String regid = getRegistrationId();

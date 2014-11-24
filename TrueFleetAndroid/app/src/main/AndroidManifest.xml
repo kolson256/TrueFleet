@@ -56,11 +56,9 @@
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
                 <!-- Receives the actual messages. -->
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
                 <category android:name="app.truefleet.com.truefleet" />
             </intent-filter>
         </receiver>
-
         <service android:name="app.truefleet.com.truefleet.Tasks.GcmIntentService" />
 
     </application>

@@ -32,6 +32,7 @@ public class HomeActivity extends Activity {
     Context context;
     Activity activity;
     HomeFragment homeFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +44,17 @@ public class HomeActivity extends Activity {
         gcmSetup();
 
 
+
         if (savedInstanceState == null) {
 
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new HomeFragment())
                     .commit();
         }
+
     }
+
+
     private synchronized void gcmSetup() {
         LoginManager loginManager = new LoginManager(context);
 
