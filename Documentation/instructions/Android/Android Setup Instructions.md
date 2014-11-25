@@ -24,6 +24,8 @@ SDK Platform
 
 Within Extras: 
 Google Play Services
+Android Support Library
+Android Support Repository
 
 I don't recommend running the Android Emulator studio itself, but if you want to try
 you must use API 19 Google API Images installed from the SDK Manager as
