@@ -31,7 +31,7 @@ dependencies {
 
     compile "com.google.code.gson:gson:2.2.4"
     compile "com.sun.jersey:jersey-core:1.17.1"
-    compile"org.postgresql:postgresql:9.3-1102-jdbc41"
+    compile "org.postgresql:postgresql:9.3-1102-jdbc41"
     compile "org.json:json:20090211"
 
     capsule 'co.paralleluniverse:capsule:0.9.0'

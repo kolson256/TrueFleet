@@ -23,3 +23,30 @@ tenantDatabase:
 
   # the JDBC URL, this will be changed
   url: jdbc:postgresql://localhost:5432/TruFleet
+
+logging:
+
+  # Permit DEBUG, INFO, WARN and ERROR messages to be logged by appenders.
+  level: DEBUG
+
+  appenders:
+    # Log warnings and errors to stderr
+    - type: console
+      threshold: WARN
+      target: stderr
+
+    # Log info, warnings and errors to our apps' main log.
+    # Rolled over daily and retained for 5 days.
+    - type: file
+      threshold: INFO
+      currentLogFilename: ./logs/trufleet.log
+      archivedLogFilenamePattern: ./logs/trufleet-%d.log.gz
+      archivedFileCount: 5
+
+    # Log debug messages, info, warnings and errors to our apps' debug log.
+    # Rolled over hourly and retained for 6 hours
+    - type: file
+      threshold: DEBUG
+      currentLogFilename: ./logs/TFdebug.log
+      archivedLogFilenamePattern: ./logs/TFdebug-%d{yyyy-MM-dd-hh}.log.gz
+      archivedFileCount: 6
