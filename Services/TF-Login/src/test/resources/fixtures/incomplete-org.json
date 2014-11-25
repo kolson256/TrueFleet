@@ -1,5 +1,0 @@
-{
-    "name": "TestOrganization1",
-    "databaseurl": "jdbc:postgresql://localhost:5432/TruFleetTest",
-    "apiversion": "0.1"
-}
