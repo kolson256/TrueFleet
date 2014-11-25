@@ -13,3 +13,13 @@ TruFleet - TruFleetSchema.backup
 TruFleetTest - TruFleetTest.backup
 TruFleetAdmin - TruFleetAdmin.backup
 
+Command line restore
+-----------------------
+From the PostgreSQL [Documentation][d_src]
+[d_src]: http://www.postgresql.org/docs/8.1/static/backup.html#BACKUP-DUMP-RESTORE
+
+````
+  psql dbname < infile
+````
+
+
