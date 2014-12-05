@@ -3,6 +3,7 @@ package com.trufleet.services;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
+import org.secnod.dropwizard.shiro.ShiroConfiguration;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -22,6 +23,11 @@ public class TruFleetAPIConfiguration extends Configuration {
     @JsonProperty
     private DataSourceFactory tenantDatabase = new DataSourceFactory();
 
+    @Valid
+    @NotNull
+    @JsonProperty
+    private ShiroConfiguration shiro = new ShiroConfiguration();
+
     /*
       @NotNull
       @JsonProperty
@@ -33,4 +39,6 @@ public class TruFleetAPIConfiguration extends Configuration {
     public DataSourceFactory getAdminDatabaseFactory() { return adminDatabase; }
 
     public DataSourceFactory getTenantDatabaseFactory() { return adminDatabase; }
+
+    public ShiroConfiguration getShiro() { return shiro; }
 }

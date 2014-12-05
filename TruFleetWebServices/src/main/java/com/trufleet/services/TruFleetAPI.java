@@ -6,7 +6,11 @@ import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.secnod.dropwizard.shiro.ShiroBundle;
+import org.secnod.dropwizard.shiro.ShiroConfiguration;
+import org.secnod.shiro.jaxrs.ShiroExceptionMapper;
 import org.skife.jdbi.v2.DBI;
 
 import javax.servlet.DispatcherType;
@@ -17,6 +21,18 @@ import java.util.EnumSet;
  * Created by Kyle Olson on 11/5/2014.
  */
 public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
+
+    /*
+        Define Bundles
+     */
+
+    private final ShiroBundle<TruFleetAPIConfiguration> shiro = new ShiroBundle<TruFleetAPIConfiguration>() {
+
+        @Override
+        protected ShiroConfiguration narrow(TruFleetAPIConfiguration configuration) {
+            return configuration.getShiro();
+        }
+    };
 
     public static void main(String[] args) throws Exception {
         new TruFleetAPI().run(new String[]{"server", System.getProperty("dropwizard.config")});
@@ -29,7 +45,7 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
 
     @Override
     public void initialize(Bootstrap<TruFleetAPIConfiguration> bootstrap) {
-
+        bootstrap.addBundle(shiro);
     }
 
     @Override
@@ -45,6 +61,9 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
         environment.jersey().register(new GcmRegistrationResource(adminDBI, configuration, environment));
         environment.jersey().register(new IntermodalContainerResource(adminDBI, configuration, environment));
         environment.jersey().register(new IMTOrderResource(adminDBI, configuration, environment));
+
+        environment.jersey().register(new ShiroExceptionMapper());
+        environment.getApplicationContext().setSessionHandler(new SessionHandler());
         configureCors(environment);
     }
 

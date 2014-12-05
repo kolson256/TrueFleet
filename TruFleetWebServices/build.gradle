@@ -20,7 +20,6 @@ configurations {
 }
 
 dependencies {
-    //compile 'io.ifar:dw-shiro-bundle:0.0.2-SNAPSHOT'
 
     compile "io.dropwizard:dropwizard-core:$dropwizard_version"
     compile "io.dropwizard:dropwizard-db:$dropwizard_version"
@@ -29,6 +28,7 @@ dependencies {
     compile "io.dropwizard:dropwizard-logging:$dropwizard_version"
     compile "io.dropwizard:dropwizard-metrics:$dropwizard_version"
 
+    compile "org.secnod.dropwizard:dropwizard-shiro:0.1.0"
     compile "com.google.code.gson:gson:2.2.4"
     compile "com.sun.jersey:jersey-core:1.17.1"
     compile "org.postgresql:postgresql:9.3-1102-jdbc41"

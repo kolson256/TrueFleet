@@ -6,6 +6,7 @@ package com.trufleet.services.core;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class UserLogin {
 
@@ -15,6 +16,7 @@ public class UserLogin {
     private String username;
 
     private String password;
+
 
     public UserLogin() {
         // Jackson deserialization

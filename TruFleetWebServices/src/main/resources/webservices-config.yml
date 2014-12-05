@@ -24,6 +24,10 @@ tenantDatabase:
   # the JDBC URL, this will be changed
   url: jdbc:postgresql://localhost:5432/TruFleet
 
+shiro:
+  iniConfigs: ["classpath:shiro.ini"]
+  filterUrlPattern: "/*" # The URL pattern for the Shiro servlet filter
+
 logging:
 
   # Permit DEBUG, INFO, WARN and ERROR messages to be logged by appenders.
