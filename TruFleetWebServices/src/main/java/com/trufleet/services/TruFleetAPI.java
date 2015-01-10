@@ -43,7 +43,7 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
         environment.jersey().register(new OrganizationResource(adminDBI, configuration, environment));
         environment.jersey().register(new NotificationResource(adminDBI, configuration, environment));
         environment.jersey().register(new GcmRegistrationResource(adminDBI, configuration, environment));
-        environment.jersey().register(new IntermodalContainerResource(adminDBI, configuration, environment));
+       // environment.jersey().register(new IntermodalContainerResource(adminDBI, configuration, environment));
         environment.jersey().register(new IMTOrderResource(adminDBI, configuration, environment));
         configureCors(environment);
     }

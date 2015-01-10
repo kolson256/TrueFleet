@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Receipt time"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_above="@+id/textRailLine"
+        android:layout_above="@+id/textUsername"
         android:layout_alignRight="@+id/pickupContact"
         android:layout_alignEnd="@+id/pickupContact" />
 

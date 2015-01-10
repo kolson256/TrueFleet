@@ -68,7 +68,6 @@ public class LoginTask extends AsyncTask<String, Void, String[]> {
                         userObj.put("username", username);
                         System.out.println(userObj.toString());
                         User user = new ObjectMapper().readValue(userObj.toString(), new TypeReference<User>(){});
-                        //TODO: Store in shared preferences
                         login(user);
 
                     }

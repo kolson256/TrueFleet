@@ -1,4 +1,4 @@
-package app.truefleet.com.truefleet;
+package app.truefleet.com.truefleet.tests;
 
 import android.test.suitebuilder.TestSuiteBuilder;
 
