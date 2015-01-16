@@ -24,9 +24,10 @@ public class WebService {
     private static final String LOG_TAG = WebService.class.getSimpleName();
     private static final String genymotion = "http://10.0.3.2:8080/";
     private static final String androidEmulator = "http://10.0.2.2:8080/";
+    private static String localhost = "http://127.0.0.1:8080/"; //have to use this for now when running tests on JVM
     private static final String SERVER = "http://140.192.30.205:8080/";
 
-    private static final String URL = genymotion;
+    private static final String URL = localhost;
 
     public static WebServiceHelper invokeWSPost(String serviceName, String body) throws MalformedURLException, UnsupportedEncodingException {
 
@@ -91,7 +92,6 @@ public class WebService {
     private static WebServiceHelper invoke(String serviceName, String body, HttpPost post) throws MalformedURLException, UnsupportedEncodingException {
 
         post.setEntity(new StringEntity(body));
-
         try {
             String error = "";
             HttpResponse response = (new DefaultHttpClient()).execute(post);

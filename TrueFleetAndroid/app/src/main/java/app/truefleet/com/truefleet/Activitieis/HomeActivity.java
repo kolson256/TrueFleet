@@ -120,13 +120,13 @@ public class HomeActivity extends Activity {
 
     }
     private boolean checkPlayServices() {
-        GooglePlayServicesCheck playServicesCheck = new GooglePlayServicesCheck(getApplicationContext());
+       GooglePlayServicesCheck playServicesCheck = new GooglePlayServicesCheck(getApplicationContext());
        GoogleCloudMessaging gcm =  GoogleCloudMessaging.getInstance(context);
 
 
         if (!playServicesCheck.checkGooglePlayServices()) {
            // Dialog dialog = GooglePlayServicesUtil.getErrorDialog(playServicesCheck.getResultCode(), this, playServicesCheck.getRQS_GooglePlayServices());
-              System.out.println("good play services not i nstalled");
+              System.out.println("google play services not installed");
            // if (dialog != null)
                 System.out.println("show dialog");//todo: redirect to login and show dialog?
               //  dialog.show();

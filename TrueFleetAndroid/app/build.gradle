@@ -14,7 +14,7 @@ android {
         targetSdkVersion 20
         versionCode 1
         versionName "1.0"
-        testPackageName "app.truefleet.com.truefleet.tests"
+        testApplicationId "app.truefleet.com.truefleet.tests"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -22,10 +22,17 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+apply plugin: 'android-unit-test'
+
+//https://github.com/evant/android-studio-unit-test-plugin/issues/17
+afterEvaluate {
+    tasks.findByName("assembleDebug").dependsOn("testDebugClasses")
 }
 
 dependencies {
@@ -33,14 +40,15 @@ dependencies {
     compile 'com.android.support:support-v4:20.0.0'
     compile 'com.google.android.gms:play-services:6.1.+'
     compile 'com.android.support:appcompat-v7:20.+'
-    //compile 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.2.+'
     compile 'javax.validation:validation-api:1.0.0.GA'
     compile 'joda-time:joda-time:2.0'
+
+    //testing
     androidTestCompile "org.mockito:mockito-core:1.+"
-   // compile 'com.fasterxml.jackson.core:jackson-databind:2.2.+'
-   // compile 'com.fasterxml.jackson.core:jackson-core:2.2.+'
-    //compile 'com.fasterxml.jackson.core:jackson-annotations:2.2.+'
+    //Java gradle plugin does not look for androidTestCompile
+    testCompile 'org.robolectric:robolectric:2.4'
+    testCompile 'junit:junit:4.+'
 }
 
 configurations {
