@@ -1,18 +1,22 @@
 package app.truefleet.com.truefleet.tests;
 
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowPreferenceManager;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
 import app.truefleet.com.truefleet.Resources.LoginManager;
 import app.truefleet.com.truefleet.Tasks.LoginTask;
+
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
@@ -26,7 +30,8 @@ public class TestLogin {
 
     @Before
     public void setUp() throws Exception {
-        mPrefs =  ShadowPreferenceManager.getDefaultSharedPreferences(Robolectric.application);
+
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(Robolectric.application);
         Robolectric.getFakeHttpLayer().interceptHttpRequests(false);
         loginManager = new LoginManager(Robolectric.application);
         loginTask = new LoginTask(null);
@@ -64,14 +69,15 @@ public class TestLogin {
 
         assertNotNull(loginManager.getRegistrationId());
     }
-    /*
-    @Test
+
+   /* @Test
     public void testUserRetrieval() throws ExecutionException, InterruptedException, TimeoutException {
 
         loginTask.execute("test", "test");
         loginTask.get(1000, TimeUnit.MILLISECONDS);
 
-        mPrefs.edit().putString("username", "test").commit();
+        //mPrefs.edit().putString("username", "test").commit();
+        System.out.println(mPrefs.getString("username", "wdf"));
         assertEquals("test", loginManager.getUser().getUsername());
         assertNotNull(loginManager.getUser().getApiVersion());
         assertNotNull(loginManager.getUser().getauthenticationToken());
