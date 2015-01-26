@@ -30,8 +30,8 @@ import org.junit.Test;
  */
 
 public class TestOrganizationJson {
-    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
+    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
     //Test serialization and De-serialization of Organization Object with all fields.
     @Test
@@ -44,7 +44,7 @@ public class TestOrganizationJson {
 
         //deserialize JSON fixture to object, then re-serialize.
         String jsonFixture = MAPPER.writeValueAsString(
-                MAPPER.readValue( fixture("fixtures/complete-org.json"), Organization.class));
+                MAPPER.readValue( fixture("fixtures/organization-complete.json"), Organization.class));
 
         assertThat(jacksonJson).isEqualTo(jsonFixture);
     }
@@ -61,7 +61,7 @@ public class TestOrganizationJson {
 
         //deserialize JSON fixture to object, then re-serialize.
         String jsonFixture = MAPPER.writeValueAsString(
-                MAPPER.readValue( fixture("fixtures/incomplete-org.json"), Organization.class));
+                MAPPER.readValue( fixture("fixtures/organization-incomplete.json"), Organization.class));
 
         assertThat(jacksonJson).isEqualTo(jsonFixture);
     }

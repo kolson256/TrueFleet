@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
-package edu.depaul.trufleet.service.login.json;
+package com.trufleet.service.login.json;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.dropwizard.jackson.Jackson;
 
 /**
  * Created by Richard Morgan on 11/6/2014.
  */
 public class TestUserLoginJson {
+
+    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
+
+
 }

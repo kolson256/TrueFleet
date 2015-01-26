@@ -32,7 +32,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
-import org.skife.jdbi.v2.Handle;
 import org.slf4j.*;
 
 import java.io.IOException;
@@ -121,7 +120,7 @@ public class TestOrganizationDAO {
     @Test
     public void testInsertNewOrganization() throws IOException{
 
-        Organization org = MAPPER.readValue( fixture("fixtures/incomplete-org.json"), Organization.class);
+        Organization org = MAPPER.readValue( fixture("fixtures/organization-incomplete.json"), Organization.class);
 
         logger.debug(">>>> Deserialized Organization object: " + org.toString() +" from JSON. <<<<");
 
