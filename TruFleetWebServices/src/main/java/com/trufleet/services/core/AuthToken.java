@@ -7,17 +7,21 @@ import java.sql.Timestamp;
 /**
  * Created by Kyle Olson on 11/5/2014.
  */
+
 public class AuthToken {
 
     private long appUserId;
     private String token;
     private Timestamp expirationDate;
 
+    public AuthToken(){}
+
     public AuthToken(long appUserId, String token, Timestamp expirationDate) {
         this.appUserId = appUserId;
         this.token = token;
         this.expirationDate = expirationDate;
     }
+
 
     @JsonProperty
     public long getAppUserId() { return appUserId; }

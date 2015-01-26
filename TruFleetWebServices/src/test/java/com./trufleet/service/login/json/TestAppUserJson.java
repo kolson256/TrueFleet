@@ -16,8 +16,17 @@
 
 package com.trufleet.service.login.json;
 
+import static io.dropwizard.testing.FixtureHelpers.*;
+import static org.fest.assertions.api.Assertions.assertThat;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.trufleet.services.core.AppUser;
+import com.trufleet.services.core.Organization;
+
 import io.dropwizard.jackson.Jackson;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Richard Morgan on 11/6/2014.
@@ -26,6 +35,38 @@ public class TestAppUserJson {
 
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
+    static Logger logger = LoggerFactory.getLogger(TestAppUserJson.class);
 
+    @Test
+    public void completeAppUserJsonSerializes() throws Exception{
+
+        AppUser au1 = new AppUser( 12345678, "testUser","Test","User","9876-5432");
+
+        String jacksonJson = MAPPER.writeValueAsString(au1);
+
+        //deserialize JSON fixture to object, then re-serialize.
+        String jsonFixture = MAPPER.writeValueAsString(
+                MAPPER.readValue( fixture("fixtures/appuser-complete.json"), AppUser.class));
+
+        logger.debug("Serialized Object is: \n" + jacksonJson);
+        logger.debug("Fixture Text is: \n" + jsonFixture);
+
+        assertThat(jacksonJson).isEqualTo(jsonFixture);
+
+    }
+
+    @Test
+    public void incompleteAppUserJsonSerializes() throws Exception{
+
+        //Attempt deserialization of JSON fixture missing a field (RegistrationID)
+        AppUser au2 = MAPPER.readValue( fixture("fixtures/appuser-incomplete-1.json"), AppUser.class);
+
+        String jsonFixture = MAPPER.writeValueAsString(au2);
+        logger.debug("Fixture Text is: \n" + jsonFixture);
+
+        assertThat(au2.getFirstName()).isEqualTo("Another");
+        assertThat(au2.getRegistrationId()).isNull();
+
+    }
 
 }

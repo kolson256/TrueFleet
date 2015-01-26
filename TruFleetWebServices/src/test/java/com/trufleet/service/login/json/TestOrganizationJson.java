@@ -24,6 +24,8 @@ import com.trufleet.services.core.Organization;
 
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Richard Morgan on 11/6/2014.
@@ -32,6 +34,7 @@ import org.junit.Test;
 public class TestOrganizationJson {
 
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
+    static Logger logger = LoggerFactory.getLogger(TestOrganizationJson.class);
 
     //Test serialization and De-serialization of Organization Object with all fields.
     @Test
@@ -45,6 +48,9 @@ public class TestOrganizationJson {
         //deserialize JSON fixture to object, then re-serialize.
         String jsonFixture = MAPPER.writeValueAsString(
                 MAPPER.readValue( fixture("fixtures/organization-complete.json"), Organization.class));
+
+        logger.debug("Serialized Object is: \n" + jacksonJson);
+        logger.debug("Fixture Text is: \n" + jsonFixture);
 
         assertThat(jacksonJson).isEqualTo(jsonFixture);
     }

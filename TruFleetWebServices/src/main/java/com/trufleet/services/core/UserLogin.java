@@ -26,6 +26,7 @@ public class UserLogin {
         this.tenantId = tenantId;
     }
 
+
     @JsonProperty
     public String getUsername() {
         return username;
@@ -36,6 +37,7 @@ public class UserLogin {
         return tenantId;
     }
 
+    @JsonProperty
     public String getPassword(){return password;}
 
     @Override

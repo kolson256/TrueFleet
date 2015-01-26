@@ -23,6 +23,8 @@ public class AppUser {
         this.registrationId = registrationId;
     }
 
+    public AppUser(){};
+
     @JsonProperty
     public long getId() { return id; }
 
@@ -37,6 +39,7 @@ public class AppUser {
 
     @JsonProperty
     public String getRegistrationId() { return registrationId;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
