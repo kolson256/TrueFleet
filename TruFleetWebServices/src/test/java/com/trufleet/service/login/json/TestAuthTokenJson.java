@@ -28,7 +28,7 @@ public class TestAuthTokenJson {
         Instant instant = Instant.ofEpochMilli(1422310680934L );
         Timestamp ts1 = Timestamp.from(instant);
 
-        AuthToken au1 = new AuthToken(12345678, "ABCD1234", ts1 );
+        AuthToken au1 = new AuthToken(12345678L, "ABCD1234", ts1 );
 
 
         String jacksonJson = MAPPER.writeValueAsString(au1);
@@ -53,8 +53,8 @@ public class TestAuthTokenJson {
         String jsonFixture = MAPPER.writeValueAsString(au2);
         logger.debug("Incomplete Fixture Text is: \n" + jsonFixture);
 
-        //assertThat(au2.getFirstName()).isEqualTo("Another");
-        //assertThat(au2.getRegistrationId()).isNull();
+            assertThat(au2.getAppUserId() == 12345678L);
+            assertThat(au2.getToken()).isNull();
 
     }
 

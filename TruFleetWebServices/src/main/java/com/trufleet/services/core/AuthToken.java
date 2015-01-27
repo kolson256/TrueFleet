@@ -1,5 +1,6 @@
 package com.trufleet.services.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.Timestamp;
@@ -14,22 +15,23 @@ public class AuthToken {
     private String token;
     private Timestamp expirationDate;
 
-    public AuthToken(){}
+    //public AuthToken(){}
 
-    public AuthToken(long appUserId, String token, Timestamp expirationDate) {
+    @JsonCreator
+    public AuthToken(@JsonProperty("appuserid") long appUserId, @JsonProperty("token") String token,  @JsonProperty("timestamp") Timestamp expirationDate) {
         this.appUserId = appUserId;
         this.token = token;
         this.expirationDate = expirationDate;
     }
 
 
-    @JsonProperty
+
     public long getAppUserId() { return appUserId; }
 
-    @JsonProperty
+
     public String getToken() { return token; }
 
-    @JsonProperty
+
     public Timestamp getExpirationDate() { return expirationDate; }
 
 }
