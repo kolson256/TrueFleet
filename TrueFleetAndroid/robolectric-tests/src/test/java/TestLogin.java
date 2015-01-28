@@ -1,5 +1,3 @@
-package app.truefleet.com.truefleet.tests;
-
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -21,8 +19,11 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
+//@RunWith(CustomTestRunner.class)
+@Config(manifest="../app/src/main/AndroidManifest.xml")
+//@Config(emulateSdk = 16)
 @RunWith(RobolectricTestRunner.class)
-@Config(emulateSdk = 16)
+
 public class TestLogin {
     private SharedPreferences mPrefs;
     LoginManager loginManager;

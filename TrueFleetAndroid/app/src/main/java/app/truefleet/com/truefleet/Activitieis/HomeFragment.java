@@ -131,5 +131,17 @@ public class HomeFragment extends Fragment {
         getActivity().unregisterReceiver(broadcastReceiver);
         super.onStop();
     }
+    @Override
+    public void onPause()
+    {
+        getActivity().unregisterReceiver(broadcastReceiver);
+        super.onPause();
+    }
+    @Override
+    public void onResume()
+    {
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter("fragmentupdater"));
+        super.onPause();
+    }
 
 }
