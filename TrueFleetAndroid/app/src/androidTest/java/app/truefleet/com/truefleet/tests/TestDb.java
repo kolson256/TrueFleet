@@ -6,8 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
+import app.truefleet.com.truefleet.data.OrderContract;
 import app.truefleet.com.truefleet.data.OrderContract.OrderEntry;
+import app.truefleet.com.truefleet.data.OrderContract.UserEntry;
 import app.truefleet.com.truefleet.data.OrderDbHelper;
+
 /**
  * Created by Chris Lacy on 1/26/2015.
  */
@@ -22,6 +25,8 @@ public class TestDb extends AndroidTestCase {
     }
 
     public void testInsertReadDb() {
+
+        String username = "test";
         String internalid = "12345";
         String externalid = "56789";
         String containerid = "54321";
@@ -37,9 +42,29 @@ public class TestDb extends AndroidTestCase {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        //USER
+        ContentValues userValues = new ContentValues();
+        userValues.put(UserEntry.COLUMN_USERNAME, username);
+
+
+        long userRowId = db.insert(UserEntry.TABLE_NAME, null, userValues);
+
+        assertTrue(userRowId != -1);
+
+        //ROUTE DRIVER TABLE
+        ContentValues routeValues = new ContentValues();
+        routeValues.put(OrderContract.RouteDriverEntry.COLUMN_USER_KEY, userRowId);
+
+        long routeId = db.insert(OrderContract.RouteDriverEntry.TABLE_NAME, null, routeValues);
+
+        assertTrue(routeId != -1);
+
+
         ContentValues values = new ContentValues();
         values.put(OrderEntry.COLUMN_INTERNAL_ID, internalid);
         values.put(OrderEntry.COLUMN_EXTERNAL_ID, externalid);
+        values.put(OrderEntry.COLUMN_USER_KEY, userRowId);
+        values.put(OrderEntry.COLUMN_ROUTE_KEY, routeId);
         values.put(OrderEntry.COLUMN_CONTAINER_ID, containerid);
         values.put(OrderEntry.COLUMN_RECEIPT_TIME, receipttime);
         values.put(OrderEntry.COLUMN_ORDER_TYPE, ordertype);
@@ -58,6 +83,8 @@ public class TestDb extends AndroidTestCase {
                 OrderEntry._ID,
                 OrderEntry.COLUMN_INTERNAL_ID,
                 OrderEntry.COLUMN_EXTERNAL_ID,
+                OrderEntry.COLUMN_USER_KEY,
+                OrderEntry.COLUMN_ROUTE_KEY,
                 OrderEntry.COLUMN_CONTAINER_ID,
                 OrderEntry.COLUMN_RECEIPT_TIME,
                 OrderEntry.COLUMN_ORDER_TYPE,
@@ -74,6 +101,8 @@ public class TestDb extends AndroidTestCase {
         if (cursor.moveToFirst()) {
             int internalIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_INTERNAL_ID);
             int externalIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_EXTERNAL_ID);
+            int userIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_USER_KEY);
+            int routeIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_ROUTE_KEY);
             int containerIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_CONTAINER_ID);
             int receiptTimeIndex = cursor.getColumnIndex(OrderEntry.COLUMN_RECEIPT_TIME);
             int orderTypeIndex = cursor.getColumnIndex(OrderEntry.COLUMN_ORDER_TYPE);
@@ -84,8 +113,10 @@ public class TestDb extends AndroidTestCase {
             int deliveryWindowCloseIndex = cursor.getColumnIndex(OrderEntry.COLUMN_DELIVERY_WINDOW_CLOSE);
 
             assertEquals(internalid, cursor.getString(internalIdIndex));
-            assertEquals(internalid, cursor.getString(externalIdIndex));
-            assertEquals(internalid, cursor.getString(containerIdIndex));
+            assertEquals(externalid, cursor.getString(externalIdIndex));
+            assertEquals(containerid, cursor.getString(containerIdIndex));
+            assertEquals(routeId, cursor.getInt(routeIdIndex));
+            assertEquals(userRowId, cursor.getInt(userIdIndex));
 
         }
         //No values returned
@@ -93,6 +124,5 @@ public class TestDb extends AndroidTestCase {
             assertEquals("test", "failed");
         }
 
-        }
     }
-
+}

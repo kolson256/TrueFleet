@@ -12,6 +12,10 @@ import java.util.Date;
  * Created by Chris Lacy on 1/26/2015.
  */
 public class OrderContract {
+    public static final String PATH_USER = "user";
+
+    public static final String DATABASE_NAME = "TruFleet.db";
+
     public static final String CONTENT_AUTHORITY = "app.truefleet.com";
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
@@ -37,14 +41,27 @@ public class OrderContract {
         }
     }
 
+    public static final class RouteDriverEntry implements BaseColumns {
+        public static final String TABLE_NAME = "routedriver";
+
+        public static final String COLUMN_USER_KEY = "userid";
+
+    }
+
     public static final class OrderEntry implements BaseColumns {
 
-        public static final String TABLE_NAME = "order";
+
+        public static final String TABLE_NAME = "orders";
 
         public static final String COLUMN_INTERNAL_ID = "internalid";
         public static final String COLUMN_EXTERNAL_ID = "externalid";
         public static final String COLUMN_CONTAINER_ID = "containerid";
 
+        // Foreign Key for user table
+        public static final String COLUMN_USER_KEY = "userid";
+
+        //Foreign Key for RouteDriver
+        public static final String COLUMN_ROUTE_KEY = "routeid";
 
         public static final String COLUMN_RECEIPT_TIME = "receiptTimeStamp";
         public static final String COLUMN_ORDER_TYPE = "ordertype";
@@ -66,5 +83,23 @@ public class OrderContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
     }
+    public static final class UserEntry implements BaseColumns {
 
+        public static final String TABLE_NAME = "users";
+
+        public static final String COLUMN_USERNAME = "username";
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
+
+        public static final String CONTENT_TYPE =
+                "vnd.android.cursor.dir/" + CONTENT_AUTHORITY + "/" + PATH_USER;
+        public static final String CONTENT_ITEM_TYPE =
+                "vnd.android.cursor.item/" + CONTENT_AUTHORITY + "/" + PATH_USER;
+
+        public static Uri buildOrderUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+    }
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import app.truefleet.com.truefleet.data.OrderContract.OrderEntry;
+import app.truefleet.com.truefleet.data.OrderContract.UserEntry;
 /**
  * Created by Chris Lacy on 1/26/2015.
  */
@@ -15,7 +16,7 @@ public class OrderDbHelper extends SQLiteOpenHelper {
      */
     private static final int DATABASE_VERSION = 1;
 
-    public static final String DATABASE_NAME = "order.db";
+    public static final String DATABASE_NAME =  OrderContract.DATABASE_NAME;
 
     public OrderDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,12 +26,16 @@ public class OrderDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         final String SQL_CREATE_ORDER_TABLE = "CREATE TABLE " +
-                OrderEntry.TABLE_NAME +  " (" +
-                OrderEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                OrderEntry.TABLE_NAME +  " ( " +
+                OrderEntry._ID + " INTEGER PRIMARY KEY, " +
                 OrderEntry.COLUMN_INTERNAL_ID + " TEXT NOT NULL, " +
 
                 OrderEntry.COLUMN_EXTERNAL_ID + " TEXT NOT NULL, " +
+
+                //the ID of the user/driver assigned to order
+                OrderEntry.COLUMN_USER_KEY + " INTEGER NOT NULL, " +
                 OrderEntry.COLUMN_CONTAINER_ID + " TEXT NOT NULL, " +
+                OrderEntry.COLUMN_ROUTE_KEY + " INTEGER NOT NULL, " +
                 OrderEntry.COLUMN_RECEIPT_TIME + " TEXT NOT NULL, " +
 
                 OrderEntry.COLUMN_ORDER_TYPE + " TEXT NOT NULL, " +
@@ -39,12 +44,24 @@ public class OrderDbHelper extends SQLiteOpenHelper {
 
                 OrderEntry.COLUMN_DROPOFF_CONTRACT + " TEXT NOT NULL, " +
                 OrderEntry.COLUMN_DELIVERY_WINDOW_OPEN + " TEXT NOT NULL, " +
-                OrderEntry.COLUMN_DELIVERY_WINDOW_CLOSE + " TEXT NOT NULL" +
+                OrderEntry.COLUMN_DELIVERY_WINDOW_CLOSE + " TEXT NOT NULL, " +
 
                 " UNIQUE (" + OrderEntry.COLUMN_INTERNAL_ID  + ") ON CONFLICT REPLACE);";
 
-        sqLiteDatabase.execSQL(SQL_CREATE_ORDER_TABLE);
+        final String SQL_CREATE_USER_TABLE = "CREATE TABLE " +
+                UserEntry.TABLE_NAME + " ( " +
+                UserEntry._ID + " INTEGER PRIMARY KEY, " +
+                UserEntry.COLUMN_USERNAME + " TEXT NOT NULL) ";
 
+        final String SQL_CREATE_ROUTE_TABLE = "CREATE TABLE " +
+                OrderContract.RouteDriverEntry.TABLE_NAME + " ( " +
+                OrderContract.RouteDriverEntry._ID + " INTEGER PRIMARY KEY, " +
+                OrderContract.RouteDriverEntry.COLUMN_USER_KEY + " TEXT NOT NULL) ";
+
+
+        sqLiteDatabase.execSQL(SQL_CREATE_USER_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_ORDER_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_ROUTE_TABLE);
 
     }
 

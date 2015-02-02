@@ -20,8 +20,8 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 //@RunWith(CustomTestRunner.class)
-@Config(manifest="../app/src/main/AndroidManifest.xml")
-//@Config(emulateSdk = 16)
+//@Config(emulateSdk = 16, manifest="../app/src/main/AndroidManifest.xml")
+@Config(emulateSdk = 16, manifest=Config.NONE)
 @RunWith(RobolectricTestRunner.class)
 
 public class TestLogin {
