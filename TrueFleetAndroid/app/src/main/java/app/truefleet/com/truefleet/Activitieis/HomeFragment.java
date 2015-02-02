@@ -128,19 +128,28 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStop()
     {
-        getActivity().unregisterReceiver(broadcastReceiver);
+        try {
+            getActivity().unregisterReceiver(broadcastReceiver);
+        } catch (Exception e) {
+            Log.d(LOG_TAG, "Receiver already unregistered");
+        }
         super.onStop();
     }
     @Override
     public void onPause()
     {
+        try {
+          //  getActivity().unregisterReceiver(broadcastReceiver);
+        } catch (Exception e) {
+            Log.d(LOG_TAG, "Receiver already unregistered");
+        }
         getActivity().unregisterReceiver(broadcastReceiver);
         super.onPause();
     }
     @Override
     public void onResume()
     {
-        getActivity().registerReceiver(broadcastReceiver, new IntentFilter("fragmentupdater"));
+        //getActivity().registerReceiver(broadcastReceiver, new IntentFilter("fragmentupdater"));
         super.onPause();
     }
 

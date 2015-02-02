@@ -29,7 +29,6 @@ public class TestDb extends AndroidTestCase {
         String username = "test";
         String internalid = "12345";
         String externalid = "56789";
-        String containerid = "54321";
         String receipttime = "20141205";
         String ordertype = "type";
         String railLine = "rail";
@@ -63,9 +62,7 @@ public class TestDb extends AndroidTestCase {
         ContentValues values = new ContentValues();
         values.put(OrderEntry.COLUMN_INTERNAL_ID, internalid);
         values.put(OrderEntry.COLUMN_EXTERNAL_ID, externalid);
-        values.put(OrderEntry.COLUMN_USER_KEY, userRowId);
         values.put(OrderEntry.COLUMN_ROUTE_KEY, routeId);
-        values.put(OrderEntry.COLUMN_CONTAINER_ID, containerid);
         values.put(OrderEntry.COLUMN_RECEIPT_TIME, receipttime);
         values.put(OrderEntry.COLUMN_ORDER_TYPE, ordertype);
         values.put(OrderEntry.COLUMN_RAIL_LINE, railLine);
@@ -83,9 +80,7 @@ public class TestDb extends AndroidTestCase {
                 OrderEntry._ID,
                 OrderEntry.COLUMN_INTERNAL_ID,
                 OrderEntry.COLUMN_EXTERNAL_ID,
-                OrderEntry.COLUMN_USER_KEY,
                 OrderEntry.COLUMN_ROUTE_KEY,
-                OrderEntry.COLUMN_CONTAINER_ID,
                 OrderEntry.COLUMN_RECEIPT_TIME,
                 OrderEntry.COLUMN_ORDER_TYPE,
                 OrderEntry.COLUMN_RAIL_LINE,
@@ -101,11 +96,8 @@ public class TestDb extends AndroidTestCase {
         if (cursor.moveToFirst()) {
             int internalIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_INTERNAL_ID);
             int externalIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_EXTERNAL_ID);
-            int userIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_USER_KEY);
             int routeIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_ROUTE_KEY);
-            int containerIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_CONTAINER_ID);
             int receiptTimeIndex = cursor.getColumnIndex(OrderEntry.COLUMN_RECEIPT_TIME);
-            int orderTypeIndex = cursor.getColumnIndex(OrderEntry.COLUMN_ORDER_TYPE);
             int railLineIndex = cursor.getColumnIndex(OrderEntry.COLUMN_RAIL_LINE);
             int pickupContractIndex = cursor.getColumnIndex(OrderEntry.COLUMN_PICKUP_CONTRACT);
             int dropoffContractIndex = cursor.getColumnIndex(OrderEntry.COLUMN_DROPOFF_CONTRACT);
@@ -114,9 +106,7 @@ public class TestDb extends AndroidTestCase {
 
             assertEquals(internalid, cursor.getString(internalIdIndex));
             assertEquals(externalid, cursor.getString(externalIdIndex));
-            assertEquals(containerid, cursor.getString(containerIdIndex));
             assertEquals(routeId, cursor.getInt(routeIdIndex));
-            assertEquals(userRowId, cursor.getInt(userIdIndex));
 
         }
         //No values returned

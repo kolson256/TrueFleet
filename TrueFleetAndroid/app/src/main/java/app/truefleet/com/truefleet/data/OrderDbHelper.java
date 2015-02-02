@@ -32,10 +32,7 @@ public class OrderDbHelper extends SQLiteOpenHelper {
 
                 OrderEntry.COLUMN_EXTERNAL_ID + " TEXT NOT NULL, " +
 
-                //the ID of the user/driver assigned to order
-                OrderEntry.COLUMN_USER_KEY + " INTEGER NOT NULL, " +
-                OrderEntry.COLUMN_CONTAINER_ID + " TEXT NOT NULL, " +
-                OrderEntry.COLUMN_ROUTE_KEY + " INTEGER NOT NULL, " +
+                OrderEntry.COLUMN_ROUTE_KEY + " INTEGER NOT NULL, " + //FK ROUTE TABLE
                 OrderEntry.COLUMN_RECEIPT_TIME + " TEXT NOT NULL, " +
 
                 OrderEntry.COLUMN_ORDER_TYPE + " TEXT NOT NULL, " +
@@ -56,7 +53,7 @@ public class OrderDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_ROUTE_TABLE = "CREATE TABLE " +
                 OrderContract.RouteDriverEntry.TABLE_NAME + " ( " +
                 OrderContract.RouteDriverEntry._ID + " INTEGER PRIMARY KEY, " +
-                OrderContract.RouteDriverEntry.COLUMN_USER_KEY + " TEXT NOT NULL) ";
+                OrderContract.RouteDriverEntry.COLUMN_USER_KEY + " INTEGER NOT NULL) "; //FK USER
 
 
         sqLiteDatabase.execSQL(SQL_CREATE_USER_TABLE);
