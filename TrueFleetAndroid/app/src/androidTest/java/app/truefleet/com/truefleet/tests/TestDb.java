@@ -7,7 +7,6 @@ import android.test.AndroidTestCase;
 import android.util.Log;
 
 import app.truefleet.com.truefleet.data.OrderContract;
-import app.truefleet.com.truefleet.data.OrderContract.OrderEntry;
 import app.truefleet.com.truefleet.data.OrderContract.UserEntry;
 import app.truefleet.com.truefleet.data.OrderDbHelper;
 
@@ -27,15 +26,14 @@ public class TestDb extends AndroidTestCase {
     public void testInsertReadDb() {
 
         String username = "test";
-        String internalid = "12345";
+        String orderid = "12345";
         String externalid = "56789";
-        String receipttime = "20141205";
+        String shipdate = "1423058445";
         String ordertype = "type";
-        String railLine = "rail";
-        String pickupcontact = "pickup";
-        String dropoffcontact = "dropoff";
-        String deliverywindowopen = "20141005";
-        String deliverywindowclose = "20141006";
+        String pickupstartdate = "1423058445";
+        String pickupenddate = "1423058485";
+        String deliverydeadline = "20141005";
+        String routeDriverNotes = "route driver notes";
 
         OrderDbHelper dbHelper = new OrderDbHelper(mContext);
 
@@ -53,66 +51,61 @@ public class TestDb extends AndroidTestCase {
         //ROUTE DRIVER TABLE
         ContentValues routeValues = new ContentValues();
         routeValues.put(OrderContract.RouteDriverEntry.COLUMN_USER_KEY, userRowId);
-
+        routeValues.put(OrderContract.RouteDriverEntry.COLUMN_NOTES, routeDriverNotes);
         long routeId = db.insert(OrderContract.RouteDriverEntry.TABLE_NAME, null, routeValues);
 
         assertTrue(routeId != -1);
 
 
         ContentValues values = new ContentValues();
-        values.put(OrderEntry.COLUMN_INTERNAL_ID, internalid);
-        values.put(OrderEntry.COLUMN_EXTERNAL_ID, externalid);
-        values.put(OrderEntry.COLUMN_ROUTE_KEY, routeId);
-        values.put(OrderEntry.COLUMN_RECEIPT_TIME, receipttime);
-        values.put(OrderEntry.COLUMN_ORDER_TYPE, ordertype);
-        values.put(OrderEntry.COLUMN_RAIL_LINE, railLine);
-        values.put(OrderEntry.COLUMN_PICKUP_CONTRACT, pickupcontact);
-        values.put(OrderEntry.COLUMN_DROPOFF_CONTRACT, dropoffcontact);
-        values.put(OrderEntry.COLUMN_DELIVERY_WINDOW_OPEN, deliverywindowopen);
-        values.put(OrderEntry.COLUMN_DELIVERY_WINDOW_CLOSE, deliverywindowclose);
+        values.put(OrderContract.LinehaulEntry.COLUMN_ORDER_ID, orderid);
+        values.put(OrderContract.LinehaulEntry.COLUMN_ROUTE_KEY, routeId);
+        values.put(OrderContract.LinehaulEntry.COLUMN_SHIP_DATE, shipdate);
+        values.put(OrderContract.LinehaulEntry.COLUMN_ORDER_TYPE, ordertype);
+        values.put(OrderContract.LinehaulEntry.COLUMN_PICKUP_START_DATE, pickupstartdate);
+        values.put(OrderContract.LinehaulEntry.COLUMN_PICKUP_END_DATE, pickupenddate);
+        values.put(OrderContract.LinehaulEntry.COLUMN_DELIVERY_DEADLINE, deliverydeadline);
 
-        long rowId = db.insert(OrderEntry.TABLE_NAME, null, values);
+        long rowId = db.insert(OrderContract.LinehaulEntry.TABLE_NAME, null, values);
 
         assertTrue(rowId != -1);
         Log.d(LOG_TAG, "Row ID: " + rowId);
 
         String[] columns = {
-                OrderEntry._ID,
-                OrderEntry.COLUMN_INTERNAL_ID,
-                OrderEntry.COLUMN_EXTERNAL_ID,
-                OrderEntry.COLUMN_ROUTE_KEY,
-                OrderEntry.COLUMN_RECEIPT_TIME,
-                OrderEntry.COLUMN_ORDER_TYPE,
-                OrderEntry.COLUMN_RAIL_LINE,
-                OrderEntry.COLUMN_PICKUP_CONTRACT,
-                OrderEntry.COLUMN_DROPOFF_CONTRACT,
-                OrderEntry.COLUMN_DELIVERY_WINDOW_OPEN,
-                OrderEntry.COLUMN_DELIVERY_WINDOW_CLOSE
+                OrderContract.LinehaulEntry._ID,
+                OrderContract.LinehaulEntry.COLUMN_ORDER_ID,
+                OrderContract.LinehaulEntry.COLUMN_ROUTE_KEY,
+                OrderContract.LinehaulEntry.COLUMN_SHIP_DATE,
+                OrderContract.LinehaulEntry.COLUMN_ORDER_TYPE,
+                OrderContract.LinehaulEntry.COLUMN_PICKUP_START_DATE,
+                OrderContract.LinehaulEntry.COLUMN_PICKUP_END_DATE,
+                OrderContract.LinehaulEntry.COLUMN_DELIVERY_DEADLINE,
         };
 
-        Cursor cursor = db.query(OrderEntry.TABLE_NAME,
+        Cursor cursor = db.query(OrderContract.LinehaulEntry.TABLE_NAME,
                 columns, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
-            int internalIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_INTERNAL_ID);
-            int externalIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_EXTERNAL_ID);
-            int routeIdIndex = cursor.getColumnIndex(OrderEntry.COLUMN_ROUTE_KEY);
-            int receiptTimeIndex = cursor.getColumnIndex(OrderEntry.COLUMN_RECEIPT_TIME);
-            int railLineIndex = cursor.getColumnIndex(OrderEntry.COLUMN_RAIL_LINE);
-            int pickupContractIndex = cursor.getColumnIndex(OrderEntry.COLUMN_PICKUP_CONTRACT);
-            int dropoffContractIndex = cursor.getColumnIndex(OrderEntry.COLUMN_DROPOFF_CONTRACT);
-            int deliveryWindowOpenIndex = cursor.getColumnIndex(OrderEntry.COLUMN_DELIVERY_WINDOW_OPEN);
-            int deliveryWindowCloseIndex = cursor.getColumnIndex(OrderEntry.COLUMN_DELIVERY_WINDOW_CLOSE);
+            int internalIdIndex = cursor.getColumnIndex(OrderContract.LinehaulEntry.COLUMN_ORDER_ID);
+            int routeIdIndex = cursor.getColumnIndex(OrderContract.LinehaulEntry.COLUMN_ROUTE_KEY);
+            int shipDateIndex = cursor.getColumnIndex(OrderContract.LinehaulEntry.COLUMN_SHIP_DATE);
+            int pickupStartDateIndex = cursor.getColumnIndex(OrderContract.LinehaulEntry.COLUMN_PICKUP_START_DATE);
+            int pickupEndDateIndex = cursor.getColumnIndex(OrderContract.LinehaulEntry.COLUMN_PICKUP_END_DATE);
+            int deliveryDeadlineIndex = cursor.getColumnIndex(OrderContract.LinehaulEntry.COLUMN_DELIVERY_DEADLINE);
 
-            assertEquals(internalid, cursor.getString(internalIdIndex));
-            assertEquals(externalid, cursor.getString(externalIdIndex));
+            assertEquals(orderid, cursor.getString(internalIdIndex));
             assertEquals(routeId, cursor.getInt(routeIdIndex));
+            assertEquals(pickupstartdate, cursor.getString(pickupStartDateIndex));
+            assertEquals(shipdate, cursor.getString(shipDateIndex));
+            assertEquals(pickupenddate, cursor.getString(pickupEndDateIndex));
+            assertEquals(deliverydeadline, cursor.getString(deliveryDeadlineIndex));
+
+            assertNotNull(OrderContract.getDateFromDb(pickupstartdate));
 
         }
         //No values returned
         else {
             assertEquals("test", "failed");
         }
-
     }
 }
