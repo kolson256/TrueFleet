@@ -2,12 +2,9 @@ package com.trufleet.services.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trufleet.services.TruFleetAPIConfiguration;
-import com.trufleet.services.core.AppUser;
-import com.trufleet.services.core.UserLogin;
+import com.trufleet.services.core.representations.AppUser;
 import com.trufleet.services.jdbi.AppUserDAO;
-import com.trufleet.services.jdbi.UserLoginDAO;
 import io.dropwizard.setup.Environment;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.skife.jdbi.v2.DBI;

@@ -16,7 +16,7 @@
 
 package com.trufleet.services.jdbi;
 
-import com.trufleet.services.core.Organization;
+import com.trufleet.services.core.representations.Organization;
 import com.trufleet.services.jdbi.mapper.OrganizationMapper;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;

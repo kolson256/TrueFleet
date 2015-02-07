@@ -111,6 +111,7 @@ public class AdminJDBCRealm extends JdbcRealm {
     protected Set getRoleNamesForUser(Connection conn, String username) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
+
         Set roleNames = new LinkedHashSet();
 
         try {

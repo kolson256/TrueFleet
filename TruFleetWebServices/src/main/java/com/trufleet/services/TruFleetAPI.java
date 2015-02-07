@@ -1,8 +1,11 @@
 package com.trufleet.services;
 
+import com.trufleet.services.core.representations.Organization;
 import com.trufleet.services.resources.*;
 
 import io.dropwizard.Application;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -34,6 +37,12 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
         }
     };
 
+    private final HibernateBundle<TruFleetAPIConfiguration> hibernate = new HibernateBundle<TruFleetAPIConfiguration>(Organization.class) {
+        public DataSourceFactory getDataSourceFactory(TruFleetAPIConfiguration configuration) {
+            return configuration.getTenantDatabaseFactory();
+        }
+    };
+
     public static void main(String[] args) throws Exception {
         new TruFleetAPI().run(new String[]{"server", System.getProperty("dropwizard.config")});
     }
@@ -46,6 +55,7 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
     @Override
     public void initialize(Bootstrap<TruFleetAPIConfiguration> bootstrap) {
         bootstrap.addBundle(shiro);
+        bootstrap.addBundle(hibernate);
     }
 
     @Override

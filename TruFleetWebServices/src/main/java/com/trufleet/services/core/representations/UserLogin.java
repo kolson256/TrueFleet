@@ -1,4 +1,4 @@
-package com.trufleet.services.core;
+package com.trufleet.services.core.representations;
 
 /**
  * Created by Richard Morgan on 10/27/2014.

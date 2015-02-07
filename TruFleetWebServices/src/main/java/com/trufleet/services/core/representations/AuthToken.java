@@ -1,4 +1,4 @@
-package com.trufleet.services.core;
+package com.trufleet.services.core.representations;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

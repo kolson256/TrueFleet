@@ -1,9 +1,9 @@
-package com.trufleet.services.api;
+package com.trufleet.services.core.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.trufleet.services.api.enums.StatusEnum;
+import com.trufleet.services.core.api.enums.StatusEnum;
 
 /**
  * Created by Richard Morgan on 12/8/2014.

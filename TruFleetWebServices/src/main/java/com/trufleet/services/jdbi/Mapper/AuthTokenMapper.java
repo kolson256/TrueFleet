@@ -1,6 +1,6 @@
 package com.trufleet.services.jdbi.mapper;
 
-import com.trufleet.services.core.AuthToken;
+import com.trufleet.services.core.representations.AuthToken;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 

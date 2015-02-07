@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.trufleet.services.core;
+package com.trufleet.services.core.representations;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -22,15 +22,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 /**
  * Created by Richard Morgan on 10/27/2014.
  */
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
-import javax.xml.crypto.Data;
 
 /**
  * Created by Richard Morgan on 10/27/2014.

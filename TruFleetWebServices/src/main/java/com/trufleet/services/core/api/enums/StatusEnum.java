@@ -1,4 +1,4 @@
-package com.trufleet.services.api.enums;
+package com.trufleet.services.core.api.enums;
 
 /**
  * Created by Richard Morgan on 12/8/2014.

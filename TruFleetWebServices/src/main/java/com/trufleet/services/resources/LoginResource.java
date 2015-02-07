@@ -1,9 +1,9 @@
 package com.trufleet.services.resources;
 
 import com.trufleet.services.TruFleetAPIConfiguration;
-import com.trufleet.services.core.AppUser;
-import com.trufleet.services.core.AuthToken;
-import com.trufleet.services.core.UserLogin;
+import com.trufleet.services.core.representations.AppUser;
+import com.trufleet.services.core.representations.AuthToken;
+import com.trufleet.services.core.representations.UserLogin;
 import com.trufleet.services.jdbi.*;
 import io.dropwizard.setup.Environment;
 import org.json.JSONException;

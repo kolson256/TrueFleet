@@ -2,7 +2,7 @@ package com.trufleet.services.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trufleet.services.TruFleetAPIConfiguration;
-import com.trufleet.services.core.Organization;
+import com.trufleet.services.core.representations.Organization;
 import com.trufleet.services.jdbi.OrganizationDAO;
 import io.dropwizard.jackson.Jackson;
 import io.dropwizard.setup.Environment;
