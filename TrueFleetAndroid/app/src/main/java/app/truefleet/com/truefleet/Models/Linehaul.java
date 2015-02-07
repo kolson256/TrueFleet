@@ -1,72 +1,37 @@
 package app.truefleet.com.truefleet.Models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 /**
  * Created by Chris Lacy on 2/4/2015.
  */
-public class Linehaul {
-    private int id;
+@Table(name = "Linehaul")
+public class Linehaul extends Model {
 
-    private int orderId;
-    private int externalId;
-    private int routeId;
-    private int shipdate;
-    private int pickupStartDate;
-    private int pickupEndDate;
-    private int deliveryDeadline;
+    @Column(name = "order", index = true)
+    public int orderId;
 
-    public int getShipdate() {
-        return shipdate;
-    }
+    @Column(name = "order", index = true)
+    public int externalId;
 
-    public void setShipdate(int shipdate) {
-        this.shipdate = shipdate;
-    }
+    @Column(name = "order", index = true)
+    public int routeId;
 
-    public int getOrderId() {
-        return orderId;
-    }
+    @Column(name = "order", index = true)
+    public int shipdate;
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
+    @Column(name = "order", index = true)
+    public int pickupStartDate;
 
-    public int getExternalId() {
-        return externalId;
-    }
+    @Column(name = "order", index = true)
+    public int pickupEndDate;
 
-    public void setExternalId(int externalId) {
-        this.externalId = externalId;
-    }
+    @Column(name = "order", index = true)
+    public int deliveryDeadline;
 
-    public int getRouteId() {
-        return routeId;
-    }
+    public Linehaul() { super(); }
 
-    public void setRouteId(int routeId) {
-        this.routeId = routeId;
-    }
 
-    public int getPickupStartDate() {
-        return pickupStartDate;
-    }
-
-    public void setPickupStartDate(int pickupStartDate) {
-        this.pickupStartDate = pickupStartDate;
-    }
-
-    public int getPickupEndDate() {
-        return pickupEndDate;
-    }
-
-    public void setPickupEndDate(int pickupEndDate) {
-        this.pickupEndDate = pickupEndDate;
-    }
-
-    public int getDeliveryDeadline() {
-        return deliveryDeadline;
-    }
-
-    public void setDeliveryDeadline(int deliveryDeadline) {
-        this.deliveryDeadline = deliveryDeadline;
-    }
 }
