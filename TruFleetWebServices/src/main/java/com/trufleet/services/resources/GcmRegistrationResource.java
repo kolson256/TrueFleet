@@ -48,6 +48,7 @@ public class GcmRegistrationResource extends BaseResource {
 
         try {
             JSONObject request = new JSONObject(body);
+            System.out.println(request.toString());
             username = request.getString("username");
             registrationId = request.getString("registrationId");
             buildTenantDb(tenantId, authToken);
@@ -88,7 +89,6 @@ public class GcmRegistrationResource extends BaseResource {
             response.put("message", "success");
             return Response.status(Response.Status.OK).build();
         }
-
     }
 
 }

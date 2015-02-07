@@ -13,6 +13,8 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_order_login">OrderActivity</string>
     <string name="Logout">Logout</string>
+    <string name ="localhost">"http://127.0.0.1:8080/"</string>
+    <string name = "androidEmulator">"http://10.0.2.2:8080/"</string>
 
     <style name="ButtonText">
         <item name="android:layout_width">fill_parent</item>

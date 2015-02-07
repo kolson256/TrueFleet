@@ -20,7 +20,7 @@
 
 
     <EditText
-        android:id="@+id/textRailLine"
+        android:id="@+id/textUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Username"
@@ -44,9 +44,9 @@
         android:drawableLeft="@drawable/password"
         android:hint="Password"
         android:inputType="textPassword"
-        android:layout_below="@+id/textRailLine"
-        android:layout_alignRight="@+id/textRailLine"
-        android:layout_alignLeft="@+id/textRailLine" />
+        android:layout_below="@+id/textUsername"
+        android:layout_alignRight="@+id/textUsername"
+        android:layout_alignLeft="@+id/textUsername" />
 
     <Button
         android:id="@+id/buttonLogin"

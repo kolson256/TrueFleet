@@ -50,11 +50,7 @@ public class IMTOrder {
         }
         return instance;
     }
- //   public IMTOrder(String containerid, String orderType) {
-  //      this.container = containerid;
-   //     this.orderType = orderType;
-    //    this.receiptTimestamp = System.currentTimeMillis();
-    //}
+
     public void setStatus(String status) { this.status = status; }
     public String getStatus() { return status; }
     public long getReceiptTimestamp() {

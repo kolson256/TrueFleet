@@ -22,4 +22,15 @@ From the PostgreSQL [Documentation][d_src]
   psql dbname < infile
 ````
 
+Creating a database backup in pgAdmin
+-------------
+
+Right click on database -> Select Backup
+
+Click on '...' button -> Select file location
+
+Ensure filename ends in .backup
+
+Select backup
+
 

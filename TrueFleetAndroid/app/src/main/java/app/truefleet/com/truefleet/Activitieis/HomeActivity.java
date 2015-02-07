@@ -16,7 +16,6 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 
-import app.truefleet.com.truefleet.Fragments.OrderListFragment;
 import app.truefleet.com.truefleet.Models.IMTOrder;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Resources.GooglePlayServicesCheck;
@@ -26,7 +25,7 @@ public class HomeActivity extends Activity {
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     LoginManager loginManager;
-    OrderListFragment orderListFragment;
+
     GoogleCloudMessaging gcm;
     String regid;
     private final String PROJECT_NUMBER = "171359155716";
@@ -46,17 +45,13 @@ public class HomeActivity extends Activity {
         getActionBar().setIcon(R.drawable.orders);
         gcmSetup();
 
-
-
         if (savedInstanceState == null) {
 
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new HomeFragment())
                     .commit();
         }
-
     }
-
 
     private synchronized void gcmSetup() {
         LoginManager loginManager = new LoginManager(context);
@@ -72,7 +67,6 @@ public class HomeActivity extends Activity {
             if (regid.isEmpty()|| regid == null) {
                 registerInBackground();
             }
-
         }
         else {
             Log.i(LOG_TAG, "No valid Google Play Services APK found.");
@@ -98,7 +92,7 @@ public class HomeActivity extends Activity {
 
                     msg = "Device registered, registration ID=" + regid;
                     Log.i(LOG_TAG, msg);
-                   // sendRegistrationIdToBackend();
+
                     if (loginManager == null)
                         loginManager = new LoginManager(context);
                     loginManager.storeRegistrationId(regid);
@@ -123,16 +117,16 @@ public class HomeActivity extends Activity {
 
     protected void onResume() {
         super.onResume();
-      //  gcmSetup();
+
     }
     private boolean checkPlayServices() {
-        GooglePlayServicesCheck playServicesCheck = new GooglePlayServicesCheck(getApplicationContext());
+       GooglePlayServicesCheck playServicesCheck = new GooglePlayServicesCheck(getApplicationContext());
        GoogleCloudMessaging gcm =  GoogleCloudMessaging.getInstance(context);
 
 
         if (!playServicesCheck.checkGooglePlayServices()) {
            // Dialog dialog = GooglePlayServicesUtil.getErrorDialog(playServicesCheck.getResultCode(), this, playServicesCheck.getRQS_GooglePlayServices());
-              System.out.println("good play services not i nstalled");
+              System.out.println("google play services not installed");
            // if (dialog != null)
                 System.out.println("show dialog");//todo: redirect to login and show dialog?
               //  dialog.show();
@@ -145,10 +139,6 @@ public class HomeActivity extends Activity {
         return true;
     }
 
-
-    private void sendRegistrationIdToBackend() {
-        //TODO: is this being sent when user logs in?
-    }
     public static void showOkDialogWithText(Context context, String messageText)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -194,10 +184,5 @@ public class HomeActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-
 
 }

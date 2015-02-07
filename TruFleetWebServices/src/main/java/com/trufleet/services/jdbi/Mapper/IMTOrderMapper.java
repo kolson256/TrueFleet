@@ -6,6 +6,7 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 /**
  * Created by Kyle Olson on 11/3/2014.
@@ -16,7 +17,7 @@ public class IMTOrderMapper implements ResultSetMapper<IMTOrder> {
         return new IMTOrder(
                 r.getLong("receipttime"),
                 r.getString("ordertype"),
-                r.getString("internalid"),
+               r.getString("internalid"),
                 r.getString("externalid"),
                 r.getString("containerid"),
                 r.getString("railline"),

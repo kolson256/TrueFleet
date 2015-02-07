@@ -173,7 +173,11 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
     @Override
     public void onStop()
     {
-       unregisterReceiver(broadcastReceiver);
+        try {
+            unregisterReceiver(broadcastReceiver);
+        } catch (Exception e) {
+            Log.d(LOG_TAG, "Receiver already unregistered");
+        }
         super.onStop();
     }
 
