@@ -18,7 +18,7 @@ public class MainPanelFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_panel, container, false);
-        System.out.println("IN MAIN PANEL");
+
         return view;
     }
     public void updateOrderView(int position) {

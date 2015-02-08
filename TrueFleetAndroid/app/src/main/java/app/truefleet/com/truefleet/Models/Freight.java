@@ -14,6 +14,9 @@ public class Freight extends Model {
     @Column(name = "container", index = true)
     public Containers container;
 
+    @Column
+    public Linehaul linehaul;
+
     @Column(name = "description")
     public String description;
 
@@ -33,9 +36,10 @@ public class Freight extends Model {
         super();
     }
 
-    public Freight(Containers container, String description, int quantity, int weight, String seal, String notes) {
+    public Freight(Containers container, Linehaul linehaul, String description, int quantity, int weight, String seal, String notes) {
         super();
         this.container =container;
+        this.linehaul = linehaul;
         this.description =  description;
         this.quantity = quantity;
         this.weight = weight;

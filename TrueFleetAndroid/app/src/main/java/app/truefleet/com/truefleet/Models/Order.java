@@ -6,10 +6,11 @@ import com.activeandroid.annotation.Table;
 
 import java.sql.Date;
 
+
 /**
  * Created by night_000 on 10/28/2014.
  */
-@Table(name = "Order")
+@Table(name = "Orders")
 public class Order extends Model {
 
     @Column
@@ -19,7 +20,7 @@ public class Order extends Model {
     public  Contact contact;
 
     @Column
-    public  String orderid;
+    public  int orderid;
 
     @Column
     public String externalId;
@@ -35,6 +36,20 @@ public class Order extends Model {
 
 
     public Order() { super(); }
+
+    public Order(Account account, Contact contact, int orderid,
+                  String externalId, String notes, Date receiptDate, String orderType) {
+        super();
+
+        this.account = account;
+        this.contact = contact;
+        this.orderid = orderid;
+        this.externalId = externalId;
+        this.notes = notes;
+        this.receiptDate = receiptDate;
+        this.orderType = orderType;
+    }
+
 
 
 }

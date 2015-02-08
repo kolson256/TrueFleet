@@ -23,7 +23,7 @@ public class Contact extends Model {
     public String suffix;
 
     @Column
-    public String mailingNtreet;
+    public String mailingStreet;
 
     @Column
     public String mailingCity;
@@ -49,5 +49,29 @@ public class Contact extends Model {
     @Column
     public String notes;
 
+    public Account account;
+
     public Contact() { super();  }
+
+    public Contact(int accountid, String firstName, String lastName, String suffix,
+                   String mailingStreet, String mailingState, String mailingCity, String mailingPostalCode,
+                   String mailingCountry, String phone,
+                   String mobilePhone, String fax, String notes, Account account) {
+        super();
+        this.accountid = accountid;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.suffix = suffix;
+        this.mailingStreet = mailingStreet;
+        this.mailingState = mailingState;
+        this.mailingCity = mailingCity;
+        this.mailingPostalCode = mailingPostalCode;
+        this.mailingCountry = mailingCountry;
+        this.phone = phone;
+        this.mobilePhone = mobilePhone;
+        this.fax = fax;
+        this.notes = notes;
+        this.account = account;
+    }
+
 }
