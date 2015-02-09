@@ -10,58 +10,22 @@
 
 
     <TextView
-        android:id="@+id/container_description"
+        android:id="@+id/freight_description"
         android:layout_columnSpan="2"
         android:layout_width="0dp"
         android:layout_gravity="start|fill_horizontal"
-        android:text="ContainerDescription"
+        android:text="Freightdescription"
         style="@style/Header"
         />
     <TextView
         android:layout_gravity="start|center_vertical"
-        android:text="Volume"
+        android:text="Quantity"
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/container_volume"
+        android:id="@+id/freight_quantity"
         android:text="0"
         android:layout_width="0dp"
-        android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/RowValue"
-        />
-    <TextView
-        android:layout_gravity="start|center_vertical"
-        android:text="Length"
-        style="@style/RowTitle"
-        />
-    <TextView
-        android:id="@+id/container_length"
-        android:text="0"
-        android:layout_width="0dp"
-        android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/RowValue"
-        />
-    <TextView
-        android:layout_gravity="start|center_vertical"
-        android:text="Width"
-        style="@style/RowTitle"
-        />
-    <TextView
-        android:id="@+id/container_width"
-        android:layout_width="0dp"
-        android:text="0"
-        android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/RowValue"
-        />
-    <TextView
-        android:layout_gravity="start|center_vertical"
-        android:text="Height"
-        style="@style/RowTitle"
-        />
-    <TextView
-        android:id="@+id/container_height"
-        android:layout_width="0dp"
-        android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
@@ -71,41 +35,35 @@
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/container_weight"
+        android:id="@+id/freight_weight"
+        android:text="0"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/RowValue"
+        />
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Seal"
+        style="@style/RowTitle"
+        />
+    <TextView
+        android:id="@+id/freight_seal"
         android:layout_width="0dp"
         android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
-
     <TextView
         android:layout_gravity="start|center_vertical"
         android:text="Notes"
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/container_notes"
+        android:id="@+id/freight_notes"
         android:layout_width="0dp"
         android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
-
-    <TableRow
-        android:layout_marginBottom="10dip"
-        android:background="@drawable/rounded_edittext" >
-
-        <TextView
-            style="@style/BoldText"
-            android:padding="7dip"
-            android:text="test" />
-
-        <TextView
-            android:id="@+id/log_priority"
-            style="@style/DetailRightText"
-            android:gravity="right"
-            android:padding="7dip"
-            android:singleLine="true" />
-    </TableRow>
 
 </GridLayout>

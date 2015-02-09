@@ -4,9 +4,12 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.util.List;
+
 /**
  * Created by Chris Lacy on 2/5/2015.
  */
+
 @Table(name = "Account")
 public class Account extends Model {
     @Column(name = "name")
@@ -56,4 +59,10 @@ public class Account extends Model {
         this.phone = phone;
         this.fax = fax;
     }
+
+    public List<Contact> contacts() {
+
+        return getMany(Contact.class, "Account");
+    }
+
 }

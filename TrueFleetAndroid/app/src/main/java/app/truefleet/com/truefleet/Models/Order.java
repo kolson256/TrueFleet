@@ -13,10 +13,12 @@ import java.sql.Date;
 @Table(name = "Orders")
 public class Order extends Model {
 
-    @Column
+    @Column(name = "Account",
+            onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public  Account account;
 
-    @Column
+    @Column(name = "Contact",
+            onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public  Contact contact;
 
     @Column
@@ -49,7 +51,5 @@ public class Order extends Model {
         this.receiptDate = receiptDate;
         this.orderType = orderType;
     }
-
-
 
 }

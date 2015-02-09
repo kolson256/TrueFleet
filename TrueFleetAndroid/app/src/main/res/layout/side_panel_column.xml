@@ -5,6 +5,8 @@
     android:text="Column"
     android:id="@+id/side_panel_column_textview"
     android:textAlignment="gravity"
-    android:minHeight="45dp">
+    android:minHeight="45dp"
+    style="@style/ListViewItem"
+    >
 
 </TextView>

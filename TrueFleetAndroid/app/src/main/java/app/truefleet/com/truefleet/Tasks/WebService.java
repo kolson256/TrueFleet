@@ -33,8 +33,6 @@ public class WebService {
 
     public static WebServiceHelper invokeWSPost(String serviceName, String body) throws MalformedURLException, UnsupportedEncodingException {
 
-        System.out.println(localhost);
-        System.out.println(androidEmulator);
         HttpPost post = new HttpPost(URL + serviceName);
         post.setHeader("Content-type", "application/json");
         post.setHeader("Accept", "application/json");
@@ -94,8 +92,7 @@ public class WebService {
     }
 
     private static WebServiceHelper invoke(String serviceName, String body, HttpPost post) throws MalformedURLException, UnsupportedEncodingException {
-        System.out.println(localhost);
-        System.out.println(androidEmulator);
+
         post.setEntity(new StringEntity(body));
         try {
             String error = "";

@@ -33,7 +33,6 @@ public class HomeFragment extends Fragment {
     private final String LOG_TAG = HomeFragment.class.getSimpleName();
     public HomeFragment() {
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,27 +44,28 @@ public class HomeFragment extends Fragment {
             updateUI();
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         LoginManager loginManager = new LoginManager(getActivity().getApplicationContext());
         Intent intent = getActivity().getIntent();
 
         if (loginManager.checkLogin())
             getActivity().finish();
+
         broadcastReceiver = new FragmentReceiverHome();
         getActivity().registerReceiver(broadcastReceiver, new IntentFilter("fragmentupdater"));
 
         User user = loginManager.getUser();
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         TextView tvWelcome = (TextView) rootView.findViewById(R.id.welcome_text);
+
         LoginManager lm = new LoginManager(getActivity().getApplicationContext());
-
-
         tvWelcome.setText("Welcome, " + user.getUsername() + "!");
         ordersReceived = (TextView) rootView.findViewById(R.id.orderreceived_text);
         updateUI();
+
     /*
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
                 String welcome = intent.getStringExtra(Intent.EXTRA_TEXT);

@@ -17,15 +17,17 @@ import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Resources.ConnectionDetector;
 import app.truefleet.com.truefleet.Resources.LoginManager;
 import app.truefleet.com.truefleet.Tasks.LoginTask;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 public class LoginActivity extends Activity {
     private final String LOG_TAG = LoginActivity.class.getSimpleName();
 
-    private EditText  username=null;
-    private EditText  password=null;
-    private TextView attempts;
-    private Button login;
-    private int counter = 3;
+    @InjectView(R.id.textUsername) EditText username;
+    @InjectView(R.id.textPassword) EditText password;
+    @InjectView(R.id.textView5) TextView attempts;
+    @InjectView(R.id.buttonLogin) Button login;
+
     ConnectionDetector cd;
     boolean connectedToInternet = false;
 
@@ -33,17 +35,11 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        ButterKnife.inject(this);
         setTitle("Login");
         getActionBar().setIcon(R.drawable.orders);
 
         cd = new ConnectionDetector(getApplicationContext());
-
-        username = (EditText)findViewById(R.id.textUsername);
-        password = (EditText)findViewById(R.id.textPassword);
-        attempts = (TextView)findViewById(R.id.textView5);
-        attempts.setText(Integer.toString(counter));
-        login = (Button)findViewById(R.id.buttonLogin);
 
         LoginManager loginManager = new LoginManager(getApplicationContext());
 
@@ -79,6 +75,20 @@ public class LoginActivity extends Activity {
                     displayToast("Please enter a password");
                 else
                 {
+
+                   // RestClient rc = new RestClient();
+                    //ApiService as = rc.getApiService();
+                   // as.login(user, pass, new RestCallback<JSONObject>() {
+                  //      @Override
+                  //      public void success(JSONObject jsonObject, Response response) {
+                            // success!
+                   //         Log.i("App", jsonObject.toString());
+                   //     }
+//
+                  //      public void failure(RestError error) {
+                   //         Log.i("App", "retrofit error");
+                  //      }
+                  //  });
                     LoginTask loginTask = new LoginTask(this);
                     loginTask.execute(user, pass);
 

@@ -5,6 +5,7 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Created by Chris Lacy on 2/4/2015.
@@ -15,21 +16,28 @@ public class Linehaul extends Model {
     @Column(name = "orderid", index = true)
     public int orderId;
 
-    @Column(name = "Orders", index = true)
+    @Column(name = "Orders",
+            onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Order order;
 
 
     @Column(name = "routeId", index = true)
     public int routeId;
 
-    @Column
+    @Column(name = "Shipper",
+            onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Account shipper;
 
-    @Column
+    @Column(name = "Terminal",
+            onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Account terminal;
 
-    @Column
+    @Column(name = "Receiver",
+            onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Account receiver;
+
+    @Column(name = "notes")
+    public String notes;
 
     @Column(name = "shipdate")
     public Date shipdate;
@@ -46,8 +54,9 @@ public class Linehaul extends Model {
     public Linehaul() { super(); }
 
     public Linehaul(int orderId, Order order, int routeId, Account shipper,
-                    Account terminal, Account receiver, Date shipdate,
-                    Date pickupStartDate, Date pickupEndDate, Date deliveryDeadline) {
+                    Account terminal, Account receiver, String notes,
+                    Date shipdate, Date pickupStartDate, Date pickupEndDate,
+                    Date deliveryDeadline) {
         super();
 
         this.orderId = orderId;
@@ -56,10 +65,14 @@ public class Linehaul extends Model {
         this.shipper = shipper;
         this.terminal = terminal;
         this.receiver = receiver;
+        this.notes = notes;
         this.shipdate = shipdate;
         this.pickupStartDate = pickupStartDate;
         this.pickupEndDate = pickupEndDate;
         this.deliveryDeadline = deliveryDeadline;
     }
 
+    public List<Freight> freights() {
+        return getMany(Freight.class, "Linehaul");
+    }
 }
