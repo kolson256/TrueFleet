@@ -1,10 +1,8 @@
 package com.trufleet.services.resources;
 
 import com.trufleet.services.TruFleetAPIConfiguration;
-import com.trufleet.services.auth.InvalidTenantIdException;
-import com.trufleet.services.auth.InvalidTokenException;
-import com.trufleet.services.jdbi.AppUserDAO;
-import com.trufleet.services.jdbi.UserLoginDAO;
+import com.trufleet.services.dao.AppUserDAO;
+import com.trufleet.services.dao.UserLoginDAO;
 import io.dropwizard.setup.Environment;
 import org.json.JSONException;
 import org.json.JSONObject;

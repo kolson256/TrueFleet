@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.trufleet.services.jdbi;
+package com.trufleet.services.dao;
 
 import com.trufleet.services.core.representations.UserLogin;
-import com.trufleet.services.jdbi.mapper.UserLoginMapper;
+import com.trufleet.services.dao.mapper.UserLoginMapper;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;

@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/TruFleetAdmin</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/TruFleet</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <mapping class="com.trufleet.services.domain.representations.AccountEntity"/>
         <mapping class="com.trufleet.services.domain.representations.ChargeEntity"/>
@@ -12,12 +12,11 @@
         <mapping class="com.trufleet.services.domain.representations.ContainerEntity"/>
         <mapping class="com.trufleet.services.domain.representations.FreightEntity"/>
         <mapping class="com.trufleet.services.domain.representations.LinehaulEntity"/>
-        <mapping class="com.trufleet.services.domain.representations.LinehaulfreightEntity"/>
         <mapping class="com.trufleet.services.domain.representations.OrderEntity"/>
         <mapping class="com.trufleet.services.domain.representations.RouteEntity"/>
-        <mapping class="com.trufleet.services.domain.representations.RoutedriverEntity"/>
-        <mapping class="com.trufleet.services.core.representations.OrganizationEntity"/>
-        <mapping class="com.trufleet.services.core.representations.UserloginEntity"/>
+        <mapping class="com.trufleet.services.domain.representations.ApproleEntity"/>
+        <mapping class="com.trufleet.services.domain.representations.AppuserEntity"/>
+        <mapping class="com.trufleet.services.domain.representations.AuthtokenEntity"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

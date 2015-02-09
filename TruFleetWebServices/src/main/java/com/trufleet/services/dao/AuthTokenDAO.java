@@ -1,7 +1,7 @@
-package com.trufleet.services.jdbi;
+package com.trufleet.services.dao;
 
 import com.trufleet.services.core.representations.AuthToken;
-import com.trufleet.services.jdbi.mapper.AuthTokenMapper;
+import com.trufleet.services.dao.mapper.AuthTokenMapper;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;

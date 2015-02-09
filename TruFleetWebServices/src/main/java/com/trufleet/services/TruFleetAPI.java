@@ -1,6 +1,8 @@
 package com.trufleet.services;
 
 import com.trufleet.services.core.representations.Organization;
+import com.trufleet.services.dao.ContactEntityDAO;
+import com.trufleet.services.domain.representations.*;
 import com.trufleet.services.resources.*;
 
 import io.dropwizard.Application;
@@ -37,7 +39,10 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
         }
     };
 
-    private final HibernateBundle<TruFleetAPIConfiguration> hibernate = new HibernateBundle<TruFleetAPIConfiguration>(Organization.class) {
+    private final HibernateBundle<TruFleetAPIConfiguration> hibernate = new HibernateBundle<TruFleetAPIConfiguration>
+            (AccountEntity.class, ChargeEntity.class, ContactEntity.class, ContainerEntity.class, FreightEntity.class,
+                    LinehaulEntity.class, OrderEntity.class, RouteEntity.class, ApproleEntity.class, AppuserEntity.class,
+                    AuthtokenEntity.class) {
         public DataSourceFactory getDataSourceFactory(TruFleetAPIConfiguration configuration) {
             return configuration.getTenantDatabaseFactory();
         }
@@ -63,14 +68,14 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
 
         final DBIFactory factory = new DBIFactory();
         final DBI adminDBI = factory.build(environment, configuration.getAdminDatabaseFactory(), "TFAdmin");
-
         environment.jersey().register(new LoginResource(adminDBI, configuration, environment));
         environment.jersey().register(new ProvisionUserResource(adminDBI, configuration, environment));
         environment.jersey().register(new OrganizationResource(adminDBI, configuration, environment));
         environment.jersey().register(new NotificationResource(adminDBI, configuration, environment));
         environment.jersey().register(new GcmRegistrationResource(adminDBI, configuration, environment));
-       // environment.jersey().register(new IntermodalContainerResource(adminDBI, configuration, environment));
-        environment.jersey().register(new IMTOrderResource(adminDBI, configuration, environment));
+
+        final ContactEntityDAO contactDAO = new ContactEntityDAO(hibernate.getSessionFactory());
+        environment.jersey().register(new ContactResource(contactDAO));
 
         environment.jersey().register(new ShiroExceptionMapper());
         environment.getApplicationContext().setSessionHandler(new SessionHandler());

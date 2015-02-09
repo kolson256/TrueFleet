@@ -28,6 +28,8 @@ public class AdminJDBCRealm extends JdbcRealm {
 
     protected boolean permissionsLookupEnabled = false;
 
+    protected int connectionTimeout;
+
     private static final Logger log = LoggerFactory.getLogger(AdminJDBCRealm.class);
 
     public AdminJDBCRealm() {
@@ -143,5 +145,15 @@ public class AdminJDBCRealm extends JdbcRealm {
 
         return roleNames;
     }
+
+
+    public int getConnectionTimeout() {
+        return connectionTimeout;
+    }
+
+    public void setConnectionTimeout(int connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+    }
+
 
 }

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.trufleet.services.jdbi;
+package com.trufleet.services.dao;
 
 import com.trufleet.services.core.representations.Organization;
-import com.trufleet.services.jdbi.mapper.OrganizationMapper;
+import com.trufleet.services.dao.mapper.OrganizationMapper;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.sqlobject.mixins.Transactional;

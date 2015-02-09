@@ -1,4 +1,4 @@
-package com.trufleet.services.jdbi.mapper;
+package com.trufleet.services.dao.mapper;
 
 import com.trufleet.services.core.representations.AppUser;
 import org.skife.jdbi.v2.StatementContext;

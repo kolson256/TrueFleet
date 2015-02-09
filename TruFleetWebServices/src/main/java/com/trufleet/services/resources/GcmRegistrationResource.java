@@ -1,11 +1,11 @@
 package com.trufleet.services.resources;
 
 import com.trufleet.services.TruFleetAPIConfiguration;
-//import com.trufleet.services.jdbi.DriverUserDAO;
+//import com.trufleet.services.dao.DriverUserDAO;
 import com.trufleet.services.core.representations.AuthToken;
-import com.trufleet.services.jdbi.AppUserDAO;
-import com.trufleet.services.jdbi.AuthTokenDAO;
-import com.trufleet.services.jdbi.UserLoginDAO;
+import com.trufleet.services.dao.AppUserDAO;
+import com.trufleet.services.dao.AuthTokenDAO;
+import com.trufleet.services.dao.UserLoginDAO;
 import io.dropwizard.setup.Environment;
 import org.json.JSONException;
 import org.json.JSONObject;
