@@ -47,6 +47,7 @@ public class OrderContract {
     public static final class RouteDriverEntry implements BaseColumns {
         public static final String TABLE_NAME = "routedriver";
 
+        public static final String COLUMN_ID = "_id";
         public static final String COLUMN_USER_KEY = "userid";
         public static final String COLUMN_NOTES = "notes";
 
@@ -67,6 +68,7 @@ public class OrderContract {
     public static final class FreightEntry implements BaseColumns {
         public static final String TABLE_NAME = "freight";
 
+        public static final String COLUMN_ID = "_id";
         public static final String COLUMN_CONTAINER_ID = "containerid";
 
         public static final String COLUMN_LINEHAUL_ID = "internalid";
@@ -96,6 +98,7 @@ public class OrderContract {
     public static final class ContainerEntry implements BaseColumns {
         public static final String TABLE_NAME = "container";
 
+        public static final String COLUMN_ID = "_id";
         public static final String COLUMN_DESCRIPTION = "description";
 
         public static final String COLUMN_VOLUME = "volume";
@@ -123,6 +126,7 @@ public class OrderContract {
     public static final class OrderEntry implements BaseColumns {
         public static final String TABLE_NAME = "orders";
 
+        public static final String COLUMN_ID = "_id";
         public static final String COLUMN_ORDER_ID = "orderid";
         public static final String COLUMN_EXTERNAL_ID = "externalid";
         public static final String COLUMN_NOTES = "notes";
@@ -145,6 +149,7 @@ public class OrderContract {
 
         public static final String TABLE_NAME = "linehaul";
 
+        public static final String COLUMN_ID = "_id";
         public static final String COLUMN_ORDER_ID = "orderid";
         public static final String COLUMN_EXTERNAL_ID = "externalid";
         //Foreign Key for RouteDriver
@@ -172,6 +177,7 @@ public class OrderContract {
 
         public static final String TABLE_NAME = "users";
 
+        public static final String COLUMN_ID = "_id";
         public static final String COLUMN_USERNAME = "username";
 
         public static final Uri CONTENT_URI =

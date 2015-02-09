@@ -20,10 +20,22 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <!--ActiveAndroid -->
+        <meta-data android:name="AA_DB_NAME" android:value="TruFleet.db" />
+        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="app.truefleet.com.truefleet.Models.Freight, app.truefleet.com.truefleet.Models.Account,
+                            app.truefleet.com.truefleet.Models.Contact, app.truefleet.com.truefleet.Models.Containers,
+                            app.truefleet.com.truefleet.Models.Linehaul, app.truefleet.com.truefleet.Models.Order"/>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

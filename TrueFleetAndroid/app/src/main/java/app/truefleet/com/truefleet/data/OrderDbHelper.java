@@ -15,8 +15,8 @@ import app.truefleet.com.truefleet.data.OrderContract.OrderEntry;
 public class OrderDbHelper extends SQLiteOpenHelper {
 
     /*
-    Increment if changing schema
-    Update onUpgrade in order to not lose data when changing schema
+        Increment if changing schema
+        Update onUpgrade in order to not lose data when changing schema
      */
     private static final int DATABASE_VERSION = 1;
 
@@ -31,14 +31,14 @@ public class OrderDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_ORDER_TABLE = "CREATE TABLE " +
                 OrderEntry.TABLE_NAME + " ( " +
-                OrderEntry._ID  + " INTEGER PRIMARY KEY, " +
-                OrderEntry.COLUMN_EXTERNAL_ID + " TEXT NOT NULL, " +
+                OrderEntry.COLUMN_ID  + " INTEGER PRIMARY KEY, " +
+                OrderEntry.COLUMN_EXTERNAL_ID + " String NOT NULL, " +
                 OrderEntry.COLUMN_ORDER_ID + " TEXT NOT NULL, " +
                 OrderEntry.COLUMN_NOTES + " TEXT) ";
 
         final String SQL_CREATE_LINEHAUL_TABLE = "CREATE TABLE " +
                 LinehaulEntry.TABLE_NAME +  " ( " +
-                LinehaulEntry._ID + " INTEGER PRIMARY KEY, " +
+                LinehaulEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
                 LinehaulEntry.COLUMN_ORDER_ID + " TEXT NOT NULL, " +
 
                 LinehaulEntry.COLUMN_ROUTE_KEY + " INTEGER NOT NULL, " + //FK ROUTE TABLE
@@ -54,18 +54,18 @@ public class OrderDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_USER_TABLE = "CREATE TABLE " +
                 UserEntry.TABLE_NAME + " ( " +
-                UserEntry._ID + " INTEGER PRIMARY KEY, " +
+                UserEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
                 UserEntry.COLUMN_USERNAME + " TEXT NOT NULL) ";
 
         final String SQL_CREATE_ROUTE_TABLE = "CREATE TABLE " +
                 OrderContract.RouteDriverEntry.TABLE_NAME + " ( " +
-                OrderContract.RouteDriverEntry._ID + " INTEGER PRIMARY KEY, " +
+                OrderContract.RouteDriverEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
                 OrderContract.RouteDriverEntry.COLUMN_USER_KEY + " INTEGER NOT NULL, " + //FK USER
                 OrderContract.RouteDriverEntry.COLUMN_NOTES + " TEXT)";
 
         final String SQL_CREATE_FREIGHT_TABLE = "CREATE TABLE " +
                 FreightEntry.TABLE_NAME + " ( " +
-                FreightEntry._ID + " INTEGER PRIMARY KEY, " +
+                FreightEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
                 FreightEntry.COLUMN_CONTAINER_ID + " TEXT NOT NULL, " +
                 FreightEntry.COLUMN_LINEHAUL_ID + " TEXT NOT NULL, " +
                 FreightEntry.COLUMN_DESCRIPTION + " TEXT, " +
@@ -76,7 +76,7 @@ public class OrderDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_CONTAINER_TABLE = "CREATE TABLE " +
                 ContainerEntry.TABLE_NAME + " ( " +
-                ContainerEntry._ID + " INTEGER PRIMARY KEY, " +
+                ContainerEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
                 ContainerEntry.COLUMN_DESCRIPTION + " TEXT, " +
                 ContainerEntry.COLUMN_VOLUME + " INTEGER NOT NULL, " +
                 ContainerEntry.COLUMN_LENGTH + " INTEGER NOT NULL, " +
@@ -84,7 +84,6 @@ public class OrderDbHelper extends SQLiteOpenHelper {
                 ContainerEntry.COLUMN_HEIGHT + " INTEGER NOT NULL, " +
                 ContainerEntry.COLUMN_WEIGHT + " INTEGER NOT NULL, " +
                 ContainerEntry.COLUMN_NOTES + " TEXT) ";
-
 
         sqLiteDatabase.execSQL(SQL_CREATE_ORDER_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_CONTAINER_TABLE);
@@ -95,11 +94,20 @@ public class OrderDbHelper extends SQLiteOpenHelper {
 
     }
 
-    //Drops table if Version changes
-    //Must change to alter table versions in order to not lose user data and transfer over
+    /*
+        Drops table if Version changes
+        Must change to alter table versions in order to not lose user data and transfer over
+     */
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + OrderContract.LinehaulEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ContainerEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + FreightEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + OrderContract.RouteDriverEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + UserEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + OrderEntry.TABLE_NAME);
+        onCreate(sqLiteDatabase);
 
     }
 }

@@ -6,8 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
+import app.truefleet.com.truefleet.Models.Container;
 import app.truefleet.com.truefleet.data.OrderContract;
 import app.truefleet.com.truefleet.data.OrderContract.UserEntry;
+import app.truefleet.com.truefleet.data.OrderContract.ContainerEntry;
 import app.truefleet.com.truefleet.data.OrderDbHelper;
 
 /**
@@ -24,7 +26,8 @@ public class TestDb extends AndroidTestCase {
     }
 
     public void testInsertReadDb() {
-
+        Container container = new Container();
+        container.setDescription("description");
         String username = "test";
         String orderid = "12345";
         String externalid = "56789";
@@ -35,10 +38,17 @@ public class TestDb extends AndroidTestCase {
         String deliverydeadline = "20141005";
         String routeDriverNotes = "route driver notes";
 
+
         OrderDbHelper dbHelper = new OrderDbHelper(mContext);
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        //CONTAINER
+        ContentValues containerValues = new ContentValues();
+        containerValues.put(ContainerEntry.COLUMN_DESCRIPTION, container.getDescription());
+
+        long containerId = db.insert(ContainerEntry.TABLE_NAME, null, containerValues);
+        assert (containerId != -1);
         //USER
         ContentValues userValues = new ContentValues();
         userValues.put(UserEntry.COLUMN_USERNAME, username);

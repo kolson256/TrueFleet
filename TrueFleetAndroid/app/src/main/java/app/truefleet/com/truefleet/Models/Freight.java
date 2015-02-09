@@ -1,71 +1,52 @@
 package app.truefleet.com.truefleet.Models;
 
-import javax.validation.constraints.NotNull;
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 
 /**
  * Created by Chris Lacy on 2/4/2015.
+ * Model.load(Freight.class, id)   Freight.load(Freight.class, id)
  */
-public class Freight {
+@Table(name = "Freight")
+public class Freight extends Model {
 
-    @NotNull
-    private int id;
-    @NotNull
-    private int containerid;
-    private String description;
-    private int quantity;
-    private int weight;
-    private String seal;
-    private String notes;
+    @Column(name = "container", index = true)
+    public Containers container;
 
-    public Freight(int containerid) {
-        this.containerid =containerid;
+    @Column
+    public Linehaul linehaul;
+
+    @Column(name = "description")
+    public String description;
+
+    @Column(name = "quantity")
+    public int quantity;
+
+    @Column(name = "weight")
+    public int weight;
+
+    @Column(name = "seal")
+    public String seal;
+
+    @Column(name = "notes")
+    public String notes;
+
+    public Freight() {
+        super();
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
+    public Freight(Containers container, Linehaul linehaul, String description, int quantity, int weight, String seal, String notes) {
+        super();
+        this.container =container;
+        this.linehaul = linehaul;
+        this.description =  description;
         this.quantity = quantity;
-    }
-
-    public int getContainerid() {
-        return containerid;
-    }
-
-    public void setContainerid(int containerid) {
-        this.containerid = containerid;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
         this.weight = weight;
-    }
-
-    public String getSeal() {
-        return seal;
-    }
-
-    public void setSeal(String seal) {
         this.seal = seal;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
         this.notes = notes;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+
+
 }

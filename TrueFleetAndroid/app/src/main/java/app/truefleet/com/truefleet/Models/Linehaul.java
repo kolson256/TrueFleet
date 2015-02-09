@@ -1,72 +1,65 @@
 package app.truefleet.com.truefleet.Models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+import java.sql.Date;
+
 /**
  * Created by Chris Lacy on 2/4/2015.
  */
-public class Linehaul {
-    private int id;
+@Table(name = "Linehaul")
+public class Linehaul extends Model {
 
-    private int orderId;
-    private int externalId;
-    private int routeId;
-    private int shipdate;
-    private int pickupStartDate;
-    private int pickupEndDate;
-    private int deliveryDeadline;
+    @Column(name = "orderid", index = true)
+    public int orderId;
 
-    public int getShipdate() {
-        return shipdate;
-    }
+    @Column(name = "Orders", index = true)
+    public Order order;
 
-    public void setShipdate(int shipdate) {
-        this.shipdate = shipdate;
-    }
 
-    public int getOrderId() {
-        return orderId;
-    }
+    @Column(name = "routeId", index = true)
+    public int routeId;
 
-    public void setOrderId(int orderId) {
+    @Column
+    public Account shipper;
+
+    @Column
+    public Account terminal;
+
+    @Column
+    public Account receiver;
+
+    @Column(name = "shipdate")
+    public Date shipdate;
+
+    @Column(name = "pickupStartDate")
+    public Date pickupStartDate;
+
+    @Column(name = "pickupEndDate")
+    public Date pickupEndDate;
+
+    @Column(name = "deliveryDeadline")
+    public Date deliveryDeadline;
+
+    public Linehaul() { super(); }
+
+    public Linehaul(int orderId, Order order, int routeId, Account shipper,
+                    Account terminal, Account receiver, Date shipdate,
+                    Date pickupStartDate, Date pickupEndDate, Date deliveryDeadline) {
+        super();
+
         this.orderId = orderId;
-    }
-
-    public int getExternalId() {
-        return externalId;
-    }
-
-    public void setExternalId(int externalId) {
-        this.externalId = externalId;
-    }
-
-    public int getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(int routeId) {
+        this.order = order;
         this.routeId = routeId;
-    }
-
-    public int getPickupStartDate() {
-        return pickupStartDate;
-    }
-
-    public void setPickupStartDate(int pickupStartDate) {
+        this.shipper = shipper;
+        this.terminal = terminal;
+        this.receiver = receiver;
+        this.shipdate = shipdate;
         this.pickupStartDate = pickupStartDate;
-    }
-
-    public int getPickupEndDate() {
-        return pickupEndDate;
-    }
-
-    public void setPickupEndDate(int pickupEndDate) {
         this.pickupEndDate = pickupEndDate;
-    }
-
-    public int getDeliveryDeadline() {
-        return deliveryDeadline;
-    }
-
-    public void setDeliveryDeadline(int deliveryDeadline) {
         this.deliveryDeadline = deliveryDeadline;
     }
+
 }

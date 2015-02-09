@@ -4,21 +4,22 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+import java.sql.Date;
 
-import java.io.IOException;
-
+import app.truefleet.com.truefleet.Models.Account;
+import app.truefleet.com.truefleet.Models.Contact;
+import app.truefleet.com.truefleet.Models.Containers;
+import app.truefleet.com.truefleet.Models.Freight;
 import app.truefleet.com.truefleet.Models.IMTOrder;
+import app.truefleet.com.truefleet.Models.Linehaul;
+import app.truefleet.com.truefleet.Models.Order;
 import app.truefleet.com.truefleet.R;
-import app.truefleet.com.truefleet.Resources.GooglePlayServicesCheck;
+import app.truefleet.com.truefleet.Resources.GcmHelper;
 import app.truefleet.com.truefleet.Resources.LoginManager;
 
 public class HomeActivity extends Activity {
@@ -26,9 +27,6 @@ public class HomeActivity extends Activity {
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     LoginManager loginManager;
 
-    GoogleCloudMessaging gcm;
-    String regid;
-    private final String PROJECT_NUMBER = "171359155716";
     Context context;
     Activity activity;
     HomeFragment homeFragment;
@@ -43,8 +41,9 @@ public class HomeActivity extends Activity {
         loginManager = new LoginManager(context);
         setTitle("Home");
         getActionBar().setIcon(R.drawable.orders);
-        gcmSetup();
-
+        GcmHelper gcmHelper = new GcmHelper(getApplicationContext());
+        gcmHelper.gcmSetup(this);
+        //addFakeOrder();
         if (savedInstanceState == null) {
 
             getFragmentManager().beginTransaction()
@@ -53,90 +52,9 @@ public class HomeActivity extends Activity {
         }
     }
 
-    private synchronized void gcmSetup() {
-        LoginManager loginManager = new LoginManager(context);
-
-        if (checkPlayServices()) {
-
-            gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
-
-            regid = loginManager.getRegistrationId();
-
-            Log.i(LOG_TAG, "Current registration ID on device: " + regid);
-
-            if (regid.isEmpty()|| regid == null) {
-                registerInBackground();
-            }
-        }
-        else {
-            Log.i(LOG_TAG, "No valid Google Play Services APK found.");
-        }
-
-
-        if (loginManager.checkLogin())
-            finish();
-    }
-    private void registerInBackground() {
-
-        Log.i(LOG_TAG, "Registering registration ID");
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                String msg="";
-                try {
-                    if (gcm == null) {
-                        gcm = GoogleCloudMessaging.getInstance(context);
-                    }
-                  //  gcm.unregister();
-                    regid = gcm.register(PROJECT_NUMBER);
-
-                    msg = "Device registered, registration ID=" + regid;
-                    Log.i(LOG_TAG, msg);
-
-                    if (loginManager == null)
-                        loginManager = new LoginManager(context);
-                    loginManager.storeRegistrationId(regid);
-                } catch (IOException ex) {
-                    msg = "Error :" + ex.getMessage();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return msg;
-
-            }
-
-            @Override
-            protected void onPostExecute(String msg) {
-
-                Toast.makeText(activity, msg,
-                        Toast.LENGTH_SHORT).show();
-            }
-        }.execute(null, null, null);
-
-    }
-
     protected void onResume() {
         super.onResume();
 
-    }
-    private boolean checkPlayServices() {
-       GooglePlayServicesCheck playServicesCheck = new GooglePlayServicesCheck(getApplicationContext());
-       GoogleCloudMessaging gcm =  GoogleCloudMessaging.getInstance(context);
-
-
-        if (!playServicesCheck.checkGooglePlayServices()) {
-           // Dialog dialog = GooglePlayServicesUtil.getErrorDialog(playServicesCheck.getResultCode(), this, playServicesCheck.getRQS_GooglePlayServices());
-              System.out.println("google play services not installed");
-           // if (dialog != null)
-                System.out.println("show dialog");//todo: redirect to login and show dialog?
-              //  dialog.show();
-
-         //   else //this should not happen
-           //     System.out.println("show dialog");//todo: redirect to login and show dialog?
-              //  showOkDialogWithText(context, "Please make sure that you have Google Play Store installed and that you are connected to the internet");
-            return false;
-        }
-        return true;
     }
 
     public static void showOkDialogWithText(Context context, String messageText)
@@ -163,6 +81,68 @@ public class HomeActivity extends Activity {
             Intent i = new Intent(context, OrderActivitys.class);
             startActivity(i);
         }
+    }
+    public void addFakeOrder() {
+        Account aOrder = new Account("name", "street", "city", "state", "60613",
+                "United States", "pickup", "notes", "phone", "fax");
+
+        aOrder.save();
+
+        Account ashipper = new Account("name", "street", "city", "state", "60613",
+                "United States", "shipper", "notes", "phone", "fax");
+
+        Account aterminal = new Account("name", "street", "city", "state", "60613",
+                "United States", "aterminal", "notes", "phone", "fax");
+
+        Account areceiver = new Account("name", "street", "city", "state", "60613",
+                "United States", "areceiver", "notes", "phone", "fax");
+
+        ashipper.save();
+        aterminal.save();
+        areceiver.save();
+
+        Contact cOrder = new Contact(12345, "firstname", "lastname", "suffix", "mailingStreet",
+                "mailingState", "mailingCity", "60613", "United States", "303-123-1234",
+                "303-123-2345", "fax", "notes", aOrder);
+
+        cOrder.save();
+
+        Contact cShipper = new Contact(12345, "firstname", "lastname", "suffix", "mailingStreet",
+                "mailingState", "mailingCity", "60613", "United States", "303-123-1234",
+                "303-123-2345", "fax", "notes", ashipper);
+
+        cOrder.save();
+
+        Contact cTerminal = new Contact(12345, "firstname", "lastname", "suffix", "mailingStreet",
+                "mailingState", "mailingCity", "60613", "United States", "303-123-1234",
+                "303-123-2345", "fax", "notes", aterminal);
+
+        cOrder.save();
+
+        Contact cReceiver = new Contact(12345, "firstname", "lastname", "suffix", "mailingStreet",
+                "mailingState", "mailingCity", "60613", "United States", "303-123-1234",
+                "303-123-2345", "fax", "notes", areceiver);
+
+        cOrder.save();
+        int orderid = 1111;
+        Order o = new Order(aOrder, cOrder, orderid, "2222", "order notes", new Date(123456),
+                "orderType");
+        o.save();
+        Linehaul lh = new Linehaul(orderid, o, 888, ashipper, aterminal, areceiver, new Date(12345),
+                new Date(123456), new Date(123457), new Date(123458));
+
+        lh.save();
+
+        Containers c = new Containers("container description", 5, 50, 40, 30, 100, "container notes");
+
+        c.save();
+
+        Freight f = new Freight(c, lh, "freight description", 5, 50, "seal", "freight notes");
+
+        f.save();
+        Freight f2 = new Freight(c, lh, "freight2 description", 6, 55, "seal2", "freight2 notes");
+        f2.save();
+
     }
 
 

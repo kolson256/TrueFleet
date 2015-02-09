@@ -19,7 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import app.truefleet.com.truefleet.Fragments.ActiveLinehaulFragment;
+import app.truefleet.com.truefleet.Fragments.ContainerFragment;
 import app.truefleet.com.truefleet.Fragments.DeliveryFragment;
+import app.truefleet.com.truefleet.Fragments.FreightFragment;
 import app.truefleet.com.truefleet.Fragments.OrderDetailsFragment;
 import app.truefleet.com.truefleet.Fragments.PickupFragment;
 import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
@@ -33,6 +36,10 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
     DeliveryFragment deliveryFragment;
     PickupFragment pickupFragment;
     SidePanelFragment sidePanelFragment;
+    ActiveLinehaulFragment activeLinehaulFragment;
+    ContainerFragment containerFragment;
+    FreightFragment freightFragment;
+
     int id;
     private BroadcastReceiver broadcastReceiver;
 
@@ -76,6 +83,9 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
     deliveryFragment = new DeliveryFragment();
     pickupFragment = new PickupFragment();
     sidePanelFragment = new SidePanelFragment();
+        activeLinehaulFragment = new ActiveLinehaulFragment();
+        containerFragment = new ContainerFragment();
+        freightFragment = new FreightFragment();
 
         getFragmentManager().beginTransaction().add(R.id.main_panel, orderFragment).commit();
         getFragmentManager().beginTransaction().add(R.id.side_panel, sidePanelFragment).commit();
@@ -131,18 +141,31 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
         Log.i(LOG_TAG, "Order activitys received selection: " + position);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment toSwitch;
 
-        if (position ==1) {
-            fragmentTransaction.replace(R.id.main_panel, pickupFragment);
-        } else if(position ==2) {
-            fragmentTransaction.replace(R.id.main_panel, deliveryFragment);
-        } else if(position ==0) {
+        switch (position) {
+            case 1:
+                toSwitch = activeLinehaulFragment;
+                break;
+            case 2:
+                toSwitch = pickupFragment;
+                break;
+            case 3:
+                toSwitch = deliveryFragment;
+                break;
+            case 4:
+                toSwitch = freightFragment;
+                break;
+            case 5:
+                toSwitch = containerFragment;
+                break;
+            default:
+                toSwitch = orderFragment;
+                break;
 
-            fragmentTransaction.replace(R.id.main_panel, orderFragment);
         }
-        else {
-            return;
-        }
+
+        fragmentTransaction.replace(R.id.main_panel, toSwitch);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -169,7 +192,7 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
             return rootView;
         }
     }
-//Stop receiver from leakeing
+//Stop receiver from leaking
     @Override
     public void onStop()
     {
