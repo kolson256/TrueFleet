@@ -1,6 +1,7 @@
 package com.trufleet.services;
 
 import com.trufleet.services.core.representations.Organization;
+import com.trufleet.services.dao.AccountEntityDAO;
 import com.trufleet.services.dao.ContactEntityDAO;
 import com.trufleet.services.domain.representations.*;
 import com.trufleet.services.resources.*;
@@ -76,6 +77,9 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
 
         final ContactEntityDAO contactDAO = new ContactEntityDAO(hibernate.getSessionFactory());
         environment.jersey().register(new ContactResource(contactDAO));
+
+        final AccountEntityDAO accountEntityDAO = new AccountEntityDAO(hibernate.getSessionFactory());
+        environment.jersey().register(new AccountResource(accountEntityDAO));
 
         environment.jersey().register(new ShiroExceptionMapper());
         environment.getApplicationContext().setSessionHandler(new SessionHandler());

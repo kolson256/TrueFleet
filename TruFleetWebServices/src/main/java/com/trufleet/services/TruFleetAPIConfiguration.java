@@ -38,7 +38,7 @@ public class TruFleetAPIConfiguration extends Configuration {
 
     public DataSourceFactory getAdminDatabaseFactory() { return adminDatabase; }
 
-    public DataSourceFactory getTenantDatabaseFactory() { return adminDatabase; }
+    public DataSourceFactory getTenantDatabaseFactory() { return tenantDatabase; }
 
     public ShiroConfiguration getShiro() { return shiro; }
 }

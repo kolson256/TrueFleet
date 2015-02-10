@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by Richard on 2/6/2015.
+ * Created by Richard Morgan on 2/9/2015.
  */
 @Entity
-@Table(name = "linehaul", schema = "public", catalog = "TruFleet")
+@Table(name = "linehaul", schema = "public", catalog = "trufleet")
 public class LinehaulEntity {
     private int id;
     private String notes;
@@ -17,7 +17,7 @@ public class LinehaulEntity {
     private Timestamp deliverydeadline;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -27,7 +27,7 @@ public class LinehaulEntity {
     }
 
     @Basic
-    @Column(name = "notes")
+    @Column(name = "notes", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getNotes() {
         return notes;
     }
@@ -37,7 +37,7 @@ public class LinehaulEntity {
     }
 
     @Basic
-    @Column(name = "shipdate")
+    @Column(name = "shipdate", nullable = true, insertable = true, updatable = true)
     public Timestamp getShipdate() {
         return shipdate;
     }
@@ -47,7 +47,7 @@ public class LinehaulEntity {
     }
 
     @Basic
-    @Column(name = "pickupstartdate")
+    @Column(name = "pickupstartdate", nullable = true, insertable = true, updatable = true)
     public Timestamp getPickupstartdate() {
         return pickupstartdate;
     }
@@ -57,7 +57,7 @@ public class LinehaulEntity {
     }
 
     @Basic
-    @Column(name = "pickupenddate")
+    @Column(name = "pickupenddate", nullable = true, insertable = true, updatable = true)
     public Timestamp getPickupenddate() {
         return pickupenddate;
     }
@@ -67,7 +67,7 @@ public class LinehaulEntity {
     }
 
     @Basic
-    @Column(name = "deliverydeadline")
+    @Column(name = "deliverydeadline", nullable = true, insertable = true, updatable = true)
     public Timestamp getDeliverydeadline() {
         return deliverydeadline;
     }

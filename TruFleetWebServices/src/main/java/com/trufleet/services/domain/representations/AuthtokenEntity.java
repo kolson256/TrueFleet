@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  * Created by Richard Morgan on 2/9/2015.
  */
 @Entity
-@Table(name = "authtoken", schema = "public", catalog = "TruFleet")
+@Table(name = "authtoken", schema = "public", catalog = "trufleet")
 public class AuthtokenEntity {
     private int appuserid;
     private String token;

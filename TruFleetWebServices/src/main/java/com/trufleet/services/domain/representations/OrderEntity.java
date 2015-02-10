@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by Richard on 2/6/2015.
+ * Created by Richard Morgan on 2/9/2015.
  */
 @Entity
-@Table(name = "order", schema = "public", catalog = "TruFleet")
+@Table(name = "order", schema = "public", catalog = "trufleet")
 public class OrderEntity {
     private int id;
     private String orderid;
@@ -16,7 +16,7 @@ public class OrderEntity {
     private Timestamp receiptdate;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -26,7 +26,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "orderid")
+    @Column(name = "orderid", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getOrderid() {
         return orderid;
     }
@@ -36,7 +36,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "externalid")
+    @Column(name = "externalid", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getExternalid() {
         return externalid;
     }
@@ -46,7 +46,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "notes")
+    @Column(name = "notes", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getNotes() {
         return notes;
     }
@@ -56,7 +56,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "receiptdate")
+    @Column(name = "receiptdate", nullable = true, insertable = true, updatable = true)
     public Timestamp getReceiptdate() {
         return receiptdate;
     }

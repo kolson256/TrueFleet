@@ -3,10 +3,10 @@ package com.trufleet.services.domain.representations;
 import javax.persistence.*;
 
 /**
- * Created by Richard on 2/6/2015.
+ * Created by Richard Morgan on 2/9/2015.
  */
 @Entity
-@Table(name = "contact", schema = "public", catalog = "TruFleet")
+@Table(name = "contact", schema = "public", catalog = "trufleet")
 public class ContactEntity {
     private String firstname;
     private String lastname;
@@ -23,7 +23,7 @@ public class ContactEntity {
     private int id;
 
     @Basic
-    @Column(name = "firstname")
+    @Column(name = "firstname", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getFirstname() {
         return firstname;
     }
@@ -33,7 +33,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "lastname")
+    @Column(name = "lastname", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getLastname() {
         return lastname;
     }
@@ -43,7 +43,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "suffix")
+    @Column(name = "suffix", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getSuffix() {
         return suffix;
     }
@@ -53,7 +53,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "mailingstreet")
+    @Column(name = "mailingstreet", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getMailingstreet() {
         return mailingstreet;
     }
@@ -63,7 +63,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "mailingcity")
+    @Column(name = "mailingcity", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getMailingcity() {
         return mailingcity;
     }
@@ -73,7 +73,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "mailingstate")
+    @Column(name = "mailingstate", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getMailingstate() {
         return mailingstate;
     }
@@ -83,7 +83,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "mailingpostalcode")
+    @Column(name = "mailingpostalcode", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getMailingpostalcode() {
         return mailingpostalcode;
     }
@@ -93,7 +93,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "mailingcountry")
+    @Column(name = "mailingcountry", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getMailingcountry() {
         return mailingcountry;
     }
@@ -103,7 +103,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getPhone() {
         return phone;
     }
@@ -113,7 +113,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "mobilephone")
+    @Column(name = "mobilephone", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getMobilephone() {
         return mobilephone;
     }
@@ -123,7 +123,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "fax")
+    @Column(name = "fax", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getFax() {
         return fax;
     }
@@ -133,7 +133,7 @@ public class ContactEntity {
     }
 
     @Basic
-    @Column(name = "notes")
+    @Column(name = "notes", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getNotes() {
         return notes;
     }
@@ -143,7 +143,7 @@ public class ContactEntity {
     }
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }

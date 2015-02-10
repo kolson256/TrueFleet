@@ -14,7 +14,7 @@ adminDatabase:
    # any properties specific to your JDBC driver:
   properties:
       charSet: UTF-8
-      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
 
   # the maximum amount of time to wait on an empty pool before throwing an exception
   maxWaitForConnection: 1s
@@ -42,12 +42,17 @@ tenantDatabase:
   password: password
 
   # the JDBC URL, this will be changed
-  url: jdbc:postgresql://localhost:5432/TruFleet
+  url: jdbc:postgresql://localhost:5432/trufleet
 
    # any properties specific to your JDBC driver:
   properties:
       charSet: UTF-8
-      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
+     #show_sql: true
+     # hibernate.hbm2ddl.auto: update
+     #hibernate.default_catalog: "trufleet"
+     #hibernate.default_schema: "public"
+
 
     # the maximum amount of time to wait on an empty pool before throwing an exception
   maxWaitForConnection: 1s

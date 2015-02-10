@@ -3,10 +3,10 @@ package com.trufleet.services.domain.representations;
 import javax.persistence.*;
 
 /**
- * Created by Richard on 2/6/2015.
+ * Created by Richard Morgan on 2/9/2015.
  */
 @Entity
-@Table(name = "freight", schema = "public", catalog = "TruFleet")
+@Table(name = "freight", schema = "public", catalog = "trufleet")
 public class FreightEntity {
     private int id;
     private String description;
@@ -16,7 +16,7 @@ public class FreightEntity {
     private String notes;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -26,7 +26,7 @@ public class FreightEntity {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getDescription() {
         return description;
     }
@@ -36,7 +36,7 @@ public class FreightEntity {
     }
 
     @Basic
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = true, insertable = true, updatable = true)
     public Integer getQuantity() {
         return quantity;
     }
@@ -46,7 +46,7 @@ public class FreightEntity {
     }
 
     @Basic
-    @Column(name = "weight")
+    @Column(name = "weight", nullable = true, insertable = true, updatable = true)
     public Integer getWeight() {
         return weight;
     }
@@ -56,7 +56,7 @@ public class FreightEntity {
     }
 
     @Basic
-    @Column(name = "seal")
+    @Column(name = "seal", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getSeal() {
         return seal;
     }
@@ -66,7 +66,7 @@ public class FreightEntity {
     }
 
     @Basic
-    @Column(name = "notes")
+    @Column(name = "notes", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getNotes() {
         return notes;
     }

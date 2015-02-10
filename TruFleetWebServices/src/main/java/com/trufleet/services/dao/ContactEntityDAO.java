@@ -4,8 +4,6 @@ import com.trufleet.services.domain.representations.ContactEntity;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 
-import java.util.List;
-
 /**
  * Created by Richard Morgan on 2/9/2015.
  */

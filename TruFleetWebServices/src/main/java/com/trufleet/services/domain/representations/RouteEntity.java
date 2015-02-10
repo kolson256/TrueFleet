@@ -3,16 +3,16 @@ package com.trufleet.services.domain.representations;
 import javax.persistence.*;
 
 /**
- * Created by Richard on 2/6/2015.
+ * Created by Richard Morgan on 2/9/2015.
  */
 @Entity
-@Table(name = "route", schema = "public", catalog = "TruFleet")
+@Table(name = "route", schema = "public", catalog = "trufleet")
 public class RouteEntity {
     private int id;
     private String notes;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -22,7 +22,7 @@ public class RouteEntity {
     }
 
     @Basic
-    @Column(name = "notes")
+    @Column(name = "notes", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getNotes() {
         return notes;
     }
