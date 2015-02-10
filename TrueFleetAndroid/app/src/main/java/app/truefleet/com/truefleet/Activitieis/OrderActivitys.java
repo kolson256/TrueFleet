@@ -23,7 +23,7 @@ import app.truefleet.com.truefleet.Fragments.ActiveLinehaulFragment;
 import app.truefleet.com.truefleet.Fragments.ContainerFragment;
 import app.truefleet.com.truefleet.Fragments.DeliveryFragment;
 import app.truefleet.com.truefleet.Fragments.FreightFragment;
-import app.truefleet.com.truefleet.Fragments.OrderDetailsFragment;
+import app.truefleet.com.truefleet.Fragments.OrderDetailsFragmentNew;
 import app.truefleet.com.truefleet.Fragments.PickupFragment;
 import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
 import app.truefleet.com.truefleet.Models.IMTOrder;
@@ -32,7 +32,7 @@ import app.truefleet.com.truefleet.Tasks.SendStatusTask;
 
 public class OrderActivitys extends Activity implements SidePanelFragment.OnColumnSelectedListener {
     private final String LOG_TAG = OrderActivitys.class.getSimpleName();
-    OrderDetailsFragment orderFragment;
+    OrderDetailsFragmentNew orderFragment;
     DeliveryFragment deliveryFragment;
     PickupFragment pickupFragment;
     SidePanelFragment sidePanelFragment;
@@ -79,7 +79,7 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
         setContentView(R.layout.activity_order);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        orderFragment = new OrderDetailsFragment();
+        orderFragment = new OrderDetailsFragmentNew();
     deliveryFragment = new DeliveryFragment();
     pickupFragment = new PickupFragment();
     sidePanelFragment = new SidePanelFragment();

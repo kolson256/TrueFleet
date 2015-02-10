@@ -11,10 +11,12 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Freight")
 public class Freight extends Model {
 
-    @Column(name = "container", index = true)
+    @Column(name = "Container",
+            onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Containers container;
 
-    @Column
+    @Column(name = "Linehaul",
+            onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Linehaul linehaul;
 
     @Column(name = "description")
@@ -31,6 +33,7 @@ public class Freight extends Model {
 
     @Column(name = "notes")
     public String notes;
+
 
     public Freight() {
         super();

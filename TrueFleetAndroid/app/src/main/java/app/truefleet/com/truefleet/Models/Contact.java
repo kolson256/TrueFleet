@@ -49,6 +49,8 @@ public class Contact extends Model {
     @Column
     public String notes;
 
+    @Column(name="Account",
+            onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Account account;
 
     public Contact() { super();  }

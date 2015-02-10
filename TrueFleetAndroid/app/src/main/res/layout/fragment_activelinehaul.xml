@@ -1,17 +1,80 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@android:color/white"
-    tools:context="app.truefleet.com.truefleet.Fragments.ActiveLinehaulFragment">
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:columnCount="2"
+    tools:ignore="UselessParent">
+
 
     <TextView
+        android:layout_columnSpan="2"
+        android:layout_width="0dp"
+        android:layout_gravity="start|fill_horizontal"
         android:text="Active Linehaul"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        style="@style/Header"
+        />
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Ship Date"
+        style="@style/RowTitle"
+        />
+    <TextView
+        android:id="@+id/linehaul_ship_date"
+        android:text="None"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/RowValue"
+        />
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Pickup Start Date"
+        style="@style/RowTitle"
+        />
+    <TextView
+        android:id="@+id/linehaul_pickup_start_date"
+        android:text="None"
+        android:layout_width="0dp"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/RowValue"
+        />
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Pickup End Date"
+        style="@style/RowTitle"
+        />
+    <TextView
+        android:id="@+id/linehaul_pickup_end_date"
+        android:layout_width="0dp"
+        android:text="None"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/RowValue"
+        />
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Delivery Deadline"
+        style="@style/RowTitle"
+        />
+    <TextView
+        android:id="@+id/linehaul_delivery_deadline"
+        android:layout_width="0dp"
+        android:text="None"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/RowValue"
+        />
+    <TextView
+        android:layout_gravity="start|center_vertical"
+        android:text="Notes"
+        style="@style/RowTitle"
+        />
+    <TextView
+        android:id="@+id/linehaul_delivery_notes"
+        android:layout_width="0dp"
+        android:text="None"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/RowValue"
+        />
 
-</RelativeLayout>
+</GridLayout>

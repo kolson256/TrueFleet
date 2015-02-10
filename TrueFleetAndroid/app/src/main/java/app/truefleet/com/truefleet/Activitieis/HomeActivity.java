@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +44,12 @@ public class HomeActivity extends Activity {
         getActionBar().setIcon(R.drawable.orders);
         GcmHelper gcmHelper = new GcmHelper(getApplicationContext());
         gcmHelper.gcmSetup(this);
-        //addFakeOrder();
+
+
+        addFakeOrder();
+        Contact c = Contact.load(Contact.class, 1);
+        Log.i(LOG_TAG, "C name:" + c.firstName + c.lastName);
+
         if (savedInstanceState == null) {
 
             getFragmentManager().beginTransaction()
@@ -128,10 +134,23 @@ public class HomeActivity extends Activity {
         Order o = new Order(aOrder, cOrder, orderid, "2222", "order notes", new Date(123456),
                 "orderType");
         o.save();
-        Linehaul lh = new Linehaul(orderid, o, 888, ashipper, aterminal, areceiver, new Date(12345),
+        Linehaul lh = new Linehaul(orderid, o, 888, ashipper, aterminal, areceiver,
+                "linehaul notes", new Date(12345),
                 new Date(123456), new Date(123457), new Date(123458));
 
         lh.save();
+
+        Linehaul lh2 = new Linehaul(orderid, o, 888, ashipper, aterminal, areceiver,
+                "linehaul notes2", new Date(12345),
+                new Date(123456), new Date(123457), new Date(123458));
+
+        lh2.save();
+
+        Linehaul lh3 = new Linehaul(orderid, o, 888, ashipper, aterminal, areceiver,
+                "linehaul notes3", new Date(12345),
+                new Date(123456), new Date(123457), new Date(123458));
+
+        lh3.save();
 
         Containers c = new Containers("container description", 5, 50, 40, 30, 100, "container notes");
 
@@ -142,6 +161,9 @@ public class HomeActivity extends Activity {
         f.save();
         Freight f2 = new Freight(c, lh, "freight2 description", 6, 55, "seal2", "freight2 notes");
         f2.save();
+
+        Freight f3 = new Freight(c, lh, "freight3 description", 6, 55, "seal3", "freight3 notes");
+        f3.save();
 
     }
 

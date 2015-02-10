@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/default_color"
     android:gravity="top|center"
     android:orientation="vertical" >
-
+    <!-- android:background="@color/default_color" -->
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/sidepanelbackground"
+
         android:id="@+id/listview_columns" />
    <!--     android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"

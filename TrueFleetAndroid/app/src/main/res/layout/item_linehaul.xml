@@ -3,109 +3,90 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="12dp"
     android:columnCount="2"
     tools:ignore="UselessParent">
 
 
     <TextView
-        android:id="@+id/container_description"
+        android:layout_height="match_parent"
         android:layout_columnSpan="2"
-        android:layout_width="0dp"
+        android:layout_width="1dp"
         android:layout_gravity="start|fill_horizontal"
-        android:text="ContainerDescription"
+        android:text="status"
         style="@style/Header"
         />
     <TextView
+        android:layout_height="match_parent"
         android:layout_gravity="start|center_vertical"
-        android:text="Volume"
+        android:text="Ship Date"
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/container_volume"
-        android:text="0"
+        android:layout_height="match_parent"
+        android:id="@+id/linehaul_ship_date"
+        android:text="None"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
     <TextView
+        android:layout_height="match_parent"
         android:layout_gravity="start|center_vertical"
-        android:text="Length"
+        android:text="Pickup Start Date"
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/container_length"
-        android:text="0"
+        android:layout_height="match_parent"
+        android:id="@+id/linehaul_pickup_start_date"
+        android:text="None"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
     <TextView
+        android:layout_height="match_parent"
         android:layout_gravity="start|center_vertical"
-        android:text="Width"
+        android:text="Pickup End Date"
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/container_width"
-        android:layout_width="0dp"
-        android:text="0"
-        android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/RowValue"
-        />
-    <TextView
-        android:layout_gravity="start|center_vertical"
-        android:text="Height"
-        style="@style/RowTitle"
-        />
-    <TextView
-        android:id="@+id/container_height"
+        android:layout_height="match_parent"
+        android:id="@+id/linehaul_pickup_end_date"
         android:layout_width="0dp"
         android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
     <TextView
+        android:layout_height="match_parent"
         android:layout_gravity="start|center_vertical"
-        android:text="Weight"
+        android:text="Delivery Deadline"
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/container_weight"
-        android:layout_width="0dp"
-        android:text="None"
-        android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/RowValue"
-        />
 
+        android:id="@+id/linehaul_delivery_deadline"
+        android:layout_width="0dp"
+        android:text="None"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/RowValue"
+        />
     <TextView
+
         android:layout_gravity="start|center_vertical"
         android:text="Notes"
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/container_notes"
+
+        android:id="@+id/linehaul_delivery_notes"
         android:layout_width="0dp"
         android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
+        android:layout_marginBottom="20dp"
         />
-
-    <TableRow
-        android:layout_marginBottom="10dip"
-        android:background="@drawable/rounded_edittext" >
-
-        <TextView
-            style="@style/BoldText"
-            android:padding="7dip"
-            android:text="test" />
-
-        <TextView
-            android:id="@+id/log_priority"
-            style="@style/DetailRightText"
-            android:gravity="right"
-            android:padding="7dip"
-            android:singleLine="true" />
-    </TableRow>
 
 </GridLayout>
