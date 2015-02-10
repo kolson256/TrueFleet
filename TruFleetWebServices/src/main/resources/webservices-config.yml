@@ -12,24 +12,24 @@ adminDatabase:
   url: jdbc:postgresql://localhost:5432/TruFleetAdmin
 
    # any properties specific to your JDBC driver:
-    properties:
+  properties:
       charSet: UTF-8
-      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
 
-    # the maximum amount of time to wait on an empty pool before throwing an exception
-    maxWaitForConnection: 1s
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 1s
 
     # the SQL query to run when validating a connection's liveness
-    validationQuery: "/* MyApplication Health Check */ SELECT 1"
+  validationQuery: "/* MyApplication Health Check */ SELECT 1"
 
     # the minimum number of connections to keep open
-    minSize: 8
+  minSize: 8
 
     # the maximum number of connections to keep open
-    maxSize: 32
+  maxSize: 32
 
     # whether or not idle connections should be validated
-    checkConnectionWhileIdle: false
+  checkConnectionWhileIdle: false
 
 tenantDatabase:
   # the name of your JDBC driver
@@ -42,27 +42,32 @@ tenantDatabase:
   password: password
 
   # the JDBC URL, this will be changed
-  url: jdbc:postgresql://localhost:5432/TruFleet
+  url: jdbc:postgresql://localhost:5432/trufleet
 
    # any properties specific to your JDBC driver:
-    properties:
+  properties:
       charSet: UTF-8
-      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL9Dialect
+     #show_sql: true
+     # hibernate.hbm2ddl.auto: update
+     #hibernate.default_catalog: "trufleet"
+     #hibernate.default_schema: "public"
+
 
     # the maximum amount of time to wait on an empty pool before throwing an exception
-    maxWaitForConnection: 1s
+  maxWaitForConnection: 1s
 
     # the SQL query to run when validating a connection's liveness
-    validationQuery: "/* MyApplication Health Check */ SELECT 1"
+  validationQuery: "/* MyApplication Health Check */ SELECT 1"
 
     # the minimum number of connections to keep open
-    minSize: 8
+  minSize: 8
 
     # the maximum number of connections to keep open
-    maxSize: 32
+  maxSize: 32
 
     # whether or not idle connections should be validated
-    checkConnectionWhileIdle: false
+  checkConnectionWhileIdle: false
 
 shiro:
   iniConfigs: ["classpath:shiro.ini"]

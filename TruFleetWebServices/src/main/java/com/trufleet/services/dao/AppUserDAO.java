@@ -1,7 +1,7 @@
-package com.trufleet.services.jdbi;
+package com.trufleet.services.dao;
 
 import com.trufleet.services.core.representations.AppUser;
-import com.trufleet.services.jdbi.mapper.AppUserMapper;
+import com.trufleet.services.dao.mapper.AppUserMapper;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;

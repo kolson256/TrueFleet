@@ -24,7 +24,7 @@ import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.DbSetupTracker;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
-import com.trufleet.services.jdbi.OrganizationDAO;
+import com.trufleet.services.dao.OrganizationDAO;
 import com.trufleet.services.core.representations.Organization;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.dropwizard.jackson.Jackson;

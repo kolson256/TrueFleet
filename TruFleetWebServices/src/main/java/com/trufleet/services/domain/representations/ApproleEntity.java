@@ -6,10 +6,10 @@ import javax.persistence.*;
  * Created by Richard Morgan on 2/9/2015.
  */
 @Entity
-@Table(name = "route", schema = "public", catalog = "trufleet")
-public class RouteEntity {
+@Table(name = "approle", schema = "public", catalog = "trufleet")
+public class ApproleEntity {
     private int id;
-    private String notes;
+    private String name;
 
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
@@ -22,13 +22,13 @@ public class RouteEntity {
     }
 
     @Basic
-    @Column(name = "notes", nullable = true, insertable = true, updatable = true, length = 2147483647)
-    public String getNotes() {
-        return notes;
+    @Column(name = "name", nullable = true, insertable = true, updatable = true, length = 2147483647)
+    public String getName() {
+        return name;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -36,10 +36,10 @@ public class RouteEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RouteEntity that = (RouteEntity) o;
+        ApproleEntity that = (ApproleEntity) o;
 
         if (id != that.id) return false;
-        if (notes != null ? !notes.equals(that.notes) : that.notes != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
@@ -47,7 +47,7 @@ public class RouteEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (notes != null ? notes.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 }

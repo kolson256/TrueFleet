@@ -4,7 +4,7 @@ import com.trufleet.services.TruFleetAPIConfiguration;
 import com.trufleet.services.core.representations.AppUser;
 import com.trufleet.services.core.representations.AuthToken;
 import com.trufleet.services.core.representations.UserLogin;
-import com.trufleet.services.jdbi.*;
+import com.trufleet.services.dao.*;
 import io.dropwizard.setup.Environment;
 import org.json.JSONException;
 import org.json.JSONObject;

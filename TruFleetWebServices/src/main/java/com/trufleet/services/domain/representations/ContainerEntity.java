@@ -3,10 +3,10 @@ package com.trufleet.services.domain.representations;
 import javax.persistence.*;
 
 /**
- * Created by Richard on 2/6/2015.
+ * Created by Richard Morgan on 2/9/2015.
  */
 @Entity
-@Table(name = "container", schema = "public", catalog = "TruFleet")
+@Table(name = "container", schema = "public", catalog = "trufleet")
 public class ContainerEntity {
     private int id;
     private String description;
@@ -18,7 +18,7 @@ public class ContainerEntity {
     private String notes;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -28,7 +28,7 @@ public class ContainerEntity {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getDescription() {
         return description;
     }
@@ -38,7 +38,7 @@ public class ContainerEntity {
     }
 
     @Basic
-    @Column(name = "volume")
+    @Column(name = "volume", nullable = true, insertable = true, updatable = true)
     public Integer getVolume() {
         return volume;
     }
@@ -48,7 +48,7 @@ public class ContainerEntity {
     }
 
     @Basic
-    @Column(name = "length")
+    @Column(name = "length", nullable = true, insertable = true, updatable = true)
     public Integer getLength() {
         return length;
     }
@@ -58,7 +58,7 @@ public class ContainerEntity {
     }
 
     @Basic
-    @Column(name = "width")
+    @Column(name = "width", nullable = true, insertable = true, updatable = true)
     public Integer getWidth() {
         return width;
     }
@@ -68,7 +68,7 @@ public class ContainerEntity {
     }
 
     @Basic
-    @Column(name = "height")
+    @Column(name = "height", nullable = true, insertable = true, updatable = true)
     public Integer getHeight() {
         return height;
     }
@@ -78,7 +78,7 @@ public class ContainerEntity {
     }
 
     @Basic
-    @Column(name = "weight")
+    @Column(name = "weight", nullable = true, insertable = true, updatable = true)
     public Integer getWeight() {
         return weight;
     }
@@ -88,7 +88,7 @@ public class ContainerEntity {
     }
 
     @Basic
-    @Column(name = "notes")
+    @Column(name = "notes", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getNotes() {
         return notes;
     }

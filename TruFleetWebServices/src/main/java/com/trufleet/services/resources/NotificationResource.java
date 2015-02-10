@@ -3,7 +3,7 @@ package com.trufleet.services.resources;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trufleet.services.TruFleetAPIConfiguration;
 import com.trufleet.services.core.representations.AppUser;
-import com.trufleet.services.jdbi.AppUserDAO;
+import com.trufleet.services.dao.AppUserDAO;
 import io.dropwizard.setup.Environment;
 import org.json.JSONException;
 import org.json.JSONObject;

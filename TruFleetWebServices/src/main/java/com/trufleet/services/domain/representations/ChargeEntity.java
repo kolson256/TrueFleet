@@ -3,17 +3,17 @@ package com.trufleet.services.domain.representations;
 import javax.persistence.*;
 
 /**
- * Created by Richard on 2/6/2015.
+ * Created by Richard Morgan on 2/9/2015.
  */
 @Entity
-@Table(name = "charge", schema = "public", catalog = "TruFleet")
+@Table(name = "charge", schema = "public", catalog = "trufleet")
 public class ChargeEntity {
     private int id;
     private String description;
     private Double amount;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -23,7 +23,7 @@ public class ChargeEntity {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getDescription() {
         return description;
     }
@@ -33,7 +33,7 @@ public class ChargeEntity {
     }
 
     @Basic
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = true, insertable = true, updatable = true, precision = 0)
     public Double getAmount() {
         return amount;
     }
