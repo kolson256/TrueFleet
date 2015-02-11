@@ -51,7 +51,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.google.code.gson:gson:2.3'
-
+   // compile 'org.parceler:parceler:0.2.15'
     //testing
     testCompile 'junit:junit:4.+'
     androidTestCompile 'org.mockito:mockito-core:1.+'

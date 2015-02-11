@@ -12,6 +12,7 @@ import android.view.View;
 
 import java.sql.Date;
 
+import app.truefleet.com.truefleet.Fragments.HomeFragment;
 import app.truefleet.com.truefleet.Models.Account;
 import app.truefleet.com.truefleet.Models.Contact;
 import app.truefleet.com.truefleet.Models.Containers;
@@ -30,8 +31,6 @@ public class HomeActivity extends Activity {
 
     Context context;
     Activity activity;
-    HomeFragment homeFragment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +165,6 @@ public class HomeActivity extends Activity {
         f3.save();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

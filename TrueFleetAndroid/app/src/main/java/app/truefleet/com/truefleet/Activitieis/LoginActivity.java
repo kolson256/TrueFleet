@@ -2,7 +2,9 @@ package app.truefleet.com.truefleet.Activitieis;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,15 +15,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Resources.ConnectionDetector;
 import app.truefleet.com.truefleet.Resources.LoginManager;
-import app.truefleet.com.truefleet.Tasks.LoginTask;
+import app.truefleet.com.truefleet.Tasks.ApiService;
+import app.truefleet.com.truefleet.Tasks.Requests.LoginRequest;
+import app.truefleet.com.truefleet.Tasks.RestCallback;
+import app.truefleet.com.truefleet.Tasks.RestClient;
+import app.truefleet.com.truefleet.Tasks.RestError;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import retrofit.client.Response;
 
 public class LoginActivity extends Activity {
     private final String LOG_TAG = LoginActivity.class.getSimpleName();
+    LoginManager loginManager;
 
     @InjectView(R.id.textUsername) EditText username;
     @InjectView(R.id.textPassword) EditText password;
@@ -41,7 +50,7 @@ public class LoginActivity extends Activity {
 
         cd = new ConnectionDetector(getApplicationContext());
 
-        LoginManager loginManager = new LoginManager(getApplicationContext());
+        loginManager = new LoginManager(getApplicationContext());
 
        // if (loginManager.checkLogin())
         //    finish();
@@ -58,39 +67,51 @@ public class LoginActivity extends Activity {
         });
     }
 
-
-
         public void login(View view) {
             connectedToInternet = cd.isConnectingToInternet();
 
             if (connectedToInternet) {
 
 
-                String user = username.getText().toString();
-                String pass = password.getText().toString();
+                final String strUser = username.getText().toString();
+                final String pass = password.getText().toString();
 
-                if (user.length() < 1)
+                if (strUser.length() < 1)
                     displayToast("Please enter a username");
                 else if (password.length() < 1)
                     displayToast("Please enter a password");
                 else
                 {
 
-                   // RestClient rc = new RestClient();
-                    //ApiService as = rc.getApiService();
-                   // as.login(user, pass, new RestCallback<JSONObject>() {
-                  //      @Override
-                  //      public void success(JSONObject jsonObject, Response response) {
-                            // success!
-                   //         Log.i("App", jsonObject.toString());
-                   //     }
-//
-                  //      public void failure(RestError error) {
-                   //         Log.i("App", "retrofit error");
-                  //      }
-                  //  });
-                    LoginTask loginTask = new LoginTask(this);
-                    loginTask.execute(user, pass);
+                    RestClient rc = new RestClient();
+                   ApiService as = rc.getApiService();
+
+                    as.login(new LoginRequest(strUser, pass), new RestCallback<User>() {
+                        @Override
+                        public void success(User user, Response response) {
+
+                            if (user.getApiVersion() != null) {
+                                user.setUsername(strUser);
+                                loginManager.createLoginSession(user);
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class).putExtra(Intent.EXTRA_TEXT, "Welcome, " + user.getUsername() + "!");
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                getApplicationContext().startActivity(intent);
+                                finish();
+                            }
+                            else
+                            {
+                                invalidLoginAttempt(strUser);
+                            }
+                        }
+                        @Override
+                        public void failure(RestError error) {
+                            displayToast("Error communicating with server, are you connected to the internet?");
+                            Log.i(LOG_TAG, "Error: " + error.getStrMessage());
+                        }
+                    });
+                   // LoginTask loginTask = new LoginTask(this);
+                  //  loginTask.execute(user, pass);
 
                 }
             } else {
@@ -133,4 +154,9 @@ public class LoginActivity extends Activity {
                 return rootView;
             }
         }
+    public void invalidLoginAttempt(String username) {
+
+        Log.v(LOG_TAG, "unsuccessful login: " + username);
+        displayToast("Wrong Credentials");
+    }
     }
