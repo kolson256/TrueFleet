@@ -7,9 +7,16 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import app.truefleet.com.truefleet.Activitieis.LoginActivity;
 import app.truefleet.com.truefleet.Models.User;
-import app.truefleet.com.truefleet.Tasks.RegisterServerTask;
+import app.truefleet.com.truefleet.Tasks.ApiService;
+import app.truefleet.com.truefleet.Tasks.Requests.GcmRegisterRequest;
+import app.truefleet.com.truefleet.Tasks.RestCallback;
+import app.truefleet.com.truefleet.Tasks.RestClient;
+import app.truefleet.com.truefleet.Tasks.RestError;
+import retrofit.client.Response;
 
 
 public class LoginManager {
@@ -45,18 +52,36 @@ public class LoginManager {
         editor.putString(KEY_APIVERSION, user.getApiVersion());
         editor.putString(KEY_LAST_USER,  user.getUsername());
         editor.putString(KEY_TENANT_ID, user.getTenantId());
-
+        editor.commit();
         //check if registration ID exists
         String regid = getRegistrationId();
         if (regid.isEmpty()|| regid == null) {
             Log.e(LOG_TAG, "App not yet registered with GCM upon logging in");
         }
         else {
-            RegisterServerTask registerServerTask = new RegisterServerTask(context);
-            registerServerTask.execute();
+
+            RestClient rc = new RestClient();
+            ApiService as = rc.getApiService();
+
+            Log.i(LOG_TAG, "registering to server user: " + user.getUsername());
+            as.registerGcmWithServer(user.getauthenticationToken(), user.getTenantId(),
+                    new GcmRegisterRequest(user.getUsername(), regid), new RestCallback<JSONObject>() {
+                        @Override
+                        public void success(JSONObject jsonObject, Response response) {
+                            Log.i(LOG_TAG, "Success response from server on GCM Registration");
+                        }
+
+                        @Override
+                        public void failure(RestError error) {
+                            System.out.println(error.getStrMessage());
+                            Log.i(LOG_TAG, "Error response from server on GCM Registration: " + error.getStrMessage());
+                        }
+                    });
+
+            //RegisterServerTask registerServerTask = new RegisterServerTask(context);
+            //registerServerTask.execute();
         }
         //if not obtain it
-        editor.commit();
         Log.i(LOG_TAG, "Stored Login information in preferences");
     }
 
