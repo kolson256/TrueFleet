@@ -54,6 +54,7 @@ public class LoginActivity extends Activity {
 
        // if (loginManager.checkLogin())
         //    finish();
+        
     }
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,14 +21,14 @@ import app.truefleet.com.truefleet.R;
  */
 public class OrderDetailsFragmentNew extends Fragment {
     private final String LOG_TAG = OrderDetailsFragmentNew.class.getSimpleName();
-
+    ActiveLinehaulFragment activeLinehaulFragment;
     TextView orderid;
     TextView receiptDate;
     TextView orderNotes;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_new, container, false);
-
+        activeLinehaulFragment = new ActiveLinehaulFragment();
         orderid = (TextView)view.findViewById(R.id.order_id);
         receiptDate = (TextView)view.findViewById(R.id.order_receipt_date);
         orderNotes = (TextView)view.findViewById(R.id.order_notes);
@@ -37,7 +38,7 @@ public class OrderDetailsFragmentNew extends Fragment {
         orderid.setText(String.valueOf(o.orderid));
         receiptDate.setText(o.receiptDate.toString());
         orderNotes.setText(o.notes);
-
+        getFragmentManager().beginTransaction().add(R.id.content_panel, activeLinehaulFragment).commit();
         //Update linehaul w temp data in DB
         ArrayList<Linehaul> arrayOfLinehauls = new ArrayList<Linehaul>();
 
@@ -53,8 +54,22 @@ public class OrderDetailsFragmentNew extends Fragment {
 
         ListView listView = (ListView) view.findViewById(R.id.listview_linehauls);
         listView.setAdapter(adapter);
+        listView.setItemsCanFocus(true);
+        listView.setSelection(0);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
+                view.setSelected(true);
+
+            }
+        });
+
+        int selectedPosition = 0;
+        listView.requestFocusFromTouch();
+        listView.performItemClick(
+                listView.getAdapter().getView(selectedPosition, null, null), selectedPosition, selectedPosition);
         return view;
     }
 }

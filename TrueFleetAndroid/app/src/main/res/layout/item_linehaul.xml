@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="12dp"
     android:columnCount="2"
+    android:background="@drawable/listselector"
     tools:ignore="UselessParent">
 
 
     <TextView
+        style="@style/Header"
         android:layout_height="match_parent"
         android:layout_columnSpan="2"
         android:layout_width="1dp"
         android:layout_gravity="start|fill_horizontal"
         android:text="status"
-        style="@style/Header"
+
+
         />
     <TextView
+
         android:layout_height="match_parent"
         android:layout_gravity="start|center_vertical"
         android:text="Ship Date"
