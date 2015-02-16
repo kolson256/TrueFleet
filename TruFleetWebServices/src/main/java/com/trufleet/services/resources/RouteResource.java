@@ -2,8 +2,8 @@ package com.trufleet.services.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.trufleet.services.dao.AccountEntityDAO;
-import com.trufleet.services.domain.representations.AccountEntity;
+import com.trufleet.services.dao.RouteEntityDAO;
+import com.trufleet.services.domain.representations.RouteEntity;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.jackson.Jackson;
 import org.json.JSONException;
@@ -16,24 +16,21 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 
 /**
- * Created by Richard Morgan on 2/9/2015.
+ * Created by Richard Morgan on 2/16/2015.
  */
-
-
-@Path("/0.1/account")
+@Path("/0.1/route")
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
-public class AccountResource{
-
+public class RouteResource {
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
-    private static final Logger LOGGER = LoggerFactory.getLogger(AccountResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteResource.class);
 
-    private final AccountEntityDAO dao;
+    private final RouteEntityDAO dao;
 
-    public AccountResource(AccountEntityDAO accountEntityDAO) {
+    public RouteResource(RouteEntityDAO routeEntityDAO) {
 
 
-        dao = accountEntityDAO;
+        dao = routeEntityDAO;
     }
 
 
@@ -42,7 +39,7 @@ public class AccountResource{
     @Timed
     @UnitOfWork
     @Path("/{id}")
-    public AccountEntity queryAccountByID (@PathParam("id") int id) {
+    public RouteEntity queryRouteByID (@PathParam("id") int id) {
         return dao.findById(id);
     }
 
@@ -51,9 +48,9 @@ public class AccountResource{
     @Timed
     @UnitOfWork
     @Consumes(MediaType.APPLICATION_JSON)
-    public int createAccount(@Valid AccountEntity account) throws JSONException, IOException {
+    public int createRoute(@Valid RouteEntity route) throws JSONException, IOException {
 
-        return dao.create(account);
+        return dao.create(route);
 
     }
 
@@ -62,10 +59,10 @@ public class AccountResource{
     @UnitOfWork
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public AccountEntity updateAccount(@PathParam("id") int id, @Valid AccountEntity account)
+    public RouteEntity updateRoute(@PathParam("id") int id, @Valid RouteEntity route)
             throws JSONException, IOException {
 
-        return dao.modifyContact(account);
+        return dao.modifyContact(route);
     }
 
     /*
@@ -78,12 +75,14 @@ public class AccountResource{
     @UnitOfWork
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void removeContact(@PathParam("id") int id, @Valid AccountEntity account)
+    public void removeContact(@PathParam("id") int id, @Valid RouteEntity route)
             throws JSONException, IOException{
 
-        dao.removeContact(account);
+        dao.removeContact(route);
     }
 
 
 
+
 }
+
