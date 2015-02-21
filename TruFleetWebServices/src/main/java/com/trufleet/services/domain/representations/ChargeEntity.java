@@ -12,6 +12,9 @@ public class ChargeEntity {
     private String description;
     private Double amount;
 
+    public ChargeEntity() {
+    }
+
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {

@@ -15,6 +15,9 @@ public class FreightEntity {
     private String seal;
     private String notes;
 
+    public FreightEntity() {
+    }
+
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {

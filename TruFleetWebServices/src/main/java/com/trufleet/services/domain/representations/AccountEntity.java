@@ -20,6 +20,9 @@ public class AccountEntity {
     private String fax;
     private int id;
 
+    public AccountEntity() {
+    }
+
     @Basic
     @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 2147483647)
     public String getName() {

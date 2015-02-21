@@ -17,6 +17,9 @@ public class ContainerEntity {
     private Integer weight;
     private String notes;
 
+    public ContainerEntity() {
+    }
+
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {

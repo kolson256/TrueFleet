@@ -16,6 +16,9 @@ public class LinehaulEntity {
     private Timestamp pickupenddate;
     private Timestamp deliverydeadline;
 
+    public LinehaulEntity() {
+    }
+
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {

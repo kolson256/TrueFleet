@@ -11,6 +11,9 @@ public class RouteEntity {
     private int id;
     private String notes;
 
+    public RouteEntity() {
+    }
+
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {

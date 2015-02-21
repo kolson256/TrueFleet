@@ -3,36 +3,23 @@ package com.trufleet.service.login.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trufleet.services.domain.representations.AccountEntity;
 import io.dropwizard.jackson.Jackson;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Richard Morgan on 2/16/2015.
  */
-public class BaseJsonTest {
+public class TestAccountEntityJson {
 
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
-    public AccountEntity account = new AccountEntity();
+    static Logger logger = LoggerFactory.getLogger(TestAccountEntityJson.class);
 
-    public BaseJsonTest() {
-    }
-
-
-
-    @BeforeClass
-    public void writeJSONFixtures(){
-        account.setName("Test Account One");
-
-
-
-        }
 
     @Test
-    public
-
-
-
-
+    public void writeJSONFixtures(){
+        AccountEntity account = new AccountEntity();
+    }
 
 }

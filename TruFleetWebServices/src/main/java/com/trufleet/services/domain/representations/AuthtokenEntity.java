@@ -13,6 +13,9 @@ public class AuthtokenEntity {
     private String token;
     private Timestamp expirationdate;
 
+    public AuthtokenEntity() {
+    }
+
     @Basic
     @Column(name = "appuserid", nullable = false, insertable = true, updatable = true)
     public int getAppuserid() {

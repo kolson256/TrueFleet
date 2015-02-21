@@ -15,6 +15,9 @@ public class OrderEntity {
     private String notes;
     private Timestamp receiptdate;
 
+    public OrderEntity() {
+    }
+
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {

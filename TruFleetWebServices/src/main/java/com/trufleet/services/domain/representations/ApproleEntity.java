@@ -11,6 +11,9 @@ public class ApproleEntity {
     private int id;
     private String name;
 
+    public ApproleEntity() {
+    }
+
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {

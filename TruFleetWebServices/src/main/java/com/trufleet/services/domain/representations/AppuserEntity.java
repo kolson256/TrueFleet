@@ -14,6 +14,9 @@ public class AppuserEntity {
     private String username;
     private String registrationid;
 
+    public AppuserEntity() {
+    }
+
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {

@@ -22,6 +22,9 @@ public class ContactEntity {
     private String notes;
     private int id;
 
+    public ContactEntity() {
+    }
+
     @Basic
     @Column(name = "firstname", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getFirstname() {
