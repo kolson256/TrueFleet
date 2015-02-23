@@ -7,8 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Adapters.FreightAdapter;
 import app.truefleet.com.truefleet.Models.Freight;
 import app.truefleet.com.truefleet.R;
@@ -19,22 +20,22 @@ import app.truefleet.com.truefleet.R;
 public class FreightFragment extends Fragment  {
 
     private final String LOG_TAG = FreightFragment.class.getSimpleName();
-
+    private ActiveOrderManager activeOrderManager;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_freight, container, false);
 
-        ArrayList<Freight> arrayOfFreights = new ArrayList<Freight>();
+        activeOrderManager = ActiveOrderManager.getInstance();
+        updateUI(view);
 
-        arrayOfFreights.add(Freight.load(Freight.class, 1));
-        arrayOfFreights.add(Freight.load(Freight.class, 2));
-        arrayOfFreights.add(Freight.load(Freight.class, 3));
+        return view;
+    }
 
+    public void updateUI(View view) {
+        List<Freight> freights = activeOrderManager.getActiveFreights();
 
-        FreightAdapter adapter = new FreightAdapter(getActivity(), arrayOfFreights);
+        FreightAdapter adapter = new FreightAdapter(getActivity(), freights);
 
         ListView listView = (ListView) view.findViewById(R.id.listview_freights);
         listView.setAdapter(adapter);
-
-        return view;
     }
 }

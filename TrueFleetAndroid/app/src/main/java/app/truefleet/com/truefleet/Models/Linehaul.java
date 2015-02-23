@@ -3,6 +3,7 @@ package app.truefleet.com.truefleet.Models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 import java.sql.Date;
 import java.util.List;
@@ -74,5 +75,13 @@ public class Linehaul extends Model {
 
     public List<Freight> freights() {
         return getMany(Freight.class, "Linehaul");
+    }
+
+    public static List<Linehaul> getLinehauls(Order order) {
+        return new Select()
+                .from(Linehaul.class)
+                .where("Orders = ?", order.getId())
+             //   .orderBy("order ASC")
+                .execute();
     }
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import app.truefleet.com.truefleet.Models.Freight;
 import app.truefleet.com.truefleet.R;
@@ -17,7 +17,7 @@ import app.truefleet.com.truefleet.R;
  */
 public class FreightAdapter extends ArrayAdapter<Freight> {
 
-    public FreightAdapter(Context context, ArrayList<Freight> freights) {
+    public FreightAdapter(Context context, List<Freight> freights) {
         super(context, 0, freights);
     }
 

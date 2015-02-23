@@ -47,8 +47,8 @@ public class SidePanelFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_side_panel, container, false);
          ArrayList<String> columns = new ArrayList<>();
 
-         columns.add("Order details");
-        columns.add("Active linehaul");
+         //columns.add("Order details");
+        //columns.add("Active linehaul");
          columns.add("Pickup");
          columns.add("Delivery");
         columns.add("Freights");

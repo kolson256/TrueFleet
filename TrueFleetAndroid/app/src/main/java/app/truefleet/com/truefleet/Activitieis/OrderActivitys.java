@@ -144,28 +144,27 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
         Fragment toSwitch;
 
         switch (position) {
-            case 1:
-                toSwitch = activeLinehaulFragment;
-                break;
-            case 2:
+
+            case 0:
                 toSwitch = pickupFragment;
                 break;
-            case 3:
+            case 1:
                 toSwitch = deliveryFragment;
                 break;
-            case 4:
+            case 2:
                 toSwitch = freightFragment;
                 break;
-            case 5:
+            case 3:
                 toSwitch = containerFragment;
                 break;
             default:
-                toSwitch = orderFragment;
+                toSwitch = pickupFragment;
                 break;
 
         }
 
-        fragmentTransaction.replace(R.id.main_panel, toSwitch);
+        //fragmentTransaction.replace(R.id.main_panel, toSwitch);
+        fragmentTransaction.replace(R.id.content_panel, toSwitch);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
