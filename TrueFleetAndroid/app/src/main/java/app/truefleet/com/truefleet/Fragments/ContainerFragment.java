@@ -35,8 +35,6 @@ public class ContainerFragment extends Fragment {
     TextView mContainerWeight;
     @InjectView(R.id.container_notes)
     TextView mContainerNotes;
-    @InjectView(R.id.log_priority)
-    TextView mLogPriority;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_container, container, false);

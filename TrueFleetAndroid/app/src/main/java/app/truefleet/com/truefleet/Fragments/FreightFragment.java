@@ -33,6 +33,12 @@ public class FreightFragment extends Fragment  {
     public void updateUI(View view) {
         List<Freight> freights = activeOrderManager.getActiveFreights();
 
+        if (freights.size() == 0) {
+            Freight f = new Freight();
+            f.description="No Freights";
+            freights.add(f);
+        }
+
         FreightAdapter adapter = new FreightAdapter(getActivity(), freights);
 
         ListView listView = (ListView) view.findViewById(R.id.listview_freights);

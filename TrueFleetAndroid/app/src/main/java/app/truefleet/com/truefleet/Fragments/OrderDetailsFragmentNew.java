@@ -92,7 +92,18 @@ public class OrderDetailsFragmentNew extends Fragment {
             }
         });
 
+        updateUI(view);
         //Update linehaul w temp data in DB
+
+        return view;
+    }
+
+    public void updateUI(View view) {
+        Order o = activeOrderManager.getOrder();
+        orderid.setText(String.valueOf(o.orderid));
+        receiptDate.setText(o.receiptDate.toString());
+        orderNotes.setText(o.notes);
+
         List<Linehaul> arrayOfLinehauls;
         arrayOfLinehauls = activeOrderManager.getLinehauls();
 
@@ -118,14 +129,6 @@ public class OrderDetailsFragmentNew extends Fragment {
         listView.getAdapter().getView(0,null,null).setSelected(true);
         listView.performItemClick(
                 listView.getAdapter().getView(selectedPosition, null, null), selectedPosition, selectedPosition);
-        return view;
-    }
-
-    public void updateUI() {
-        Order o = activeOrderManager.getOrder();
-        orderid.setText(String.valueOf(o.orderid));
-        receiptDate.setText(o.receiptDate.toString());
-        orderNotes.setText(o.notes);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

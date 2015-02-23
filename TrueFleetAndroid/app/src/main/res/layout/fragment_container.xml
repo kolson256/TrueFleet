@@ -91,21 +91,4 @@
         style="@style/RowValue"
         />
 
-    <TableRow
-        android:layout_marginBottom="10dip"
-        android:background="@drawable/rounded_edittext" >
-
-        <TextView
-            style="@style/BoldText"
-            android:padding="7dip"
-            android:text="test" />
-
-        <TextView
-            android:id="@+id/log_priority"
-            style="@style/DetailRightText"
-            android:gravity="right"
-            android:padding="7dip"
-            android:singleLine="true" />
-    </TableRow>
-
 </GridLayout>
