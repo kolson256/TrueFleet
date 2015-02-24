@@ -1,12 +1,17 @@
 package com.trufleet.services.domain.representations;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 
 /**
  * Created by Richard Morgan on 2/9/2015.
  */
+
+
 @Entity
 @Table(name = "account", schema = "public", catalog = "trufleet")
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_DEFAULT)
 public class AccountEntity {
     private String name;
     private String mailingstreet;

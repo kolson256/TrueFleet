@@ -81,6 +81,10 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
         final AccountEntityDAO accountEntityDAO = new AccountEntityDAO(hibernate.getSessionFactory());
         environment.jersey().register(new AccountResource(accountEntityDAO));
 
+
+
+
+
         environment.jersey().register(new ShiroExceptionMapper());
         environment.getApplicationContext().setSessionHandler(new SessionHandler());
         configureCors(environment);

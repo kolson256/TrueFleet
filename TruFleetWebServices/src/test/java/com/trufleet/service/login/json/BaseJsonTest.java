@@ -20,19 +20,4 @@ public class BaseJsonTest {
 
 
 
-    @BeforeClass
-    public void writeJSONFixtures(){
-        account.setName("Test Account One");
-
-
-
-        }
-
-    @Test
-    public
-
-
-
-
-
 }
