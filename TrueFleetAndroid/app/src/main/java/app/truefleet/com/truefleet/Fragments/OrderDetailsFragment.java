@@ -2,7 +2,6 @@ package app.truefleet.com.truefleet.Fragments;
 
 
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,7 +57,6 @@ public class OrderDetailsFragment extends Fragment {
 
         if (order.getOrderType() != null) {
 
-            System.out.println(order.getReceiptTimestamp());
             Date d = new Date(order.getReceiptTimestamp());
             SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
             receiptTime.setText(format.format(d));

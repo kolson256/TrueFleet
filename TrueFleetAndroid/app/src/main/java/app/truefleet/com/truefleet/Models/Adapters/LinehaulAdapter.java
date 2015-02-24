@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import app.truefleet.com.truefleet.Models.Linehaul;
 import app.truefleet.com.truefleet.R;
@@ -17,7 +17,7 @@ import app.truefleet.com.truefleet.R;
  */
 public class LinehaulAdapter  extends ArrayAdapter<Linehaul> {
 
-    public LinehaulAdapter(Context context, ArrayList<Linehaul> linehauls) {
+    public LinehaulAdapter(Context context, List<Linehaul> linehauls) {
         super(context, 0, linehauls);
     }
 
