@@ -15,7 +15,6 @@ public class AccountEntityDAO extends AbstractDAO<AccountEntity> {
         super(factory);
     }
 
-
     public AccountEntity findById(int id) {
         return get(id);
     }
