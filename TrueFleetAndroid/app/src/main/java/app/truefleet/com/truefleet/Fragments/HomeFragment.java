@@ -29,9 +29,9 @@ import app.truefleet.com.truefleet.Resources.LoginManager;
 public class HomeFragment extends Fragment {
     ArrayAdapter<String> columnAdapter;
     private TextView ordersReceived = null;
-    private ListView orderList = null;
     BroadcastReceiver broadcastReceiver;
     private final String LOG_TAG = HomeFragment.class.getSimpleName();
+
     public HomeFragment() {
     }
     @Override

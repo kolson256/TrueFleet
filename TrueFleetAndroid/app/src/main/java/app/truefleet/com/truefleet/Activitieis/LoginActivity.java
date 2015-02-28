@@ -1,6 +1,5 @@
 package app.truefleet.com.truefleet.Activitieis;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import retrofit.client.Response;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
     private final String LOG_TAG = LoginActivity.class.getSimpleName();
     LoginManager loginManager;
 

@@ -55,8 +55,6 @@ public class OrderDetailsFragmentNew extends Fragment {
     TextView orderNotes;
     Button addImageButton;
     ImageView imageView;
-    Bitmap test = null;
-    private Uri imageUri;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -75,9 +73,6 @@ public class OrderDetailsFragmentNew extends Fragment {
         addImageButton = (Button)view.findViewById(R.id.btnAddImage);
         imageView = (ImageView)view.findViewById(R.id.orderImageView);
 
-       // getFragmentManager().beginTransaction().add(R.id.content_panel, activeLinehaulFragment).commit();
-
-
         addImageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -93,7 +88,6 @@ public class OrderDetailsFragmentNew extends Fragment {
         });
 
         updateUI(view);
-        //Update linehaul w temp data in DB
 
         return view;
     }
@@ -233,10 +227,9 @@ public class OrderDetailsFragmentNew extends Fragment {
     private boolean checkCameraSupport() {
         if (getActivity().getApplicationContext().getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_CAMERA)) {
-            // this device has a camera
+
             return true;
         } else {
-            // no camera on this device
             return false;
         }
     }
