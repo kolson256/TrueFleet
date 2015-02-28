@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import app.truefleet.com.truefleet.Activitieis.HomeActivity;
-import app.truefleet.com.truefleet.Activitieis.LoginActivity;
+import app.truefleet.com.truefleet.Activitieis.Login.LoginActivity;
 import app.truefleet.com.truefleet.R;
 
 /**

@@ -4,7 +4,12 @@ import android.content.Context;
 
 import javax.inject.Singleton;
 
-import app.truefleet.com.truefleet.Activitieis.LoginActivity;
+import app.truefleet.com.truefleet.Activitieis.HomeActivity;
+import app.truefleet.com.truefleet.Activitieis.Login.LoginActivity;
+import app.truefleet.com.truefleet.Activitieis.Login.LoginInteractorImpl;
+import app.truefleet.com.truefleet.Activitieis.OrderActivitys;
+import app.truefleet.com.truefleet.Resources.LoginManager;
+import app.truefleet.com.truefleet.modules.ResourceModule;
 import app.truefleet.com.truefleet.modules.ApiModule;
 import dagger.Module;
 import dagger.Provides;
@@ -14,10 +19,16 @@ import dagger.Provides;
  */
 @Module (
         includes = {
-                ApiModule.class
+                ApiModule.class,
+                ResourceModule.class
         },
         injects = {
-               LoginActivity.class
+                LoginActivity.class,
+                HomeActivity.class,
+                OrderActivitys.class,
+                LoginInteractorImpl.class,
+               TrueFleetApp.class,
+                LoginManager.class
         }
 )
 public class TrueFleetModule {

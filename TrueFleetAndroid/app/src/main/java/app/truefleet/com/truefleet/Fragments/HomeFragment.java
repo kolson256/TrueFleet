@@ -26,7 +26,7 @@ import app.truefleet.com.truefleet.Resources.LoginManager;
 /**
  * Created by Chris Lacy on 11/22/2014.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements Updater {
     ArrayAdapter<String> columnAdapter;
     private TextView ordersReceived = null;
     BroadcastReceiver broadcastReceiver;

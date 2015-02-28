@@ -17,20 +17,22 @@ import app.truefleet.com.truefleet.R;
 /**
  * Created by Chris Lacy on 2/8/2015.
  */
-public class FreightFragment extends Fragment  {
-
+public class FreightFragment extends Fragment implements Updater {
+    private ListView listView;
     private final String LOG_TAG = FreightFragment.class.getSimpleName();
     private ActiveOrderManager activeOrderManager;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_freight, container, false);
 
+        listView = (ListView)view.findViewById(R.id.listview_freights);
         activeOrderManager = ActiveOrderManager.getInstance();
-        updateUI(view);
+        activeOrderManager.setContentUpdater(this);
+        updateUI();
 
         return view;
     }
 
-    public void updateUI(View view) {
+    public void updateUI() {
         List<Freight> freights = activeOrderManager.getActiveFreights();
 
         if (freights.size() == 0) {
@@ -41,7 +43,6 @@ public class FreightFragment extends Fragment  {
 
         FreightAdapter adapter = new FreightAdapter(getActivity(), freights);
 
-        ListView listView = (ListView) view.findViewById(R.id.listview_freights);
         listView.setAdapter(adapter);
     }
 }

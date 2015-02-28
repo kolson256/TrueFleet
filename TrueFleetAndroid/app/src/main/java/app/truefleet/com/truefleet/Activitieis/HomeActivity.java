@@ -5,12 +5,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import java.sql.Date;
+
+import javax.inject.Inject;
 
 import app.truefleet.com.truefleet.Fragments.HomeFragment;
 import app.truefleet.com.truefleet.Models.Account;
@@ -24,10 +25,12 @@ import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Resources.GcmHelper;
 import app.truefleet.com.truefleet.Resources.LoginManager;
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends BaseActivity {
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
-    LoginManager loginManager;
+    @Inject LoginManager loginManager;
+    @Inject
+    GcmHelper gcmHelper;
 
     Context context;
     Activity activity;
@@ -38,16 +41,12 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
         activity = this;
         context = getApplicationContext();
-        loginManager = new LoginManager(context);
         setTitle("Home");
         getActionBar().setIcon(R.drawable.orders);
-        GcmHelper gcmHelper = new GcmHelper(getApplicationContext());
+
         gcmHelper.gcmSetup(this);
 
-
-        addFakeOrder();
-        Contact c = Contact.load(Contact.class, 1);
-        Log.i(LOG_TAG, "C name:" + c.firstName + c.lastName);
+        //addFakeOrder();
 
         if (savedInstanceState == null) {
 

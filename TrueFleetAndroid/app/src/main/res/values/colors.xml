@@ -8,4 +8,6 @@
     <color name="green">#00ff00</color>
     <color name="blue">#0000ff</color>
     <color name="white">#000000</color>
+    <color name="caramel">#af6f09</color>
+    <color name="dark_activated">#282323</color>
 </resources>

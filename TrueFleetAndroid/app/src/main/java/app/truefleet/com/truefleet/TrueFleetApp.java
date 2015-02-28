@@ -3,6 +3,8 @@ package app.truefleet.com.truefleet;
 import android.app.Application;
 import android.content.Context;
 
+import com.activeandroid.ActiveAndroid;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class TrueFleetApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-   
+        ActiveAndroid.initialize(this);
 
         buildObjectGraphAndInject();
     }
@@ -34,12 +36,15 @@ public class TrueFleetApp extends Application {
     public void inject(Object o) {
         objectGraph.inject(o);
     }
+
     protected List<Object> getModules() {
         return Arrays.<Object>asList(new TrueFleetModule(this));
     }
+
     public static TrueFleetApp get(Context context) {
         return (TrueFleetApp) context.getApplicationContext();
     }
+
     public ObjectGraph getObjectGraph() {
         return this.objectGraph;
     }

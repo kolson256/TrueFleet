@@ -21,7 +21,6 @@ public interface ApiService {
     @POST("/Login")
     public void login(@Body LoginRequest loginRequest, RestCallback<User> cb);
 
-
     @Headers({
             "Content-type: application/json",
             "Accept: application/json"

@@ -16,7 +16,7 @@ import butterknife.InjectView;
 /**
  * Created by Chris Lacy on 11/21/2014.
  */
-public class DeliveryFragment extends Fragment {
+public class DeliveryFragment extends Fragment implements Updater {
     private final String LOG_TAG = DeliveryFragment.class.getSimpleName();
     ActiveOrderManager activeOrderManager;
 
@@ -35,6 +35,7 @@ public class DeliveryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_delivery, container, false);
 
         activeOrderManager = ActiveOrderManager.getInstance();
+        activeOrderManager.setContentUpdater(this);
         ButterKnife.inject(this, view);
 
         updateUI();

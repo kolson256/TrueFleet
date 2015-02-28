@@ -13,15 +13,11 @@ public abstract class BaseActivity extends Activity {
    // @Inject AppContainer appContainer;
     private ViewGroup container;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TrueFleetApp app = TrueFleetApp.get(this);
-
-        app.getObjectGraph().inject(this);
-        //app.inject(this);
-
-       // container = appContainer.get(this);
+        ((TrueFleetApp) getApplication()).inject(this);
     }
 }

@@ -7,11 +7,13 @@
     android:layout_height="match_parent"
     android:padding="12dp"
     android:columnCount="2"
-    android:background="@drawable/listselector"
-    tools:ignore="UselessParent">
+    android:background="@drawable/darklistselector"
+    tools:ignore="UselessParent"
+    >
 
 
     <TextView
+        android:id="@+id/linehaul_status"
         style="@style/Header"
         android:layout_height="match_parent"
         android:layout_columnSpan="2"

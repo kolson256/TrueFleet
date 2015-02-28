@@ -20,7 +20,6 @@ public class RestClient {
     private static final String BASE_URL = genymotion;
     private ApiService apiService;
 
-
     public RestClient()
     {
         Gson gson = new GsonBuilder()
@@ -34,6 +33,7 @@ public class RestClient {
                 .build();
 
         apiService = restAdapter.create(ApiService.class);
+
 
     }
 

@@ -9,17 +9,20 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-import app.truefleet.com.truefleet.Activitieis.LoginActivity;
+import javax.inject.Inject;
+
+import app.truefleet.com.truefleet.Activitieis.Login.LoginActivity;
 import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.Tasks.ApiService;
 import app.truefleet.com.truefleet.Tasks.Requests.GcmRegisterRequest;
 import app.truefleet.com.truefleet.Tasks.RestCallback;
-import app.truefleet.com.truefleet.Tasks.RestClient;
 import app.truefleet.com.truefleet.Tasks.RestError;
+import app.truefleet.com.truefleet.TrueFleetApp;
 import retrofit.client.Response;
 
 
 public class LoginManager {
+    @Inject ApiService apiService;
     SharedPreferences sharedPreferences;
     Context context;
     SharedPreferences.Editor editor;
@@ -42,6 +45,7 @@ public class LoginManager {
         this.context = context;
         sharedPreferences = this.context.getSharedPreferences(NAME, MODE);
         editor = sharedPreferences.edit();
+        ((TrueFleetApp) context.getApplicationContext()).inject(this);
     }
 
     public void createLoginSession(User user) {
@@ -60,11 +64,9 @@ public class LoginManager {
         }
         else {
 
-            RestClient rc = new RestClient();
-            ApiService as = rc.getApiService();
-
             Log.i(LOG_TAG, "registering to server user: " + user.getUsername());
-            as.registerGcmWithServer(user.getauthenticationToken(), user.getTenantId(),
+
+           apiService.registerGcmWithServer(user.getauthenticationToken(), user.getTenantId(),
                     new GcmRegisterRequest(user.getUsername(), regid), new RestCallback<JSONObject>() {
                         @Override
                         public void success(JSONObject jsonObject, Response response) {

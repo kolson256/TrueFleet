@@ -1,6 +1,5 @@
 package app.truefleet.com.truefleet.Activitieis;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -23,16 +22,16 @@ import app.truefleet.com.truefleet.Fragments.ActiveLinehaulFragment;
 import app.truefleet.com.truefleet.Fragments.ContainerFragment;
 import app.truefleet.com.truefleet.Fragments.DeliveryFragment;
 import app.truefleet.com.truefleet.Fragments.FreightFragment;
-import app.truefleet.com.truefleet.Fragments.OrderDetailsFragmentNew;
+import app.truefleet.com.truefleet.Fragments.OrderDetailsFragment;
 import app.truefleet.com.truefleet.Fragments.PickupFragment;
 import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
 import app.truefleet.com.truefleet.Models.IMTOrder;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Tasks.SendStatusTask;
 
-public class OrderActivitys extends Activity implements SidePanelFragment.OnColumnSelectedListener {
+public class OrderActivitys extends BaseActivity implements SidePanelFragment.OnColumnSelectedListener {
     private final String LOG_TAG = OrderActivitys.class.getSimpleName();
-    OrderDetailsFragmentNew orderFragment;
+    OrderDetailsFragment orderFragment;
     DeliveryFragment deliveryFragment;
     PickupFragment pickupFragment;
     SidePanelFragment sidePanelFragment;
@@ -79,7 +78,7 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
         setContentView(R.layout.activity_order);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        orderFragment = new OrderDetailsFragmentNew();
+        orderFragment = new OrderDetailsFragment();
     deliveryFragment = new DeliveryFragment();
     pickupFragment = new PickupFragment();
     sidePanelFragment = new SidePanelFragment();
@@ -136,6 +135,7 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
 
     }
 
+
     @Override
     public void onColumnSelected(int position) {
         Log.i(LOG_TAG, "Order activitys received selection: " + position);
@@ -164,6 +164,7 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
         }
 
         //fragmentTransaction.replace(R.id.main_panel, toSwitch);
+
         fragmentTransaction.replace(R.id.content_panel, toSwitch);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
@@ -186,7 +187,7 @@ public class OrderActivitys extends Activity implements SidePanelFragment.OnColu
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_order, container, false);
 
             return rootView;
         }

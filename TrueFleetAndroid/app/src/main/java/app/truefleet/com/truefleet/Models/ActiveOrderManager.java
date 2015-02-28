@@ -5,6 +5,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.truefleet.com.truefleet.Fragments.Updater;
+
 /**
  * Created by Chris Lacy on 2/23/2015.
  */
@@ -16,12 +18,21 @@ public class ActiveOrderManager {
     private Order order;
     private List<Linehaul> linehauls;
     private int activeLinehaulIndex;
-
+    private Updater linehaulUdater;
+    private Updater contentUpdater;
 
     private ActiveOrderManager() {
+        linehaulUdater = null;
+        contentUpdater = null;
         linehauls = new ArrayList<Linehaul>();
         order = null;
         activeLinehaulIndex = 0;
+    }
+    public void setLinehaulUpdater(Updater linehaulUpdater) {
+        this.linehaulUdater = linehaulUpdater;
+    }
+    public void setContentUpdater(Updater updater) {
+        contentUpdater = updater;
     }
     public static ActiveOrderManager getInstance() { return instance; }
 
@@ -42,6 +53,8 @@ public class ActiveOrderManager {
             return;
         }
         this.activeLinehaulIndex =  index;
+        if (contentUpdater!=null)
+            contentUpdater.updateUI();
     }
 
     public Linehaul getActiveLinehaul() { return linehauls.get(activeLinehaulIndex); }
