@@ -2,6 +2,7 @@ package app.truefleet.com.truefleet.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,12 +46,26 @@ public class DeliveryFragment extends Fragment implements Updater {
 
     public void updateUI() {
         Account account = activeOrderManager.getActiveDeliveryAccount();
+
+        if(account == null) {
+            Log.i(LOG_TAG, "Account was null");
+            emptyDelivery();
+            return;
+        }
+        mPickupName.setText(account.name);
         mPickupAddress.setText(account.mailingstreet);
         mPickupCityStateZip.setText(account.mailingcity + ", " + account.mailingstate +" " + account.mailingpostalcode);
         mPickupPhone.setText(account.phone);
         mPickupNotes.setText(account.notes);
     }
 
+    private void emptyDelivery() {
+        mPickupName.setText("No Delivery");
+        mPickupAddress.setText("");
+        mPickupCityStateZip.setText("");
+        mPickupPhone.setText("");
+        mPickupNotes.setText("");
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

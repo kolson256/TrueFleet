@@ -1,23 +1,10 @@
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import app.truefleet.com.truefleet.Resources.LoginManager;
-import app.truefleet.com.truefleet.Tasks.LoginTask;
-
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
 
 //@RunWith(CustomTestRunner.class)
 //@Config(emulateSdk = 16, manifest="../app/src/main/AndroidManifest.xml")
@@ -27,7 +14,7 @@ import static junit.framework.Assert.assertTrue;
 public class TestLogin {
     private SharedPreferences mPrefs;
     LoginManager loginManager;
-    LoginTask loginTask;
+/*    LoginTask loginTask;
 
     @Before
     public void setUp() throws Exception {

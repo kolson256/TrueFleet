@@ -131,6 +131,7 @@
         android:layout_width="0dp"
         android:layout_below="@id/grid_layout">
         <ListView
+
             android:choiceMode="singleChoice"
             android:layout_height="match_parent"
             android:layout_width = "match_parent"
@@ -150,6 +151,7 @@
         android:layout_toRightOf="@id/dummyView">
 
         <ListView
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 

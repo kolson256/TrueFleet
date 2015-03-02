@@ -2,6 +2,7 @@ package app.truefleet.com.truefleet.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,9 @@ public class ContainerFragment extends Fragment implements Updater {
         Containers container = activeOrderManager.getActiveContainer();
 
         if (container == null) {
-            container = new Containers();
+            Log.i(LOG_TAG, "Container was null");
+            setNullContainer();
+            return;
         }
         mContainerDescription.setText(setValue(container.description, "No container"));
         mContainerVolume.setText(setValue(container.volume, ""));
@@ -60,6 +63,16 @@ public class ContainerFragment extends Fragment implements Updater {
         mContainerHeight.setText(setValue(container.height, ""));
         mContainerWeight.setText(setValue(container.weight, ""));
         mContainerNotes.setText(setValue(container.notes, ""));
+    }
+
+    public void setNullContainer() {
+        mContainerDescription.setText("No container");
+        mContainerVolume.setText("");
+        mContainerLength.setText("");
+        mContainerWidth.setText("");
+        mContainerHeight.setText("");
+        mContainerWeight.setText("");
+        mContainerNotes.setText("");
     }
 
     @Override

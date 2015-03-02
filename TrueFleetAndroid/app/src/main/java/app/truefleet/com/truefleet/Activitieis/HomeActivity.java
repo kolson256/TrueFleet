@@ -15,12 +15,13 @@ import javax.inject.Inject;
 
 import app.truefleet.com.truefleet.Fragments.HomeFragment;
 import app.truefleet.com.truefleet.Models.Account;
+import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Contact;
 import app.truefleet.com.truefleet.Models.Containers;
 import app.truefleet.com.truefleet.Models.Freight;
-import app.truefleet.com.truefleet.Models.IMTOrder;
 import app.truefleet.com.truefleet.Models.Linehaul;
 import app.truefleet.com.truefleet.Models.Order;
+import app.truefleet.com.truefleet.Models.OrderOverviewManager;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Resources.GcmHelper;
 import app.truefleet.com.truefleet.Resources.LoginManager;
@@ -28,9 +29,14 @@ import app.truefleet.com.truefleet.Resources.LoginManager;
 public class HomeActivity extends BaseActivity {
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
+
+    private ActiveOrderManager activeOrderManager;
     @Inject LoginManager loginManager;
     @Inject
     GcmHelper gcmHelper;
+
+    @Inject
+    OrderOverviewManager orderOverviewManager;
 
     Context context;
     Activity activity;
@@ -43,6 +49,7 @@ public class HomeActivity extends BaseActivity {
         context = getApplicationContext();
         setTitle("Home");
         getActionBar().setIcon(R.drawable.orders);
+        activeOrderManager = activeOrderManager.getInstance();
 
         gcmHelper.gcmSetup(this);
 
@@ -79,9 +86,9 @@ public class HomeActivity extends BaseActivity {
         showOrders();
     }
     public void showOrders() {
-        IMTOrder order = IMTOrder.getInstance();
+        Order order = activeOrderManager.getOrder();
 
-        if (order.getOrderType() != null) {
+        if (order != null) {
             Intent i = new Intent(context, OrderActivitys.class);
             startActivity(i);
         }
@@ -130,7 +137,7 @@ public class HomeActivity extends BaseActivity {
         cOrder.save();
         int orderid = 1111;
         Order o = new Order(aOrder, cOrder, orderid, "2222", "order notes", new Date(123456),
-                "orderType");
+                "orderType", "test");
         o.save();
         Linehaul lh = new Linehaul(orderid, o, 888, ashipper, aterminal, areceiver,
                 "linehaul notes", new Date(12345),

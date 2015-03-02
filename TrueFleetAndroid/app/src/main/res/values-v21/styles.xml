@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-
+    <style name="AppTheme" parent="AppTheme.Base">
+        <!-- Customize your theme using Material Design here. -->
     </style>
+
     <style name="activated" parent="AppTheme">
         <item name="android:background">?android:attr/activatedBackgroundIndicator</item>
     </style>

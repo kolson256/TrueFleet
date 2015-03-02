@@ -4,7 +4,8 @@
 
     <item android:drawable="@color/dark_activated"  android:state_activated="true"/>
     <item android:drawable="@color/dark_activated" android:state_pressed="true"/>
-    <item android:drawable="@color/android:transparent"/>
+    <item android:drawable="@xml/rectangle_listview_activated"/>
+  <!--  <item android:drawable="@color/android:transparent"/>-->
 
 
 </selector>

@@ -57,11 +57,25 @@ public class PickupFragment extends Fragment implements Updater {
 
     public void updateUI() {
         Account account = activeOrderManager.getActivePickupAccount();
+
+        if (account == null) {
+            Log.i(LOG_TAG, "Account was null");
+            emptyPickup();
+            return;
+        }
+        mPickupName.setText(account.name);
         mPickupAddress.setText(account.mailingstreet);
         mPickupCityStateZip.setText(account.mailingcity + ", " + account.mailingstate +" " + account.mailingpostalcode);
         mPickupPhone.setText(account.phone);
         mPickupNotes.setText(account.notes);
 
+    }
+    private void emptyPickup() {
+        mPickupName.setText("No pickup set");
+        mPickupAddress.setText("");
+        mPickupCityStateZip.setText("");
+        mPickupPhone.setText("");
+        mPickupNotes.setText("");
     }
     @Override
     public void onDestroyView() {

@@ -84,4 +84,9 @@ public class Linehaul extends Model {
              //   .orderBy("order ASC")
                 .execute();
     }
+
+    //TODO: Implement when status is in DB
+    public static boolean isAactive(Linehaul linehaul) {
+        return true;
+    }
 }

@@ -64,7 +64,7 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
         activeOrderManager = ActiveOrderManager.getInstance();
 
         activeOrderManager.setLinehaulUpdater(this);
-        activeOrderManager.setOrder(Order.load(Order.class, 1));
+        //activeOrderManager.setOrder(Order.load(Order.class, 1));
 
 
         View view = inflater.inflate(R.layout.fragment_order, container, false);

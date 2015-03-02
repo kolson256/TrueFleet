@@ -74,6 +74,7 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
         registerReceiver(broadcastReceiver, new IntentFilter("orderstatus"));
 
         setTitle("Order Details");
+        getActionBar().setSubtitle("test");
         getActionBar().setIcon(R.drawable.orders);
         setContentView(R.layout.activity_order);
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -94,6 +95,13 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             hideSidePanel();
         }
+
+        //initialize w pickup fragment
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_panel, pickupFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
      //   if (savedInstanceState == null) {
      //       getFragmentManager().beginTransaction()
       //              .add(R.id.container, new PlaceholderFragment())

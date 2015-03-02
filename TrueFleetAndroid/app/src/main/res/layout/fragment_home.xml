@@ -46,11 +46,29 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="240dp"
-            android:id="@+id/listViewOrders"
+            android:id="@+id/listviewActiveOrders"
             android:layout_below="@+id/orderreceived_text"
             android:dividerHeight="0.3dp"
             android:layout_gravity="left|center_vertical" />
     </FrameLayout>
+
+
+    <TextView
+        android:id= "@+id/completed_text"
+        android:text="Completed orders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/orders_container"
+        android:layout_marginTop="50dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:id="@+id/listviewCompletedOrders"
+        android:layout_below="@+id/completed_text"
+        android:dividerHeight="0.3dp"
+        android:layout_gravity="left|center_vertical" />
 
 
 
