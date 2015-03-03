@@ -8,11 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import app.truefleet.com.truefleet.Models.Adapters.PanelAdapter;
+import app.truefleet.com.truefleet.Models.PanelItem;
 import app.truefleet.com.truefleet.R;
 
 /**
@@ -43,20 +44,26 @@ public class SidePanelFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_side_panel, container, false);
+        ArrayList<PanelItem> panelItems = new ArrayList<>();
+
+        ListView listView = (ListView)view.findViewById(R.id.listview_columns);
+        panelItems.add(new PanelItem(R.drawable.ic_pickup, "Pickup", ""));
+        panelItems.add(new PanelItem(R.drawable.ic_delivery, "Delivery", ""));
+        panelItems.add(new PanelItem(R.drawable.ic_freights, "Freights", ""));
+        panelItems.add(new PanelItem(R.drawable.ic_container, "Container", ""));
+
          ArrayList<String> columns = new ArrayList<>();
 
          columns.add("Pickup");
          columns.add("Delivery");
         columns.add("Freights");
         columns.add("Container");
+        PanelAdapter adapter = new PanelAdapter(getActivity(), panelItems);
 
-                 ArrayAdapter<String> columnAdapter = new ArrayAdapter<String>
-                 (getActivity(), R.layout.side_panel_column, R.id.side_panel_column_textview, columns);
 
-                 ListView lvColumn = (ListView) view.findViewById(R.id.listview_columns);
-         lvColumn.setAdapter(columnAdapter);
+         listView.setAdapter(adapter);
 
-        lvColumn.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -66,8 +73,8 @@ public class SidePanelFragment extends Fragment {
             }
         });
 
-        lvColumn.setItemChecked(0, true);
-        lvColumn.setSelection(0);
+        listView.setItemChecked(0, true);
+        listView.setSelection(0);
 
 
         return view;

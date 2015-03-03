@@ -25,6 +25,7 @@ import app.truefleet.com.truefleet.Fragments.FreightFragment;
 import app.truefleet.com.truefleet.Fragments.OrderDetailsFragment;
 import app.truefleet.com.truefleet.Fragments.PickupFragment;
 import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
+import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.IMTOrder;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Tasks.SendStatusTask;
@@ -72,12 +73,12 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
 
         broadcastReceiver = new FragmentReceiverOrderDetails();
         registerReceiver(broadcastReceiver, new IntentFilter("orderstatus"));
+        ActiveOrderManager activeOrderManager = ActiveOrderManager.getInstance();
 
         setTitle("Order Details");
-        getActionBar().setSubtitle("test");
-        getActionBar().setIcon(R.drawable.orders);
+        getSupportActionBar().setSubtitle("#" + activeOrderManager.getOrder().orderid);
         setContentView(R.layout.activity_order);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         orderFragment = new OrderDetailsFragment();
     deliveryFragment = new DeliveryFragment();

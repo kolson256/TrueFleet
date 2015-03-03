@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -53,7 +52,7 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
     TextView orderid;
     TextView receiptDate;
     TextView orderNotes;
-    Button addImageButton;
+    com.gc.materialdesign.views.ButtonRectangle addImageButton;
     ImageView imageView;
     ListView listView;
 
@@ -74,7 +73,7 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
         receiptDate = (TextView)view.findViewById(R.id.order_receipt_date);
         orderNotes = (TextView)view.findViewById(R.id.order_notes);
 
-        addImageButton = (Button)view.findViewById(R.id.btnAddImage);
+        addImageButton = (com.gc.materialdesign.views.ButtonRectangle)view.findViewById(R.id.btnAddImage);
         imageView = (ImageView)view.findViewById(R.id.orderImageView);
 
         addImageButton.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +124,8 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
         });
 
         int selectedPosition = 0;
+        listView.setItemChecked(0, true);
+        listView.setSelection(0);
         //listView.requestFocusFromTouch();
 
        // listView.getAdapter().getView(0,null,null).setSelected(true);

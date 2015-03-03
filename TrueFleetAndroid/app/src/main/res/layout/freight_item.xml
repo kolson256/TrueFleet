@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity = "center"
+    card_view:cardCornerRadius="10dp"
+    android:elevation="20dp"
+
+    >
 <GridLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,58 +23,71 @@
     <TextView
         android:id="@+id/freight_description"
         android:layout_columnSpan="2"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="start|fill_horizontal"
         android:text="Freightdescription"
         style="@style/Header"
         />
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:text="Quantity"
         style="@style/RowTitle"
         />
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/freight_quantity"
         android:text="0"
-        android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:text="Weight"
         style="@style/RowTitle"
         />
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/freight_weight"
         android:text="0"
-        android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:text="Seal"
         style="@style/RowTitle"
         />
     <TextView
         android:id="@+id/freight_seal"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:text="Notes"
         style="@style/RowTitle"
         />
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/freight_notes"
-        android:layout_width="0dp"
         android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
-
 </GridLayout>
+</android.support.v7.widget.CardView>

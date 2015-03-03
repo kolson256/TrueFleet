@@ -1,8 +1,8 @@
 package app.truefleet.com.truefleet.Activitieis;
 
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -15,7 +15,7 @@ import app.truefleet.com.truefleet.TrueFleetApp;
 /**
  * Created by Chris Lacy on 2/27/2015.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends ActionBarActivity {
    // @Inject AppContainer appContainer;
     private ViewGroup container;
 
@@ -25,7 +25,8 @@ public abstract class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         ((TrueFleetApp) getApplication()).inject(this);
-        getActionBar().setCustomView(R.layout.action_bar);
+        getSupportActionBar().setIcon(R.drawable.orders);
+      //  getSupportActionBar().setCustomView(R.layout.action_bar);
       //  centerActionBarTitle();
     }
 

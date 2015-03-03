@@ -1,24 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/listselector"
+    android:id="@+id/sidepanel_column"
+    android:layout_width="match_parent"
+    android:layout_height="48dp" >
+   <!-- android:background="#F3F3F3" -->
 
-<ImageView
-    android:id="@+id/icon"
-    android:layout_width="22px"
-    android:layout_height="22px"
-    android:layout_marginLeft="4px"
-    android:layout_marginRight="10px"
-    android:layout_marginTop="4px"
-    android:src="@drawable/ic_launcher" >
-</ImageView>
+    <ImageView
+        android:id="@+id/panel_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_launcher"
+        />
 
-<TextView
-    android:id="@+id/label"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@+id/label"
-    android:textSize="20px" >
-</TextView>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/panel_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/panel_icon"
+        android:layout_alignBaseline="@+id/panel_counter"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/panel_counter"
+        android:visibility="invisible"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rectangle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,7 +53,7 @@ public class HomeFragment extends Fragment implements Updater {
     @InjectView(R.id.listviewCompletedOrders)
     ListView listviewCompletedOrders;
     @InjectView(R.id.buttonLogout)
-    Button mButtonLogout;
+    com.gc.materialdesign.views.ButtonRectangle mButtonLogout;
 
     BroadcastReceiver broadcastReceiver;
     private final String LOG_TAG = HomeFragment.class.getSimpleName();

@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
-
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity = "center"
+    card_view:cardCornerRadius="10dp"
+
+
+    android:elevation="20dp"
+
+    >
+<GridLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="12dp"
@@ -16,85 +26,101 @@
     <TextView
         android:id="@+id/linehaul_status"
         style="@style/Header"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_columnSpan="2"
-        android:layout_width="1dp"
+        android:layout_width="match_parent"
         android:layout_gravity="start|fill_horizontal"
         android:text="status"
 
-
         />
     <TextView
 
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:text="Ship Date"
+        android:textColor="@color/text_selector"
         style="@style/RowTitle"
         />
     <TextView
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/linehaul_ship_date"
         android:text="None"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
+        android:textColor="@color/text_selector"
         />
     <TextView
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:text="Pickup Start Date"
         style="@style/RowTitle"
+        android:textColor="@color/text_selector"
         />
     <TextView
         android:layout_height="match_parent"
         android:id="@+id/linehaul_pickup_start_date"
         android:text="None"
-        android:layout_width="0dp"
+        android:layout_width="1dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
+        android:textColor="@color/text_selector"
         />
     <TextView
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:text="Pickup End Date"
         style="@style/RowTitle"
+        android:textColor="@color/text_selector"
         />
     <TextView
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/linehaul_pickup_end_date"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
+        android:textColor="@color/text_selector"
         />
     <TextView
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:text="Delivery Deadline"
         style="@style/RowTitle"
+        android:textColor="@color/text_selector"
         />
     <TextView
-
+        android:layout_height="wrap_content"
         android:id="@+id/linehaul_delivery_deadline"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
+        android:textColor="@color/text_selector"
         />
     <TextView
-
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:text="Notes"
         style="@style/RowTitle"
+        android:textColor="@color/text_selector"
         />
     <TextView
-
+        android:layout_height="wrap_content"
         android:id="@+id/linehaul_delivery_notes"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         android:layout_marginBottom="20dp"
+        android:textColor="@color/text_selector"
         />
 
+
 </GridLayout>
+</android.support.v7.widget.CardView>

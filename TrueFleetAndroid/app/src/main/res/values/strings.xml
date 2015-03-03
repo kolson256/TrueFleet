@@ -6,13 +6,13 @@
     <string name="hello_world">TruFleet</string>
     <string name="username">Username:</string>
     <string name="password">Password:</string>
-    <string name="Login">Login</string>
+    <string name="Login">LOGIN</string>
     <string name="attempts">Attempts Left:</string>
     <string name="title_activity_my">MyActivity</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="title_order_login">OrderActivity</string>
-    <string name="Logout">Logout</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_order_login">Order Details</string>
+    <string name="Logout">LOGOUT</string>
     <string name ="localhost">"http://127.0.0.1:8080/"</string>
     <string name = "androidEmulator">"http://10.0.2.2:8080/"</string>
 

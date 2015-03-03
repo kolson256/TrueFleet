@@ -48,7 +48,7 @@ public class HomeActivity extends BaseActivity {
         activity = this;
         context = getApplicationContext();
         setTitle("Home");
-        getActionBar().setIcon(R.drawable.orders);
+
         activeOrderManager = activeOrderManager.getInstance();
 
         gcmHelper.gcmSetup(this);

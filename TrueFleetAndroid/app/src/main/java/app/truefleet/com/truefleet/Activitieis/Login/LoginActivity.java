@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +27,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @InjectView(R.id.textUsername) EditText username;
     @InjectView(R.id.textPassword) EditText password;
     @InjectView(R.id.textView5) TextView attempts;
-    @InjectView(R.id.buttonLogin) Button login;
+    @InjectView(R.id.buttonLogin) com.gc.materialdesign.views.ButtonRectangle login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
         setTitle("Login");
-        getActionBar().setIcon(R.drawable.orders);
 
        // if (loginManager.checkLogin())
         //    finish();

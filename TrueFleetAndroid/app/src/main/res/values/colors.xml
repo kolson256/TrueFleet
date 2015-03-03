@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primary">@color/blue_500</color>
+    <color name="primary_dark">#303F9F</color>
+    <color name="accent">#FF5252</color>
+    <color name="light_primary">@color/blue_200</color>
+    <color name="secondary_text">#727272</color>
+    <color name="text_icons">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
+
     <color name="pressed_color">#449def</color>
     <color name="default_color">#EAEAEA</color>
     <color name="text_light">#66000000</color>
@@ -7,7 +15,7 @@
     <color name="red">#ff0000</color>
     <color name="green">#00ff00</color>
     <color name="blue">#0000ff</color>
-    <color name="white">#000000</color>
+    <color name="white">#fff</color>
     <color name="caramel">#af6f09</color>
     <color name="dark_activated">#282323</color>
 
