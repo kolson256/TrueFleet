@@ -9,7 +9,7 @@ adminDatabase:
   password: password
 
   # the JDBC URL
-  url: jdbc:postgresql://localhost:5432/TruFleetAdmin
+  url: jdbc:postgresql://localhost:5432/trufleetadmin
 
    # any properties specific to your JDBC driver:
   properties:
@@ -42,7 +42,7 @@ tenantDatabase:
   password: password
 
   # the JDBC URL, this will be changed
-  url: jdbc:postgresql://localhost:5432/TruFleet
+  url: jdbc:postgresql://localhost:5432/trufleet
 
    # any properties specific to your JDBC driver:
   properties:
