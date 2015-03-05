@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.Resources.ConnectionDetector;
@@ -23,7 +24,7 @@ public class LoginInteractorImpl implements LoginInteractor {
     private final String LOG_TAG = LoginInteractorImpl.class.getSimpleName();
 
     @Inject ConnectionDetector cd;
-    @Inject ApiService apiService;
+    @Inject @Named("real") ApiService apiService;
    @Inject LoginManager loginManager;
 
     LoginInteractorImpl(Context context) {

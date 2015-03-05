@@ -27,6 +27,7 @@ public class SidePanelFragment extends Fragment {
     public interface OnColumnSelectedListener {
         public void onColumnSelected(int position);
     }
+
     @Override
     public void onAttach(Activity activity) {
 
@@ -46,28 +47,28 @@ public class SidePanelFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_side_panel, container, false);
         ArrayList<PanelItem> panelItems = new ArrayList<>();
 
-        ListView listView = (ListView)view.findViewById(R.id.listview_columns);
+        ListView listView = (ListView) view.findViewById(R.id.listview_columns);
         panelItems.add(new PanelItem(R.drawable.ic_pickup, "Pickup", ""));
         panelItems.add(new PanelItem(R.drawable.ic_delivery, "Delivery", ""));
         panelItems.add(new PanelItem(R.drawable.ic_freights, "Freights", ""));
         panelItems.add(new PanelItem(R.drawable.ic_container, "Container", ""));
 
-         ArrayList<String> columns = new ArrayList<>();
+        ArrayList<String> columns = new ArrayList<>();
 
-         columns.add("Pickup");
-         columns.add("Delivery");
+        columns.add("Pickup");
+        columns.add("Delivery");
         columns.add("Freights");
         columns.add("Container");
         PanelAdapter adapter = new PanelAdapter(getActivity(), panelItems);
 
 
-         listView.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-               view.setSelected(true);
+                view.setSelected(true);
                 Log.i(LOG_TAG, "Listview index: " + position + " clicked");
                 mCallback.onColumnSelected(position);
             }

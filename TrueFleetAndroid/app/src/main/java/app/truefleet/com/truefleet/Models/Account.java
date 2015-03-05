@@ -42,7 +42,9 @@ public class Account extends Model {
     @Column
     public String fax;
 
-    public Account() { super(); }
+    public Account() {
+        super();
+    }
 
     public Account(String name, String mailingstreet, String mailingcity, String mailingstate,
                    String mailingpostalcode, String mailingCountry, String types,

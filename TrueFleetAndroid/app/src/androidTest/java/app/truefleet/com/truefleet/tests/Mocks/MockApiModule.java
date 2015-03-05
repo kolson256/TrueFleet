@@ -1,4 +1,4 @@
-package app.truefleet.com.truefleet.modules;
+package app.truefleet.com.truefleet.tests.Mocks;
 
 import android.content.Context;
 
@@ -7,23 +7,23 @@ import javax.inject.Singleton;
 
 import app.truefleet.com.truefleet.Tasks.ApiService;
 import app.truefleet.com.truefleet.Tasks.RestClient;
+import app.truefleet.com.truefleet.tests.LoginApiTest;
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Chris Lacy on 2/27/2015.
+ * Created by Chris Lacy on 3/4/2015.
  */
 @Module(
+        injects = LoginApiTest.class,
         complete = false,
         library = true
 )
-public class ApiModule {
-
+public class MockApiModule {
     @Provides
-    @Named("real")
-    @Singleton
-    ApiService provideServerApi(Context context) {
+    @Named("mock")@Singleton
+    ApiService provideServerApi(Context context)
+    {
         return new RestClient().getApiService();
     }
-
 }

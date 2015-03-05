@@ -1,92 +1,82 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
 
     tools:context="app.truefleet.com.truefleet.Activitieis.HomeActivity">
 
+
     <TextView
-        android:id= "@+id/welcome_text"
-        android:text="hello"
+        android:id="@+id/welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
+        android:text="hello"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:typeface="serif" />
 
     <TextView
-        android:id= "@+id/orderreceived_text"
-        android:text=""
+        android:id="@+id/orderreceived_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/welcome_text"
         android:layout_marginTop="50dp"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <View
         android:id="@+id/lineOne"
-        android:layout_below="@+id/orderreceived_text"
         android:layout_width="fill_parent"
         android:layout_height="3dp"
-        android:background="@color/primary"/>
+        android:layout_below="@+id/orderreceived_text"
+        android:background="@color/primary" />
+
+    <Spinner
+        android:id="@+id/order_type_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lineOne"
+        android:entries="@array/order_types"
+        android:prompt="@string/ordertype_prompt" />
 
     <FrameLayout
+        android:id="@+id/orders_container"
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:id="@+id/orders_container"
-        android:layout_below="@+id/lineOne"
+        android:layout_below="@+id/order_type_spinner"
         android:layout_marginTop="20dp">
 
         <ListView
+            android:id="@+id/listviewActiveOrders"
             android:layout_width="match_parent"
             android:layout_height="240dp"
-            android:id="@+id/listviewActiveOrders"
             android:layout_below="@+id/orderreceived_text"
-            android:dividerHeight="0.3dp"
-            android:layout_gravity="left|center_vertical" />
+            android:layout_gravity="left|center_vertical"
+            android:dividerHeight="0.3dp" />
     </FrameLayout>
 
 
-    <TextView
-        android:id= "@+id/completed_text"
-        android:text="Completed orders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/orders_container"
-        android:layout_marginTop="50dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:id="@+id/listviewCompletedOrders"
-        android:layout_below="@+id/completed_text"
-        android:dividerHeight="0.3dp"
-        android:layout_gravity="left|center_vertical" />
-
-
     <view
-        class="com.gc.materialdesign.views.ButtonRectangle"
         android:id="@+id/buttonLogout"
+        class="com.gc.materialdesign.views.ButtonRectangle"
 
-        android:onClick="logout"
-        android:textSize="30sp"
         android:layout_width="270dp"
         android:layout_height="60dp"
-        android:background="@color/accent"
-        android:text="@string/Logout"
-        android:layout_below="@+id/textPassword"
         android:layout_alignParentBottom="true"
+        android:layout_below="@+id/textPassword"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="55dp"></view>
-
-
+        android:layout_marginBottom="55dp"
+        android:background="@color/accent"
+        android:onClick="logout"
+        android:text="@string/Logout"
+        android:textSize="30sp"></view>
 
 
 </RelativeLayout>

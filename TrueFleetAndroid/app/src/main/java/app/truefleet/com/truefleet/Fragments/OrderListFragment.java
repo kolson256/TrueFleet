@@ -27,36 +27,38 @@ public class OrderListFragment extends Fragment {
     ArrayAdapter<String> columnAdapter;
     ArrayList<String> orders;
     IMTOrder order;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_list, container, false);
 
         orders = new ArrayList<>();
-         order = IMTOrder.getInstance();
+        order = IMTOrder.getInstance();
 
         String toAdd = "No orders";
         if (order.getOrderType() != null) {
             toAdd = order.toString();
         }
-            orders.add(toAdd);
+        orders.add(toAdd);
 
-            columnAdapter = new ArrayAdapter<String>
-                    (getActivity(), R.layout.order_column, R.id.order_column_textview, orders);
+        columnAdapter = new ArrayAdapter<String>
+                (getActivity(), R.layout.order_column, R.id.order_column_textview, orders);
 
-            ListView lvColumn = (ListView) view.findViewById(R.id.orderList);
-            lvColumn.setAdapter(columnAdapter);
+        ListView lvColumn = (ListView) view.findViewById(R.id.orderList);
+        lvColumn.setAdapter(columnAdapter);
 
-            lvColumn.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view,
-                                        int position, long id) {
-                    view.setSelected(true);
-                    Log.i(LOG_TAG, "Listview index: " + position + " clicked");
-                    ((HomeActivity)getActivity()).showOrders();
-                }
-            });
+        lvColumn.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                view.setSelected(true);
+                Log.i(LOG_TAG, "Listview index: " + position + " clicked");
+                ((HomeActivity) getActivity()).showOrders();
+            }
+        });
 
         return view;
     }
+
     public BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

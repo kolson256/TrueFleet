@@ -48,7 +48,6 @@ public class HomeActivity extends BaseActivity {
         activity = this;
         context = getApplicationContext();
         setTitle("Home");
-
         activeOrderManager = activeOrderManager.getInstance();
 
         gcmHelper.gcmSetup(this);
@@ -99,13 +98,13 @@ public class HomeActivity extends BaseActivity {
 
         aOrder.save();
 
-        Account ashipper = new Account("name", "street", "city", "state", "60613",
+        Account ashipper = new Account("shipper", "231 S Grand Ave.", "Chicago", "IL", "60613",
                 "United States", "shipper", "notes", "phone", "fax");
 
-        Account aterminal = new Account("name", "street", "city", "state", "60613",
+        Account aterminal = new Account("terminal", "1234 S. Leland St.", "Chicago", "IL", "60613",
                 "United States", "aterminal", "notes", "phone", "fax");
 
-        Account areceiver = new Account("name", "street", "city", "state", "60613",
+        Account areceiver = new Account("receiver", "123 S Utopia", "Chicago", "IL", "60613",
                 "United States", "areceiver", "notes", "phone", "fax");
 
         ashipper.save();
@@ -122,20 +121,25 @@ public class HomeActivity extends BaseActivity {
                 "mailingState", "mailingCity", "60613", "United States", "303-123-1234",
                 "303-123-2345", "fax", "notes", ashipper);
 
-        cOrder.save();
+        cShipper.save();
 
         Contact cTerminal = new Contact(12345, "firstname", "lastname", "suffix", "mailingStreet",
                 "mailingState", "mailingCity", "60613", "United States", "303-123-1234",
                 "303-123-2345", "fax", "notes", aterminal);
 
-        cOrder.save();
+        cTerminal.save();
 
         Contact cReceiver = new Contact(12345, "firstname", "lastname", "suffix", "mailingStreet",
                 "mailingState", "mailingCity", "60613", "United States", "303-123-1234",
                 "303-123-2345", "fax", "notes", areceiver);
 
-        cOrder.save();
-        int orderid = 1111;
+        cReceiver.save();
+       addOrder(aOrder, cOrder, ashipper, aterminal, areceiver, 11111);
+        addOrder(aOrder, cOrder, ashipper, aterminal, areceiver, 22222);
+
+    }
+
+    private void addOrder(Account aOrder, Contact cOrder, Account ashipper, Account aterminal, Account areceiver, int orderid) {
         Order o = new Order(aOrder, cOrder, orderid, "2222", "order notes", new Date(123456),
                 "orderType", "test");
         o.save();
@@ -169,7 +173,6 @@ public class HomeActivity extends BaseActivity {
 
         Freight f3 = new Freight(c, lh, "freight3 description", 6, 55, "seal3", "freight3 notes");
         f3.save();
-
     }
 
     @Override
@@ -190,5 +193,6 @@ public class HomeActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }

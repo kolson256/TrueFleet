@@ -10,7 +10,7 @@ public class RestError
 {
 
     @SerializedName("errorMessage")
-    private String strMessage;
+     String strMessage;
 
     public RestError() {
         //needed for parcel

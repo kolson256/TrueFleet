@@ -30,6 +30,15 @@
         <item name="android:shadowRadius">2</item>
     </style>
 
-    <string name="title_activity_order">OrderActivity</string>
+    <string name="title_activity_order">Order Details</string>
+
+    <string name="ordertype_prompt">Order Type</string>
+    <string-array name="order_types">
+        <item>Active</item>
+        <item>Completed</item>
+
+    </string-array>
+
+
 
 </resources>

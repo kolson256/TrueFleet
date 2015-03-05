@@ -28,13 +28,18 @@ public class ActiveOrderManager {
         order = null;
         activeLinehaulIndex = 0;
     }
+
     public void setLinehaulUpdater(Updater linehaulUpdater) {
         this.linehaulUdater = linehaulUpdater;
     }
+
     public void setContentUpdater(Updater updater) {
         contentUpdater = updater;
     }
-    public static ActiveOrderManager getInstance() { return instance; }
+
+    public static ActiveOrderManager getInstance() {
+        return instance;
+    }
 
     public void setOrder(Order order) {
         this.order = order;
@@ -42,22 +47,27 @@ public class ActiveOrderManager {
         activeLinehaulIndex = 0;
     }
 
-    public List<Linehaul> getLinehauls() { return linehauls; }
+    public List<Linehaul> getLinehauls() {
+        return linehauls;
+    }
 
-    public int getActiveLinehaulIndex() { return activeLinehaulIndex; }
+    public int getActiveLinehaulIndex() {
+        return activeLinehaulIndex;
+    }
 
     public void setActiveLinehaulIndex(int index) {
-        if (index > (linehauls.size() -1 ))
-        {
+        if (index > (linehauls.size() - 1)) {
             Log.e(LOG_TAG, "Attempted to set index greater then list size");
             return;
         }
-        this.activeLinehaulIndex =  index;
-        if (contentUpdater!=null)
+        this.activeLinehaulIndex = index;
+        if (contentUpdater != null)
             contentUpdater.updateUI();
     }
 
-    public Linehaul getActiveLinehaul() { return linehauls.get(activeLinehaulIndex); }
+    public Linehaul getActiveLinehaul() {
+        return linehauls.get(activeLinehaulIndex);
+    }
 
     public List<Freight> getActiveFreights() {
         try {
@@ -96,6 +106,8 @@ public class ActiveOrderManager {
         return null;
     }
 
-    public Order getOrder() { return order; }
+    public Order getOrder() {
+        return order;
+    }
 
 }

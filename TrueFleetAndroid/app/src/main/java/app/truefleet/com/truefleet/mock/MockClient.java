@@ -27,7 +27,7 @@ public class MockClient implements Client {
         String response = "";
 
         if (uri.getPath().equals("/Login")) {
-  response  = "Login json response";
+        response  = "{\"apiVersion\":\"test\",\"tenantId\":\"ade7e24a-ecc4-48f7-ad1c-943b9da2385f\",\"authenticationToken\":\"1\"}";
         } else if (uri.getPath().equals("/GcmRegistration")) {
         response = "Gcm registration json response";
         } else {

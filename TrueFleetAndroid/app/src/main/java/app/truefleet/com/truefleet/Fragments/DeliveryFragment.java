@@ -47,14 +47,14 @@ public class DeliveryFragment extends Fragment implements Updater {
     public void updateUI() {
         Account account = activeOrderManager.getActiveDeliveryAccount();
 
-        if(account == null) {
+        if (account == null) {
             Log.i(LOG_TAG, "Account was null");
             emptyDelivery();
             return;
         }
         mPickupName.setText(account.name);
         mPickupAddress.setText(account.mailingstreet);
-        mPickupCityStateZip.setText(account.mailingcity + ", " + account.mailingstate +" " + account.mailingpostalcode);
+        mPickupCityStateZip.setText(account.mailingcity + ", " + account.mailingstate + " " + account.mailingpostalcode);
         mPickupPhone.setText(account.phone);
         mPickupNotes.setText(account.notes);
     }
@@ -66,6 +66,7 @@ public class DeliveryFragment extends Fragment implements Updater {
         mPickupPhone.setText("");
         mPickupNotes.setText("");
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

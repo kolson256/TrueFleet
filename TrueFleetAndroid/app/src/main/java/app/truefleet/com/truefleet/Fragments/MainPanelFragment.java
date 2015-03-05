@@ -21,6 +21,7 @@ public class MainPanelFragment extends Fragment {
 
         return view;
     }
+
     public void updateOrderView(int position) {
         Log.i(LOG_TAG, "Main panel fragment received update order from item selected");
     }

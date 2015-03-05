@@ -1,5 +1,6 @@
 package app.truefleet.com.truefleet.Fragments;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -20,9 +21,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import java.io.File;
@@ -40,7 +43,8 @@ import app.truefleet.com.truefleet.R;
 /**
  * Created by Chris Lacy on 2/9/2015.
  */
-public class OrderDetailsFragment extends Fragment implements  Updater  {
+public class OrderDetailsFragment extends Fragment implements Updater {
+
     private static final String IMAGE_DIRECTORY_NAME = "trufleet";
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final int REQUEST_CODE = 100;
@@ -69,12 +73,12 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
         View view = inflater.inflate(R.layout.fragment_order, container, false);
         listView = (ListView) view.findViewById(R.id.listview_linehauls);
         activeLinehaulFragment = new ActiveLinehaulFragment();
-        orderid = (TextView)view.findViewById(R.id.order_id);
-        receiptDate = (TextView)view.findViewById(R.id.order_receipt_date);
-        orderNotes = (TextView)view.findViewById(R.id.order_notes);
+        orderid = (TextView) view.findViewById(R.id.order_id);
+        receiptDate = (TextView) view.findViewById(R.id.order_receipt_date);
+        orderNotes = (TextView) view.findViewById(R.id.order_notes);
 
-        addImageButton = (com.gc.materialdesign.views.ButtonRectangle)view.findViewById(R.id.btnAddImage);
-        imageView = (ImageView)view.findViewById(R.id.orderImageView);
+        addImageButton = (com.gc.materialdesign.views.ButtonRectangle) view.findViewById(R.id.btnAddImage);
+        imageView = (ImageView) view.findViewById(R.id.orderImageView);
 
         addImageButton.setOnClickListener(new View.OnClickListener() {
 
@@ -92,6 +96,29 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
 
         updateUI();
 
+
+        SpinnerAdapter adapter =
+                ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.order_types,
+                        android.R.layout.simple_spinner_dropdown_item);
+
+
+        ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
+
+            String[] items = getResources().getStringArray(R.array.order_types); // List items from res
+
+            @Override
+            public boolean onNavigationItemSelected(int position, long id) {
+
+                // Do stuff when navigation item is selected
+
+                Log.d("NavigationItemSelected", items[position]); // Debug
+
+                return true;
+
+            }
+
+
+        };
         return view;
     }
 
@@ -99,6 +126,7 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
     public void onResume() {
         super.onResume();
     }
+
     public void updateUI() {
         Order o = activeOrderManager.getOrder();
         orderid.setText(String.valueOf(o.orderid));
@@ -108,7 +136,7 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
         List<Linehaul> arrayOfLinehauls;
         arrayOfLinehauls = activeOrderManager.getLinehauls();
 
-        LinehaulAdapter adapter= new LinehaulAdapter(getActivity(), arrayOfLinehauls);
+        LinehaulAdapter adapter = new LinehaulAdapter(getActivity(), arrayOfLinehauls);
 
         listView.setAdapter(adapter);
         listView.setItemsCanFocus(true);
@@ -128,13 +156,14 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
         listView.setSelection(0);
         //listView.requestFocusFromTouch();
 
-       // listView.getAdapter().getView(0,null,null).setSelected(true);
-       // listView.performItemClick(
-         //       listView.getAdapter().getView(selectedPosition, null, null), selectedPosition, selectedPosition);
+        // listView.getAdapter().getView(0,null,null).setSelected(true);
+        // listView.performItemClick(
+        //       listView.getAdapter().getView(selectedPosition, null, null), selectedPosition, selectedPosition);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode ==REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE) {
             try {
                 if (resultCode == Activity.RESULT_OK) {
 
@@ -149,8 +178,7 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
                             options);
                     System.out.println("width: " + bitmap.getWidth());
                     imageView.setImageBitmap(bitmap);
-                }
-                else {
+                } else {
                     Log.i(LOG_TAG, "Not result OK from camera");
                 }
             } catch (Exception e) {
@@ -160,7 +188,7 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
     }
 
     public void showImage() {
-        Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         System.out.println("Width: " + bitmap.getWidth());
         Dialog builder = new Dialog(getActivity());
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -180,6 +208,7 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
                 ViewGroup.LayoutParams.MATCH_PARENT));
         builder.show();
     }
+
     private void takePhoto(View v) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
@@ -223,7 +252,7 @@ public class OrderDetailsFragment extends Fragment implements  Updater  {
         if (type == MEDIA_TYPE_IMAGE) {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator
                     + "IMG_" + timeStamp + ".jpg");
-        }  else {
+        } else {
             return null;
         }
 

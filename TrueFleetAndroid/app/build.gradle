@@ -15,7 +15,9 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
-        testApplicationId "app.truefleet.com.truefleet.tests"
+        //testApplicationId "app.truefleet.com.truefleet.tests"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -38,6 +40,7 @@ repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 dependencies {
+    compile 'it.neokree:MaterialTabs:0.11'
     compile 'com.android.support:appcompat-v7:+'
    // compile 'android-support-v4.jar'
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -59,18 +62,24 @@ dependencies {
 
     //testing
     testCompile 'junit:junit:4.+'
-    androidTestCompile 'org.mockito:mockito-core:1.+'
+    testCompile "org.mockito:mockito-core:1.+"
+
+    //androidTestCompile 'org.mockito:mockito-core:1.+'
     //Java gradle plugin does not look for androidTestCompile
     androidTestCompile 'org.robolectric:robolectric:2.4'
     //espresso
-    androidTestCompile files('libs/espresso-1.1.jar')
-    androidTestCompile files('libs/testrunner-1.1.jar')
-    androidTestCompile files('libs/testrunner-runtime-1.1.jar')
-    androidTestCompile 'com.google.guava:guava:14.0.1',
-            'com.squareup.dagger:dagger:1.1.0',
-            'org.hamcrest:hamcrest-core:1.1',
-            'org.hamcrest:hamcrest-integration:1.1',
-            'org.hamcrest:hamcrest-library:1.1'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.0') {
+        exclude group: 'javax.inject' //dagger conflict
+    }
+    androidTestCompile('com.android.support.test:testing-support-lib:0.1')
+    //androidTestCompile files('libs/espresso-1.1.jar')
+    //androidTestCompile files('libs/testrunner-1.1.jar')
+    //androidTestCompile files('libs/testrunner-runtime-1.1.jar')
+    //androidTestCompile 'com.google.guava:guava:14.0.1',
+     //       'com.squareup.dagger:dagger:1.1.0',
+      //      'org.hamcrest:hamcrest-core:1.1',
+       //     'org.hamcrest:hamcrest-integration:1.1',
+        //    'org.hamcrest:hamcrest-library:1.1'
 
 }
 configurations {

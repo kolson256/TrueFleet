@@ -46,6 +46,7 @@ public class PickupFragment extends Fragment implements Updater {
             public void onSwipeRight() {
                 Log.i(LOG_TAG, "SWIPE RIGHT");
             }
+
             @Override
             public void onSwipeLeft() {
                 Log.i(LOG_TAG, "SWIPE LEFT");
@@ -65,11 +66,12 @@ public class PickupFragment extends Fragment implements Updater {
         }
         mPickupName.setText(account.name);
         mPickupAddress.setText(account.mailingstreet);
-        mPickupCityStateZip.setText(account.mailingcity + ", " + account.mailingstate +" " + account.mailingpostalcode);
+        mPickupCityStateZip.setText(account.mailingcity + ", " + account.mailingstate + " " + account.mailingpostalcode);
         mPickupPhone.setText(account.phone);
         mPickupNotes.setText(account.notes);
 
     }
+
     private void emptyPickup() {
         mPickupName.setText("No pickup set");
         mPickupAddress.setText("");
@@ -77,6 +79,7 @@ public class PickupFragment extends Fragment implements Updater {
         mPickupPhone.setText("");
         mPickupNotes.setText("");
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

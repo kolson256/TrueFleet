@@ -11,6 +11,7 @@ import org.robolectric.util.ActivityController;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import app.truefleet.com.truefleet.Activitieis.Login.LoginActivity;
 import app.truefleet.com.truefleet.Models.User;
@@ -23,7 +24,7 @@ import app.truefleet.com.truefleet.Tasks.RestCallback;
 @Config(emulateSdk = 16, manifest=Config.NONE)
 @RunWith(RobolectricTestRunner.class)
 public class TestApi {
-    @Inject ApiService mockApi;
+    @Inject @Named("mock")ApiService mockApi;
 
     private LoginActivity loginActivity;
 

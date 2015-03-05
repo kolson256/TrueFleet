@@ -16,7 +16,7 @@ import dagger.ObjectGraph;
  * Created by Chris Lacy on 2/27/2015.
  */
 public class TrueFleetApp extends Application {
-    private ObjectGraph objectGraph;
+    private static ObjectGraph objectGraph;
 
     @Override
     public void onCreate() {
@@ -33,7 +33,7 @@ public class TrueFleetApp extends Application {
         objectGraph.inject(this);
     }
 
-    public void inject(Object o) {
+    public static void inject(Object o) {
         objectGraph.inject(o);
     }
 
@@ -47,6 +47,10 @@ public class TrueFleetApp extends Application {
 
     public ObjectGraph getObjectGraph() {
         return this.objectGraph;
+    }
+
+    public static void add(Object... object) {
+        objectGraph.create(object);
     }
 
 

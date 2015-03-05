@@ -1,19 +1,42 @@
 package app.truefleet.com.truefleet.Tasks;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import retrofit.Callback;
 import retrofit.RetrofitError;
+import retrofit.mime.TypedByteArray;
 
 /**
  * Created by Chris Lacy on 2/9/2015.
  */
+/* Our own restcall back in order to be able to access the error messages through retrofit */
 public abstract class RestCallback<T> implements Callback<T>
 {
+    private final String LOG_TAG = RestCallback.class.getSimpleName();
     public abstract void failure(RestError restError);
 
     @Override
     public void failure(RetrofitError error)
     {
-        RestError restError = (RestError) error.getBodyAs(RestError.class);
+
+        final GsonBuilder gsonBuilder = new GsonBuilder();
+
+        gsonBuilder.registerTypeAdapter(RestError.class, new RestErrorTypeAdapter());
+
+        final Gson gson = gsonBuilder.create();
+        RestError restError=null;
+
+        try {
+            String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
+            Log.d(LOG_TAG, json);
+            restError = gson.fromJson(json, RestError.class);
+        } catch (NullPointerException npe) {
+            Log.d(LOG_TAG, "body was null");
+        }
+       // RestError restError = (RestError) error.getBodyAs(RestError.class);
 
         if (restError != null)
             failure(restError);
