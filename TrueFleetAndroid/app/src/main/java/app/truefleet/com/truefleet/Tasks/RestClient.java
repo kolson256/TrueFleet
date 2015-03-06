@@ -15,11 +15,8 @@ import retrofit.converter.GsonConverter;
 public class RestClient {
     private static final String genymotion = "http://10.0.3.2:8080/";
     private static final String androidEmulator = "http://10.0.2.2:8080/";
-
     private static final String localhost = "http://127.0.0.1:8080/"; //have to use this for now when running tests on JVM
-
     private static final String server = "http://140.192.30.205:8080/";
-
     private static final String BASE_URL = genymotion;
     private ApiService apiService;
 
@@ -27,7 +24,6 @@ public class RestClient {
     {
         //Interceptor for stetho
         OkHttpClient client = new OkHttpClient();
-
         client.networkInterceptors().add(new StethoInterceptor());
 
         Gson gson = new GsonBuilder()
@@ -42,10 +38,7 @@ public class RestClient {
                 .build();
 
         apiService = restAdapter.create(ApiService.class);
-
-
     }
-
 
     public ApiService getApiService()
     {

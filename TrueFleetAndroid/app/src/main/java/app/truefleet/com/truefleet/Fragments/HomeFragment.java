@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +19,6 @@ import java.util.List;
 import app.truefleet.com.truefleet.Activitieis.HomeActivity;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Adapters.OrderAdapter;
-import app.truefleet.com.truefleet.Models.IMTOrder;
 import app.truefleet.com.truefleet.Models.Order;
 import app.truefleet.com.truefleet.Models.OrderOverviewManager;
 import app.truefleet.com.truefleet.Models.User;
@@ -43,7 +41,6 @@ public class HomeFragment extends Fragment implements Updater {
     OrderOverviewManager orderOverviewManager;
     LoginManager loginManager;
     ActiveOrderManager activeOrderManager;
-    ArrayAdapter<String> columnAdapter;
 
     @InjectView(R.id.welcome_text)
     TextView welcomeText;
@@ -118,15 +115,8 @@ public class HomeFragment extends Fragment implements Updater {
         updateUI();
     }
 
-    public void updateAdapter() {
-        if (columnAdapter != null) {
-            columnAdapter.clear();
-            columnAdapter.add(IMTOrder.getInstance().toString());
-        }
-    }
-
     public void updateUI() {
-        IMTOrder order = IMTOrder.getInstance();
+
 
         User user = loginManager.getUser();
         Log.i(LOG_TAG, "USER: " + user.getUsername());
@@ -148,12 +138,6 @@ public class HomeFragment extends Fragment implements Updater {
         getActivity().registerReceiver(broadcastReceiver, new IntentFilter("fragmentupdater"));
         welcomeText.setText("Welcome, " + user.getUsername() + "!");
 
-        if (order.getOrderType() != null) {
-            ordersReceived.setText("One order received.");
-            updateAdapter();
-        } else {
-            ordersReceived.setText("No orders received.");
-        }
     }
 
     @Override

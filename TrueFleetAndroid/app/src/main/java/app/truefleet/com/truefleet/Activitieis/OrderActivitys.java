@@ -26,9 +26,7 @@ import app.truefleet.com.truefleet.Fragments.OrderDetailsFragment;
 import app.truefleet.com.truefleet.Fragments.PickupFragment;
 import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
-import app.truefleet.com.truefleet.Models.IMTOrder;
 import app.truefleet.com.truefleet.R;
-import app.truefleet.com.truefleet.Tasks.SendStatusTask;
 
 public class OrderActivitys extends BaseActivity implements SidePanelFragment.OnColumnSelectedListener {
     private final String LOG_TAG = OrderActivitys.class.getSimpleName();
@@ -173,12 +171,10 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
     }
 
     public void statusUpdate(View view) {
-        IMTOrder order = IMTOrder.getInstance();
-        String status = order.getStatus();
-        //TODO: HANDLE OTHER STATUS
+;
+        //TODO: HANDLE STATUS WHEN AVL IN SERVER
         Log.i(LOG_TAG, "Status button clicked");
-        SendStatusTask sendStatusTask = new SendStatusTask(this);
-        sendStatusTask.execute("ACCEPT");
+
     }
 
     public static class PlaceholderFragment extends Fragment {
