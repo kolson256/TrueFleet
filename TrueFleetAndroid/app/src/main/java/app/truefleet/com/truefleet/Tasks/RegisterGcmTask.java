@@ -42,6 +42,7 @@ public class RegisterGcmTask extends AsyncTask<String, Void, String[]> {
         String msg="";
         String regid;
         try {
+
         gcm = GoogleCloudMessaging.getInstance(context);
 
             //  gcm.unregister();

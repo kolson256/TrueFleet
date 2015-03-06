@@ -15,6 +15,9 @@ public class Account extends Model {
     @Column(name = "name")
     public String name;
 
+    @Column(name="serverid")
+    public int id;
+
     @Column
     public String mailingstreet;
 
@@ -28,7 +31,7 @@ public class Account extends Model {
     public String mailingpostalcode;
 
     @Column
-    public String mailingCountry;
+    public String mailingcountry;
 
     @Column
     public String types;
@@ -47,7 +50,7 @@ public class Account extends Model {
     }
 
     public Account(String name, String mailingstreet, String mailingcity, String mailingstate,
-                   String mailingpostalcode, String mailingCountry, String types,
+                   String mailingpostalcode, String mailingcountry, String types,
                    String notes, String phone, String fax) {
         super();
         this.name = name;
@@ -55,7 +58,7 @@ public class Account extends Model {
         this.mailingcity = mailingcity;
         this.mailingstate = mailingstate;
         this.mailingpostalcode = mailingpostalcode;
-        this.mailingCountry = mailingCountry;
+        this.mailingcountry = mailingcountry;
         this.types = types;
         this.notes = notes;
         this.phone = phone;

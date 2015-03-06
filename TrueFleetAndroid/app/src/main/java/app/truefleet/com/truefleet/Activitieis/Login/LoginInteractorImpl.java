@@ -5,12 +5,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.Resources.ConnectionDetector;
 import app.truefleet.com.truefleet.Resources.LoginManager;
 import app.truefleet.com.truefleet.Tasks.ApiService;
+import app.truefleet.com.truefleet.Tasks.OrderService;
 import app.truefleet.com.truefleet.Tasks.Requests.LoginRequest;
 import app.truefleet.com.truefleet.Tasks.RestCallback;
 import app.truefleet.com.truefleet.Tasks.RestError;
@@ -23,9 +23,12 @@ import retrofit.client.Response;
 public class LoginInteractorImpl implements LoginInteractor {
     private final String LOG_TAG = LoginInteractorImpl.class.getSimpleName();
 
-    @Inject ConnectionDetector cd;
-    @Inject @Named("real") ApiService apiService;
-   @Inject LoginManager loginManager;
+    @Inject
+    ConnectionDetector cd;
+    @Inject
+    ApiService apiService;
+    @Inject
+    LoginManager loginManager;
 
     LoginInteractorImpl(Context context) {
         ((TrueFleetApp) context.getApplicationContext()).inject(this);
@@ -38,18 +41,17 @@ public class LoginInteractorImpl implements LoginInteractor {
 
         if (TextUtils.isEmpty(username)) {
             listener.onUsernameError();
-        }
-        else if (TextUtils.isEmpty(password)) {
+        } else if (TextUtils.isEmpty(password)) {
             listener.onPasswordError();
-        }
-        else { //communicate w server
+        } else { //communicate w server
             //Ensure connected to internet
             boolean connectedToInternet = cd.isConnectingToInternet();
             if (!connectedToInternet) {
                 listener.notConnectedToInternetError();
                 return;
             }
-
+            OrderService os = new OrderService("test", 3, 3);
+            os.execute();
             apiService.login(new LoginRequest(username, password), new RestCallback<User>() {
                 @Override
                 public void success(User user, Response response) {
@@ -58,13 +60,12 @@ public class LoginInteractorImpl implements LoginInteractor {
                         user.setUsername(finalUsername);
                         loginManager.createLoginSession(user);
                         finalListener.onSuccess();
-                    }
-                    else
-                    {
+                    } else {
                         Log.i(LOG_TAG, "Invalid login Attempt");
                         finalListener.onLoginError();
                     }
                 }
+
                 @Override
                 public void failure(RestError error) {
                     finalListener.onCommunicationError();

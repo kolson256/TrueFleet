@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.activeandroid.ActiveAndroid;
+import com.facebook.stetho.Stetho;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,13 +23,27 @@ public class TrueFleetApp extends Application {
     public void onCreate() {
         super.onCreate();
         ActiveAndroid.initialize(this);
-
+        setupStetho();
         buildObjectGraphAndInject();
     }
+
+    private void setupStetho() {
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                        .build());
+    }
+
     public void buildObjectGraphAndInject() {
         //objectGraph = ObjectGraph.create(Modules.list(this));
         //objectGraph.inject(this);
         Object[] modules = getModules().toArray();
+        objectGraph = ObjectGraph.create(modules);
+        objectGraph.inject(this);
+    }
+    public void buildMockObjectGraphAndInject() {
+        Object[] modules = getMockModules().toArray();
         objectGraph = ObjectGraph.create(modules);
         objectGraph.inject(this);
     }
@@ -38,7 +53,11 @@ public class TrueFleetApp extends Application {
     }
 
     protected List<Object> getModules() {
-        return Arrays.<Object>asList(new TrueFleetModule(this));
+        return Arrays.<Object>asList(new MockModule(this));
+    }
+
+    protected List<Object> getMockModules() {
+        return Arrays.<Object>asList(new MockModule(this));
     }
 
     public static TrueFleetApp get(Context context) {
@@ -53,5 +72,11 @@ public class TrueFleetApp extends Application {
         objectGraph.create(object);
     }
 
+    public void setObjectGraph(Object... modules) {
+        objectGraph = buildScopedObjectGraph(modules);
+    }
 
+    public ObjectGraph buildScopedObjectGraph(Object... modules) {
+        return objectGraph.plus(modules);
+    }
 }

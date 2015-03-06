@@ -13,18 +13,23 @@ import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Adapters.FreightAdapter;
 import app.truefleet.com.truefleet.Models.Freight;
 import app.truefleet.com.truefleet.R;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by Chris Lacy on 2/8/2015.
  */
 public class FreightFragment extends Fragment implements Updater {
-    private ListView listView;
     private final String LOG_TAG = FreightFragment.class.getSimpleName();
     private ActiveOrderManager activeOrderManager;
+    @InjectView(R.id.listview_freights)
+    ListView listView;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_freight, container, false);
 
-        listView = (ListView)view.findViewById(R.id.listview_freights);
+        ButterKnife.inject(this, view);
+
         activeOrderManager = ActiveOrderManager.getInstance();
         activeOrderManager.setContentUpdater(this);
         updateUI();

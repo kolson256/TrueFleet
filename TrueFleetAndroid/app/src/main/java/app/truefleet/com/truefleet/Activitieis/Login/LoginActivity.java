@@ -38,10 +38,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
         setTitle("Login");
-
-       // if (loginManager.checkLogin())
-        //    finish();
-        
     }
 
     public void login(View view) {

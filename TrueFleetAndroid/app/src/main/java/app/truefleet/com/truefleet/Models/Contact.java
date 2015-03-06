@@ -14,34 +14,34 @@ public class Contact extends Model {
     public int accountid;
 
     @Column
-    public String firstName;
+    public String firstname;
 
     @Column
-    public String lastName;
+    public String lastname;
 
     @Column
     public String suffix;
 
     @Column
-    public String mailingStreet;
+    public String mailingstreet;
 
     @Column
-    public String mailingCity;
+    public String mailingcity;
 
     @Column
-    public String mailingState;
+    public String mailingstate;
 
     @Column
-    public String mailingPostalCode;
+    public String mailingpostalcode;
 
     @Column
-    public String mailingCountry;
+    public String mailingcountry;
 
     @Column
     public String phone;
 
     @Column
-    public String mobilePhone;
+    public String mobilephone;
 
     @Column
     public String fax;
@@ -61,16 +61,16 @@ public class Contact extends Model {
                    String mobilePhone, String fax, String notes, Account account) {
         super();
         this.accountid = accountid;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstName;
+        this.lastname = lastName;
         this.suffix = suffix;
-        this.mailingStreet = mailingStreet;
-        this.mailingState = mailingState;
-        this.mailingCity = mailingCity;
-        this.mailingPostalCode = mailingPostalCode;
-        this.mailingCountry = mailingCountry;
+        this.mailingstreet = mailingStreet;
+        this.mailingstate = mailingState;
+        this.mailingcity = mailingCity;
+        this.mailingpostalcode = mailingPostalCode;
+        this.mailingcountry = mailingCountry;
         this.phone = phone;
-        this.mobilePhone = mobilePhone;
+        this.mobilephone = mobilePhone;
         this.fax = fax;
         this.notes = notes;
         this.account = account;

@@ -12,18 +12,18 @@ import app.truefleet.com.truefleet.Fragments.HomeFragment;
 import app.truefleet.com.truefleet.Models.OrderOverviewManager;
 import app.truefleet.com.truefleet.Resources.LoginManager;
 import app.truefleet.com.truefleet.Tasks.OrderService;
-import app.truefleet.com.truefleet.modules.ApiModule;
+import app.truefleet.com.truefleet.mock.MockApiModule;
 import app.truefleet.com.truefleet.modules.ModelModule;
 import app.truefleet.com.truefleet.modules.ResourceModule;
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Chris Lacy on 2/27/2015.
+ * Created by Chris Lacy on 3/5/2015.
  */
-@Module (
+@Module(
         includes = {
-                ApiModule.class,
+                MockApiModule.class,
                 ResourceModule.class,
                 ModelModule.class
         },
@@ -32,22 +32,24 @@ import dagger.Provides;
                 HomeActivity.class,
                 OrderActivitys.class,
                 LoginInteractorImpl.class,
-               TrueFleetApp.class,
+                TrueFleetApp.class,
                 LoginManager.class,
                 OrderOverviewManager.class,
                 HomeFragment.class,
                 OrderService.class
         }
 )
-public class TrueFleetModule {
+public class MockModule {
 
     private final Context app;
 
 
-    public TrueFleetModule(Context app) {
+    public MockModule(Context app) {
         this.app = app;
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     Context provideApplicationContext() { return app; }
 }
+

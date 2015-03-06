@@ -1,6 +1,7 @@
 package app.truefleet.com.truefleet.Models.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class OrderAdapter extends ArrayAdapter<Order> {
 
      TextView orderNotes;
     TextView receiptDate;
-
+    TextView orderId;
     public OrderAdapter(Context context, List<Order> orders) {
         super(context, 0, orders);
     }
@@ -34,11 +35,17 @@ public class OrderAdapter extends ArrayAdapter<Order> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_order,
                     parent, false);
         }
+        try {
+            orderId = (TextView) convertView.findViewById(R.id.homeOrder_id);
+            orderNotes = (TextView) convertView.findViewById(R.id.order_notes);
+            receiptDate = (TextView) convertView.findViewById(R.id.order_receipt_date);
+            orderId.setText("#" + order.orderid);
+            orderNotes.setText(order.notes);
 
-        orderNotes = (TextView) convertView.findViewById(R.id.order_notes);
-        receiptDate = (TextView) convertView.findViewById(R.id.order_receipt_date);
-        orderNotes.setText(order.notes);
-        receiptDate.setText(order.receiptDate.toString());
+            receiptDate.setText(order.convertDateTime(order.receiptdate).toString());
+        } catch (NullPointerException npe) {
+            Log.e("OrderAdapter", "Null order received");
+        }
 
         return convertView;
 

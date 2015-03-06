@@ -38,10 +38,10 @@ public class LinehaulAdapter  extends ArrayAdapter<Linehaul> {
         TextView deadline = (TextView)convertView.findViewById(R.id.linehaul_delivery_deadline);
         TextView notes = (TextView)convertView.findViewById(R.id.linehaul_delivery_notes);
 
-        shipDate.setText(linehaul.shipdate.toString());
-        startDate.setText(linehaul.pickupStartDate.toString());
-        endDate.setText(String.valueOf(linehaul.pickupEndDate.toString()));
-        deadline.setText(String.valueOf(linehaul.deliveryDeadline));
+        shipDate.setText(linehaul.convertDateTime(linehaul.shipdate).toString());
+        startDate.setText(linehaul.convertDateTime(linehaul.pickupStartDate).toString());
+        endDate.setText(linehaul.convertDateTime(linehaul.pickupEndDate).toString());
+        deadline.setText(linehaul.convertDateTime(linehaul.deliveryDeadline).toString());
         notes.setText(linehaul.notes);
 
         return convertView;

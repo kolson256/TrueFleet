@@ -20,7 +20,14 @@
     android:orientation="vertical"
 
     >
-
+    <TextView
+        android:layout_height="wrap_content"
+        android:id="@+id/homeOrder_id"
+        android:text="#"
+        android:layout_width="match_parent"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/RowValue"
+        />
 
     <TextView
         android:layout_width="wrap_content"

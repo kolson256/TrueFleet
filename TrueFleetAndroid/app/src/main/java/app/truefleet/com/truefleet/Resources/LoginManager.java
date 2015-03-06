@@ -10,7 +10,6 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import app.truefleet.com.truefleet.Activitieis.Login.LoginActivity;
 import app.truefleet.com.truefleet.Models.User;
@@ -23,7 +22,7 @@ import retrofit.client.Response;
 
 
 public class LoginManager {
-    @Inject @Named("real") ApiService apiService;
+    @Inject  ApiService apiService;
     SharedPreferences sharedPreferences;
     Context context;
     SharedPreferences.Editor editor;

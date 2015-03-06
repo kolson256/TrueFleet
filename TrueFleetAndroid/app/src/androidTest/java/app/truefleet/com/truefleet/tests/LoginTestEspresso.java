@@ -12,9 +12,12 @@ import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.util.ActivityRule;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by Chris Lacy on 3/4/2015.
@@ -26,9 +29,27 @@ public class LoginTestEspresso {
 
     @Test
     public void testVisibility() {
+
         onView(withId(R.id.buttonLogin)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.textUsername)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withId(R.id.textPassword)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+    @Test
+    public void testInput() {
+        onView(withId(R.id.textUsername)).perform(typeText("hello"));
+        onView(withId(R.id.textUsername)).check(matches(withText("hello")));
+
+        onView(withId(R.id.textPassword)).perform(typeText("there"));
+        onView(withId(R.id.textPassword)).check(matches(withText("there")));
+    }
+    @Test
+    public void testCorrectLogin() {
+        onView(withId(R.id.textUsername)).perform(typeText("hello"));
+        onView(withId(R.id.textPassword)).perform(typeText("there"));
+
+        onView(withId(R.id.buttonLogin)).perform(click());
+
+        onView(withId(R.id.buttonLogin)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
     }
 
 }

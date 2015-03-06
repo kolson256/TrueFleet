@@ -9,8 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.sql.Date;
-
 import javax.inject.Inject;
 
 import app.truefleet.com.truefleet.Fragments.HomeFragment;
@@ -52,7 +50,7 @@ public class HomeActivity extends BaseActivity {
 
         gcmHelper.gcmSetup(this);
 
-        //addFakeOrder();
+       // addFakeOrder();
 
         if (savedInstanceState == null) {
 
@@ -140,24 +138,24 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void addOrder(Account aOrder, Contact cOrder, Account ashipper, Account aterminal, Account areceiver, int orderid) {
-        Order o = new Order(aOrder, cOrder, orderid, "2222", "order notes", new Date(123456),
+        Order o = new Order(aOrder, cOrder, orderid, "2222", "order notes", 976987273000L,
                 "orderType", "test");
         o.save();
         Linehaul lh = new Linehaul(orderid, o, 888, ashipper, aterminal, areceiver,
-                "linehaul notes", new Date(12345),
-                new Date(123456), new Date(123457), new Date(123458));
+                "linehaul notes", 976987273001L,
+                976987273001L, 976987273001L, 976987273001L);
 
         lh.save();
 
         Linehaul lh2 = new Linehaul(orderid, o, 888, ashipper, aterminal, areceiver,
-                "linehaul notes2", new Date(12345),
-                new Date(123456), new Date(123457), new Date(123458));
+                "linehaul notes2", 976987273001L,
+                976987273001L, 976987273001L, 976987273001L);
 
         lh2.save();
 
         Linehaul lh3 = new Linehaul(orderid, o, 888, ashipper, aterminal, areceiver,
-                "linehaul notes3", new Date(12345),
-                new Date(123456), new Date(123457), new Date(123458));
+                "linehaul notes3", 976987273001L,
+                976987273001L, 976987273001L, 976987273001L);
 
         lh3.save();
 

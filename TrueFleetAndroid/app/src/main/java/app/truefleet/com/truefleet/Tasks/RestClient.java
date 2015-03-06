@@ -1,9 +1,12 @@
 package app.truefleet.com.truefleet.Tasks;
 
+import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.okhttp.OkHttpClient;
 
 import retrofit.RestAdapter;
+import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
 /**
@@ -22,6 +25,11 @@ public class RestClient {
 
     public RestClient()
     {
+        //Interceptor for stetho
+        OkHttpClient client = new OkHttpClient();
+
+        client.networkInterceptors().add(new StethoInterceptor());
+
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'")
                 .create();
@@ -30,6 +38,7 @@ public class RestClient {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(BASE_URL)
                 .setConverter(new GsonConverter(gson))
+                .setClient(new OkClient(client))
                 .build();
 
         apiService = restAdapter.create(ApiService.class);

@@ -33,8 +33,8 @@ public abstract class RestCallback<T> implements Callback<T>
             String json = new String(((TypedByteArray) error.getResponse().getBody()).getBytes());
             Log.d(LOG_TAG, json);
             restError = gson.fromJson(json, RestError.class);
-        } catch (NullPointerException npe) {
-            Log.d(LOG_TAG, "body was null");
+        } catch (Exception e) {
+            Log.d(LOG_TAG, "Unexpected failure result from server: " + e.toString());
         }
        // RestError restError = (RestError) error.getBodyAs(RestError.class);
 

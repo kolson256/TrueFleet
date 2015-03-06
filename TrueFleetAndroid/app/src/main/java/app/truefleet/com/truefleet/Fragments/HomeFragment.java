@@ -43,20 +43,19 @@ public class HomeFragment extends Fragment implements Updater {
     OrderOverviewManager orderOverviewManager;
     LoginManager loginManager;
     ActiveOrderManager activeOrderManager;
-
     ArrayAdapter<String> columnAdapter;
+
     @InjectView(R.id.welcome_text)
     TextView welcomeText;
     @InjectView(R.id.orderreceived_text)
     TextView ordersReceived;
-
     @InjectView(R.id.listviewActiveOrders)
     ListView listviewActiveOrders;
-
     @InjectView(R.id.buttonLogout)
     com.gc.materialdesign.views.ButtonRectangle mButtonLogout;
 
     BroadcastReceiver broadcastReceiver;
+
     private final String LOG_TAG = HomeFragment.class.getSimpleName();
 
     public HomeFragment() {
@@ -84,16 +83,11 @@ public class HomeFragment extends Fragment implements Updater {
         ButterKnife.inject(this, rootView);
 
         activeOrderManager = activeOrderManager.getInstance();
-        //  try {
+
         if (loginManager.checkLogin())
             getActivity().finish();
         else
             setup(rootView);
-        //   } catch (NullPointerException exception) {
-        //      Log.i(LOG_TAG, "User not logged in");
-        //       System.out.println(exception);
-        //      getActivity().finish();
-        //  }
 
         return rootView;
 
@@ -121,6 +115,18 @@ public class HomeFragment extends Fragment implements Updater {
 
     public void setup(View rootView) {
         orderOverviewManager = new OrderOverviewManager(getActivity().getApplicationContext());
+        updateUI();
+    }
+
+    public void updateAdapter() {
+        if (columnAdapter != null) {
+            columnAdapter.clear();
+            columnAdapter.add(IMTOrder.getInstance().toString());
+        }
+    }
+
+    public void updateUI() {
+        IMTOrder order = IMTOrder.getInstance();
 
         User user = loginManager.getUser();
         Log.i(LOG_TAG, "USER: " + user.getUsername());
@@ -141,19 +147,6 @@ public class HomeFragment extends Fragment implements Updater {
         broadcastReceiver = new FragmentReceiverHome();
         getActivity().registerReceiver(broadcastReceiver, new IntentFilter("fragmentupdater"));
         welcomeText.setText("Welcome, " + user.getUsername() + "!");
-
-        updateUI();
-    }
-
-    public void updateAdapter() {
-        if (columnAdapter != null) {
-            columnAdapter.clear();
-            columnAdapter.add(IMTOrder.getInstance().toString());
-        }
-    }
-
-    public void updateUI() {
-        IMTOrder order = IMTOrder.getInstance();
 
         if (order.getOrderType() != null) {
             ordersReceived.setText("One order received.");

@@ -15,6 +15,9 @@ public class Freight extends Model {
             onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Containers container;
 
+    @Column(name = "containerid")
+    public int containerid;
+
     @Column(name = "Linehaul",
             onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Linehaul linehaul;

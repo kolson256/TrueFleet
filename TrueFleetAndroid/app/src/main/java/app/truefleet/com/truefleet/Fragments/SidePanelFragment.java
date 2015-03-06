@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import app.truefleet.com.truefleet.Models.Adapters.PanelAdapter;
 import app.truefleet.com.truefleet.Models.PanelItem;
 import app.truefleet.com.truefleet.R;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by Chris Lacy on 11/21/2014.
@@ -22,6 +24,8 @@ import app.truefleet.com.truefleet.R;
 public class SidePanelFragment extends Fragment {
     private final String LOG_TAG = SidePanelFragment.class.getSimpleName();
 
+    @InjectView(R.id.listview_columns)
+    ListView listView;
     OnColumnSelectedListener mCallback;
 
     public interface OnColumnSelectedListener {
@@ -47,7 +51,8 @@ public class SidePanelFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_side_panel, container, false);
         ArrayList<PanelItem> panelItems = new ArrayList<>();
 
-        ListView listView = (ListView) view.findViewById(R.id.listview_columns);
+        ButterKnife.inject(this, view);
+
         panelItems.add(new PanelItem(R.drawable.ic_pickup, "Pickup", ""));
         panelItems.add(new PanelItem(R.drawable.ic_delivery, "Delivery", ""));
         panelItems.add(new PanelItem(R.drawable.ic_freights, "Freights", ""));

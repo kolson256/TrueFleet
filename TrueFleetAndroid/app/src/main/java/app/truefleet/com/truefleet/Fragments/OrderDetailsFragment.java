@@ -1,6 +1,5 @@
 package app.truefleet.com.truefleet.Fragments;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -21,11 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import java.io.File;
@@ -39,6 +36,8 @@ import app.truefleet.com.truefleet.Models.Adapters.LinehaulAdapter;
 import app.truefleet.com.truefleet.Models.Linehaul;
 import app.truefleet.com.truefleet.Models.Order;
 import app.truefleet.com.truefleet.R;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by Chris Lacy on 2/9/2015.
@@ -53,39 +52,35 @@ public class OrderDetailsFragment extends Fragment implements Updater {
 
     private static final String LOG_TAG = OrderDetailsFragment.class.getSimpleName();
     ActiveLinehaulFragment activeLinehaulFragment;
+
+    @InjectView(R.id.order_id)
     TextView orderid;
+    @InjectView(R.id.order_receipt_date)
     TextView receiptDate;
+    @InjectView(R.id.order_notes)
     TextView orderNotes;
+    @InjectView(R.id.btnAddImage)
     com.gc.materialdesign.views.ButtonRectangle addImageButton;
+    @InjectView(R.id.orderImageView)
     ImageView imageView;
+    @InjectView(R.id.listview_linehauls)
     ListView listView;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //TODO: Change to home in real app with selected order
-
         activeOrderManager = ActiveOrderManager.getInstance();
-
         activeOrderManager.setLinehaulUpdater(this);
-        //activeOrderManager.setOrder(Order.load(Order.class, 1));
-
 
         View view = inflater.inflate(R.layout.fragment_order, container, false);
-        listView = (ListView) view.findViewById(R.id.listview_linehauls);
-        activeLinehaulFragment = new ActiveLinehaulFragment();
-        orderid = (TextView) view.findViewById(R.id.order_id);
-        receiptDate = (TextView) view.findViewById(R.id.order_receipt_date);
-        orderNotes = (TextView) view.findViewById(R.id.order_notes);
+        ButterKnife.inject(this, view);
 
-        addImageButton = (com.gc.materialdesign.views.ButtonRectangle) view.findViewById(R.id.btnAddImage);
-        imageView = (ImageView) view.findViewById(R.id.orderImageView);
+        activeLinehaulFragment = new ActiveLinehaulFragment();
 
         addImageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 takePhoto(v);
-
             }
         });
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -96,29 +91,6 @@ public class OrderDetailsFragment extends Fragment implements Updater {
 
         updateUI();
 
-
-        SpinnerAdapter adapter =
-                ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.order_types,
-                        android.R.layout.simple_spinner_dropdown_item);
-
-
-        ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
-
-            String[] items = getResources().getStringArray(R.array.order_types); // List items from res
-
-            @Override
-            public boolean onNavigationItemSelected(int position, long id) {
-
-                // Do stuff when navigation item is selected
-
-                Log.d("NavigationItemSelected", items[position]); // Debug
-
-                return true;
-
-            }
-
-
-        };
         return view;
     }
 
@@ -130,7 +102,7 @@ public class OrderDetailsFragment extends Fragment implements Updater {
     public void updateUI() {
         Order o = activeOrderManager.getOrder();
         orderid.setText(String.valueOf(o.orderid));
-        receiptDate.setText(o.receiptDate.toString());
+        receiptDate.setText(o.convertDateTime(o.receiptdate).toString());
         orderNotes.setText(o.notes);
 
         List<Linehaul> arrayOfLinehauls;
@@ -154,11 +126,6 @@ public class OrderDetailsFragment extends Fragment implements Updater {
         int selectedPosition = 0;
         listView.setItemChecked(0, true);
         listView.setSelection(0);
-        //listView.requestFocusFromTouch();
-
-        // listView.getAdapter().getView(0,null,null).setSelected(true);
-        // listView.performItemClick(
-        //       listView.getAdapter().getView(selectedPosition, null, null), selectedPosition, selectedPosition);
     }
 
     @Override
@@ -169,10 +136,6 @@ public class OrderDetailsFragment extends Fragment implements Updater {
 
                     // bimatp factory
                     BitmapFactory.Options options = new BitmapFactory.Options();
-
-                    // downsizing image as it throws OutOfMemory Exception for larger
-                    // images
-                    //options.inSampleSize = 8;
 
                     final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(),
                             options);

@@ -1,11 +1,9 @@
 package app.truefleet.com.truefleet.Models;
 
-import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
-import java.sql.Date;
 import java.util.List;
 
 
@@ -13,7 +11,7 @@ import java.util.List;
  * Created by night_000 on 10/28/2014.
  */
 @Table(name = "Orders")
-public class Order extends Model {
+public class Order extends BaseModel {
 
     @Column(name = "Account",
             onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
@@ -27,16 +25,16 @@ public class Order extends Model {
     public  int orderid;
 
     @Column
-    public String externalId;
+    public String externalid;
 
     @Column
     public String notes;
 
     @Column
-    public Date receiptDate;
+    public long receiptdate;
 
     @Column
-    public  String orderType;
+    public  String ordertype;
 
     @Column public String assignedUser;
 
@@ -44,17 +42,17 @@ public class Order extends Model {
     public Order() { super(); }
 
     public Order(Account account, Contact contact, int orderid,
-                  String externalId, String notes, Date receiptDate, String orderType,
+                  String externalid, String notes, long receiptdate, String ordertype,
                   String assignedUser) {
         super();
 
         this.account = account;
         this.contact = contact;
         this.orderid = orderid;
-        this.externalId = externalId;
+        this.externalid = externalid;
         this.notes = notes;
-        this.receiptDate = receiptDate;
-        this.orderType = orderType;
+        this.receiptdate = receiptdate;
+        this.ordertype = ordertype;
         this.assignedUser = assignedUser;
     }
     public static List<Order> getOrders(String user) {

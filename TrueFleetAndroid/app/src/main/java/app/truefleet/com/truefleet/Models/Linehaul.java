@@ -1,22 +1,22 @@
 package app.truefleet.com.truefleet.Models;
 
-import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
-import java.sql.Date;
 import java.util.List;
 
 /**
  * Created by Chris Lacy on 2/4/2015.
  */
 @Table(name = "Linehaul")
-public class Linehaul extends Model {
+public class Linehaul extends BaseModel {
 
     @Column(name = "orderid", index = true)
-    public int orderId;
+    public int orderid;
 
+    @Column(name ="serverid")
+    public int id;
     @Column(name = "Orders",
             onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Order order;
@@ -40,27 +40,38 @@ public class Linehaul extends Model {
     @Column(name = "notes")
     public String notes;
 
+    @Column(name = "shipperid")
+    public int shipperid;
+
+    @Column(name = "terminalid")
+    public int terminalid;
+
+    @Column(name = "receiverid")
+    public int receiverid;
+
+
+
     @Column(name = "shipdate")
-    public Date shipdate;
+    public long shipdate;
 
     @Column(name = "pickupStartDate")
-    public Date pickupStartDate;
+    public long pickupStartDate;
 
     @Column(name = "pickupEndDate")
-    public Date pickupEndDate;
+    public long pickupEndDate;
 
     @Column(name = "deliveryDeadline")
-    public Date deliveryDeadline;
+    public long deliveryDeadline;
 
     public Linehaul() { super(); }
 
-    public Linehaul(int orderId, Order order, int routeId, Account shipper,
+    public Linehaul(int orderid, Order order, int routeId, Account shipper,
                     Account terminal, Account receiver, String notes,
-                    Date shipdate, Date pickupStartDate, Date pickupEndDate,
-                    Date deliveryDeadline) {
+                    long shipdate, long pickupStartDate, long pickupEndDate,
+                    long deliveryDeadline) {
         super();
 
-        this.orderId = orderId;
+        this.orderid = orderid;
         this.order = order;
         this.routeId = routeId;
         this.shipper = shipper;
