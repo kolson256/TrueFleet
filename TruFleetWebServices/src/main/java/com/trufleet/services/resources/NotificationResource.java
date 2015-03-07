@@ -35,10 +35,11 @@ public class NotificationResource extends BaseResource {
     public NotificationResource(DBI adminDBI, TruFleetAPIConfiguration configuration, Environment environment) throws ClassNotFoundException {
         super(adminDBI, configuration, environment);
     }
-
+    //TODO: Insert into routedriver table routeid & driverid & verify routeid & orderId (internal id) are valid id's
     /*
         JSON Body requires an username of the person to be notified.
-        and the internalOrderID of the order that user was assigned.
+        the internalOrderID of the order that user was assigned
+        and the routeID of the linehauls associated with the order
      */
     @POST
     public Response notification( @HeaderParam("authToken") String authToken,
@@ -54,11 +55,15 @@ public class NotificationResource extends BaseResource {
         //UserLoginDAO userLoginDAO = getAdminDb().onDemand(UserLoginDAO.class);
         String internalId;
 
+        //Route id of the linehauls associated with an order
+        String routeId;
+
+
         try {
             JSONObject request = new JSONObject(body);
             username = request.getString("username");
             internalId = request.getString("internalId");
-
+            routeId = request.getString("routeId");
         } catch (JSONException e) {
             e.printStackTrace();
             response.put("errorMessage", e.getMessage());
@@ -101,6 +106,7 @@ public class NotificationResource extends BaseResource {
             content.addData("title", "orderUpdate");
             content.addData("user","username");
             content.addData("internalId", internalId);
+            content.addData("routeId", routeId);
 
         mapper.writeValue(dataOutputStream, content);
 
