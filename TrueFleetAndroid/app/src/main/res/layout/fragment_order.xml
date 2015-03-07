@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,114 +8,101 @@
         android:id="@+id/grid_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:columnCount="3"
         android:padding="12dp"
-        android:columnCount="2"
 
 
         tools:ignore="UselessParent">
 
         <Spinner
-            android:layout_gravity="start|center_vertical"
             android:id="@+id/spinner_order_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
 
             />
-        <com.gc.materialdesign.views.ButtonRectangle
 
-            android:background="@color/accent"
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/button_update_status"
             android:layout_width="150dp"
             android:layout_height="75dp"
             android:layout_gravity="start|center_vertical"
+            android:background="@color/accent"
             android:text="UPDATE STATUS"
             android:textSize="500sp"
 
             />
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:text=" Notes"
-            style="@style/RowTitle"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="None"
-            android:id="@+id/order_notes"
-
-            android:layout_gravity="start|center_vertical|fill_horizontal"
-            style="@style/RowValue"
-            />
-
-
-    </GridLayout>
-    <LinearLayout
-        android:layout_alignTop="@id/grid_layout"
-        android:layout_toRightOf="@id/grid_layout"
-        android:padding="12dp"
-        android:layout_columnSpan="2"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-
-        android:orientation="horizontal"
-        >
-        <ImageView
-            android:id="@+id/orderImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/noimage"/>
-
         <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/btnAddImage"
-            android:background="@color/accent"
             android:layout_width="150dp"
             android:layout_height="75dp"
             android:layout_gravity="start|center_vertical"
+            android:layout_marginLeft="50dp"
+            android:background="@color/accent"
             android:text="ADD IMAGE"
             android:textSize="500sp"
 
+
             />
-    </LinearLayout>
+
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/notestitle"
+        style="@style/RowTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/grid_layout"
+        android:layout_gravity="start|center_vertical"
+        android:text=" Notes" />
+
+    <TextView
+        android:id="@+id/order_notes"
+        style="@style/RowValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/grid_layout"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:layout_toRightOf="@+id/notestitle"
+        android:text="None" />
+
+
     <LinearLayout
         android:id="@+id/linlayout"
-        android:layout_columnSpan="2"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
         android:layout_gravity="start|fill_horizontal"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_weight="1"
             android:layout_marginRight="8dp"
+            android:layout_weight="1"
             android:gravity="center_vertical|right"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/order_id"
+                style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="orderid"
-                style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
-                />
+                android:text="orderid" />
+
             <TextView
                 android:id="@+id/order_receipt_date"
+                style="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="receiptdate"
-                style="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle"
-                />
+                android:text="receiptdate" />
         </LinearLayout>
 
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/orders"
-            />
+            android:src="@drawable/orders" />
     </LinearLayout>
 
 
@@ -125,45 +110,48 @@
         android:id="@+id/dummyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@id/grid_layout">
-    <LinearLayout android:layout_weight="1"
-        android:id="@+id/linearlinehaul"
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:layout_below="@id/grid_layout">
-        <ListView
-
-            android:choiceMode="singleChoice"
-            android:layout_height="match_parent"
-            android:layout_width = "match_parent"
-            android:id="@+id/listview_linehauls" />
-    </LinearLayout>
-
-
-
-    <LinearLayout android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:layout_width="0dp">
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/content_panel"
-        android:layout_toRightOf="@id/dummyView">
+        android:layout_below="@id/order_notes">
 
-        <ListView
-
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/linearlinehaul"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_below="@id/grid_layout"
+            android:layout_weight="1">
 
-            android:id="@+id/listview_freights" />
-    </FrameLayout>
+            <ListView
+
+                android:id="@+id/listview_linehauls"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:id="@+id/content_panel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/dummyView">
+
+                <ListView
+
+                    android:id="@+id/listview_freights"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </RelativeLayout>

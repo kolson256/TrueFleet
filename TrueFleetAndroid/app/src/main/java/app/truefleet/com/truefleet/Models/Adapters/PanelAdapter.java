@@ -36,6 +36,13 @@ public class PanelAdapter extends ArrayAdapter<PanelItem> {
         TextView titleView = (TextView)  convertView.findViewById(R.id.panel_title);
         TextView counterView = (TextView)convertView.findViewById(R.id.panel_counter);
 
+        if(panelItem.isVisible()) {
+            counterView.setVisibility(View.VISIBLE);
+        }
+        else {
+            counterView.setVisibility(View.INVISIBLE);
+        }
+
         imgView.setImageResource(panelItem.getIcon());
         titleView.setText(panelItem.getTitle());
         counterView.setText(panelItem.getCounter());

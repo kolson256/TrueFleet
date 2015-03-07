@@ -15,7 +15,7 @@ import app.truefleet.com.truefleet.Fragments.HomeFragment;
 import app.truefleet.com.truefleet.Models.Account;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Contact;
-import app.truefleet.com.truefleet.Models.Containers;
+import app.truefleet.com.truefleet.Models.Container;
 import app.truefleet.com.truefleet.Models.Freight;
 import app.truefleet.com.truefleet.Models.Linehaul;
 import app.truefleet.com.truefleet.Models.Order;
@@ -159,7 +159,7 @@ public class HomeActivity extends BaseActivity {
 
         lh3.save();
 
-        Containers c = new Containers("container description", 5, 50, 40, 30, 100, "container notes");
+        Container c = new Container("container description", 5, 50, 40, 30, 100, "container notes");
 
         c.save();
 

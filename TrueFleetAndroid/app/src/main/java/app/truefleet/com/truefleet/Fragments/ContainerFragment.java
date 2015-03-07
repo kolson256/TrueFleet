@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
-import app.truefleet.com.truefleet.Models.Containers;
+import app.truefleet.com.truefleet.Models.Container;
 import app.truefleet.com.truefleet.R;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -49,7 +49,7 @@ public class ContainerFragment extends Fragment implements Updater {
     }
 
     public void updateUI() {
-        Containers container = activeOrderManager.getActiveContainer();
+        Container container = activeOrderManager.getActiveContainer();
 
         if (container == null) {
             Log.i(LOG_TAG, "Container was null");

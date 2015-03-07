@@ -26,8 +26,7 @@ public class PickupFragment extends Fragment implements Updater {
     TextView mPickupName;
     @InjectView(R.id.pickup_address)
     TextView mPickupAddress;
-    @InjectView(R.id.pickup_city_state_zip)
-    TextView mPickupCityStateZip;
+
     @InjectView(R.id.pickup_phone)
     TextView mPickupPhone;
     @InjectView(R.id.pickup_notes)
@@ -65,8 +64,8 @@ public class PickupFragment extends Fragment implements Updater {
             return;
         }
         mPickupName.setText(account.name);
-        mPickupAddress.setText(account.mailingstreet);
-        mPickupCityStateZip.setText(account.mailingcity + ", " + account.mailingstate + " " + account.mailingpostalcode);
+        mPickupAddress.setText(account.mailingstreet + "\n" +
+                        account.mailingcity + ", " + account.mailingstate + " " + account.mailingpostalcode);
         mPickupPhone.setText(account.phone);
         mPickupNotes.setText(account.notes);
 
@@ -75,7 +74,6 @@ public class PickupFragment extends Fragment implements Updater {
     private void emptyPickup() {
         mPickupName.setText("No pickup set");
         mPickupAddress.setText("");
-        mPickupCityStateZip.setText("");
         mPickupPhone.setText("");
         mPickupNotes.setText("");
     }

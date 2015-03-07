@@ -27,6 +27,7 @@ import app.truefleet.com.truefleet.Fragments.PickupFragment;
 import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.TrueFleetApp;
 
 public class OrderActivitys extends BaseActivity implements SidePanelFragment.OnColumnSelectedListener {
     private final String LOG_TAG = OrderActivitys.class.getSimpleName();
@@ -38,13 +39,13 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
     ContainerFragment containerFragment;
     FreightFragment freightFragment;
 
-
     int id;
     private BroadcastReceiver broadcastReceiver;
 
     public class FragmentReceiverOrderDetails extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            TrueFleetApp.inject(this);
 
             boolean value = intent.getBooleanExtra("STATUS", false);
             if (value) {
@@ -65,6 +66,7 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
             }
         });
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +179,9 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
 
     }
 
+    public void displayImage() {
+        Log.i(LOG_TAG, "Received display image request");
+    }
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
@@ -201,5 +206,4 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
         }
         super.onStop();
     }
-
 }

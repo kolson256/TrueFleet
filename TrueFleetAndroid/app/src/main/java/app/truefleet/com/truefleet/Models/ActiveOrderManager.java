@@ -2,10 +2,16 @@ package app.truefleet.com.truefleet.Models;
 
 import android.util.Log;
 
+import com.squareup.otto.Bus;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import app.truefleet.com.truefleet.Activitieis.Events.FreightCountChangedEvent;
 import app.truefleet.com.truefleet.Fragments.Updater;
+import app.truefleet.com.truefleet.TrueFleetApp;
 
 /**
  * Created by Chris Lacy on 2/23/2015.
@@ -20,8 +26,13 @@ public class ActiveOrderManager {
     private int activeLinehaulIndex;
     private Updater linehaulUdater;
     private Updater contentUpdater;
+    @Inject
+    Bus bus;
 
     private ActiveOrderManager() {
+
+        TrueFleetApp.inject(this);
+        bus.register(this);
         linehaulUdater = null;
         contentUpdater = null;
         linehauls = new ArrayList<Linehaul>();
@@ -44,7 +55,9 @@ public class ActiveOrderManager {
     public void setOrder(Order order) {
         this.order = order;
         linehauls = Linehaul.getLinehauls(order);
+
         activeLinehaulIndex = 0;
+
     }
 
     public List<Linehaul> getLinehauls() {
@@ -56,6 +69,7 @@ public class ActiveOrderManager {
     }
 
     public void setActiveLinehaulIndex(int index) {
+        Log.i(LOG_TAG, "Active linehaul index changed: " + index);
         if (index > (linehauls.size() - 1)) {
             Log.e(LOG_TAG, "Attempted to set index greater then list size");
             return;
@@ -63,6 +77,8 @@ public class ActiveOrderManager {
         this.activeLinehaulIndex = index;
         if (contentUpdater != null)
             contentUpdater.updateUI();
+
+        bus.post(new FreightCountChangedEvent(getActiveFreights().size()));
     }
 
     public Linehaul getActiveLinehaul() {
@@ -78,7 +94,7 @@ public class ActiveOrderManager {
         return null;
     }
 
-    public Containers getActiveContainer() {
+    public Container getActiveContainer() {
         try {
             return linehauls.get(activeLinehaulIndex).freights().get(0).container;
         } catch (Exception e) {

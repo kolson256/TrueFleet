@@ -1,15 +1,13 @@
 package app.truefleet.com.truefleet.Fragments;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,11 +16,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -61,8 +57,7 @@ public class OrderDetailsFragment extends Fragment implements Updater {
     TextView orderNotes;
     @InjectView(R.id.btnAddImage)
     com.gc.materialdesign.views.ButtonRectangle addImageButton;
-    @InjectView(R.id.orderImageView)
-    ImageView imageView;
+
     @InjectView(R.id.listview_linehauls)
     ListView listView;
 
@@ -83,11 +78,7 @@ public class OrderDetailsFragment extends Fragment implements Updater {
                 takePhoto(v);
             }
         });
-        imageView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showImage();
-            }
-        });
+
 
         updateUI();
 
@@ -134,13 +125,7 @@ public class OrderDetailsFragment extends Fragment implements Updater {
             try {
                 if (resultCode == Activity.RESULT_OK) {
 
-                    // bimatp factory
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-
-                    final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(),
-                            options);
-                    System.out.println("width: " + bitmap.getWidth());
-                    imageView.setImageBitmap(bitmap);
+                    showImageDialog();
                 } else {
                     Log.i(LOG_TAG, "Not result OK from camera");
                 }
@@ -150,26 +135,32 @@ public class OrderDetailsFragment extends Fragment implements Updater {
         }
     }
 
-    public void showImage() {
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        System.out.println("Width: " + bitmap.getWidth());
-        Dialog builder = new Dialog(getActivity());
-        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        builder.getWindow().setBackgroundDrawable(
-                new ColorDrawable(android.graphics.Color.BLACK));
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                //nothing;
-            }
-        });
+    public void showImageDialog() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(),
+                options);
 
         ImageView imageView = new ImageView(getActivity());
         imageView.setImageBitmap(bitmap);
-        builder.addContentView(imageView, new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-        builder.show();
+
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(getActivity()).
+                        setTitle("Upload to server?").
+                        setPositiveButton("Send to Server", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss(); //TODO: Send to server when implemented
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setView(imageView);
+
+        builder.create().show();
+
+
     }
 
     private void takePhoto(View v) {

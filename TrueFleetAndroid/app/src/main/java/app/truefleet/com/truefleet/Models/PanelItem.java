@@ -8,10 +8,21 @@ public class PanelItem {
     private String title;
     private String counter;
 
-    public PanelItem(int icon, String title, String counter) {
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    private boolean visible;
+
+    public PanelItem(int icon, String title, String counter, boolean visible) {
         this.icon = icon;
         this.title = title;
         this.counter = counter;
+        this.visible = visible;
     }
 
     public int getIcon() {

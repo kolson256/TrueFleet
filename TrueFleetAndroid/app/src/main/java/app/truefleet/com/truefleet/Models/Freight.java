@@ -13,7 +13,7 @@ public class Freight extends Model {
 
     @Column(name = "Container",
             onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
-    public Containers container;
+    public Container container;
 
     @Column(name = "containerid")
     public int containerid;
@@ -42,7 +42,7 @@ public class Freight extends Model {
         super();
     }
 
-    public Freight(Containers container, Linehaul linehaul, String description, int quantity, int weight, String seal, String notes) {
+    public Freight(Container container, Linehaul linehaul, String description, int quantity, int weight, String seal, String notes) {
         super();
         this.container =container;
         this.linehaul = linehaul;

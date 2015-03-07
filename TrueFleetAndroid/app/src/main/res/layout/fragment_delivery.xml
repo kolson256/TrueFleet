@@ -10,7 +10,7 @@
 
 
     <TextView
-        android:id="@+id/pickup_name"
+        android:id="@+id/delivery_name"
         android:layout_columnSpan="2"
         android:layout_width="0dp"
         android:layout_gravity="start|fill_horizontal"
@@ -23,21 +23,11 @@
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/pickup_address"
-
+        android:id="@+id/delivery_address"
+        android:autoLink="map"
+        android:lines="2"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        android:text="12345 S. Anywhere St"
-        style="@style/RowValue"
-        />
-    <TextView
-        android:layout_gravity="start|center_vertical"
-        android:text=""
-        style="@style/RowTitle"
-        />
-    <TextView
-        android:id="@+id/pickup_city_state_zip"
-        android:text="city, state 60613"
-        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:text="None"
         style="@style/RowValue"
         />
 
@@ -47,7 +37,8 @@
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/pickup_phone"
+        android:id="@+id/delivery_phone"
+        android:autoLink="phone"
         android:text="None"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"
@@ -59,7 +50,7 @@
         style="@style/RowTitle"
         />
     <TextView
-        android:id="@+id/pickup_notes"
+        android:id="@+id/delivery_notes"
         android:layout_width="0dp"
         android:text="None"
         android:layout_gravity="start|center_vertical|fill_horizontal"

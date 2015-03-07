@@ -33,9 +33,12 @@
     <string name="title_activity_order">Order Details</string>
 
     <string name="ordertype_prompt">Order Type</string>
+    <string name="picture_accept">Send to server?</string>
+    <string name="button_accept_picture">Send to server</string>
+    <string name="button_reject_picture">Cancel</string>
     <string-array name="order_types">
-        <item>Active</item>
-        <item>Completed</item>
+        <item>Active Orders</item>
+        <item>Completed Orders</item>
 
     </string-array>
 

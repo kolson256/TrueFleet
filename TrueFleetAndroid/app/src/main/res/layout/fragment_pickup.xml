@@ -24,20 +24,10 @@
         />
     <TextView
         android:id="@+id/pickup_address"
-
+        android:lines="2"
+        android:autoLink="map"
         android:layout_gravity="start|center_vertical|fill_horizontal"
-        android:text="12345 S. Anywhere St"
-        style="@style/RowValue"
-        />
-    <TextView
-        android:layout_gravity="start|center_vertical"
-        android:text=""
-        style="@style/RowTitle"
-        />
-    <TextView
-        android:id="@+id/pickup_city_state_zip"
-        android:text="city, state 60613"
-        android:layout_gravity="start|center_vertical|fill_horizontal"
+        android:text="None"
         style="@style/RowValue"
         />
 
@@ -48,6 +38,7 @@
         />
     <TextView
         android:id="@+id/pickup_phone"
+        android:autoLink="phone"
         android:text="None"
         android:layout_width="0dp"
         android:layout_gravity="start|center_vertical|fill_horizontal"

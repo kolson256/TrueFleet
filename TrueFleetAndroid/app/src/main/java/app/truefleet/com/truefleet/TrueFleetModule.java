@@ -9,10 +9,13 @@ import app.truefleet.com.truefleet.Activitieis.Login.LoginActivity;
 import app.truefleet.com.truefleet.Activitieis.Login.LoginInteractorImpl;
 import app.truefleet.com.truefleet.Activitieis.OrderActivitys;
 import app.truefleet.com.truefleet.Fragments.HomeFragment;
+import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
+import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.OrderOverviewManager;
 import app.truefleet.com.truefleet.Resources.LoginManager;
 import app.truefleet.com.truefleet.Tasks.OrderService;
 import app.truefleet.com.truefleet.modules.ApiModule;
+import app.truefleet.com.truefleet.modules.BusModule;
 import app.truefleet.com.truefleet.modules.ModelModule;
 import app.truefleet.com.truefleet.modules.ResourceModule;
 import dagger.Module;
@@ -25,7 +28,8 @@ import dagger.Provides;
         includes = {
                 ApiModule.class,
                 ResourceModule.class,
-                ModelModule.class
+                ModelModule.class,
+                BusModule.class
         },
         injects = {
                 LoginActivity.class,
@@ -36,7 +40,9 @@ import dagger.Provides;
                 LoginManager.class,
                 OrderOverviewManager.class,
                 HomeFragment.class,
-                OrderService.class
+                OrderService.class,
+                ActiveOrderManager.class,
+                SidePanelFragment.class
         }
 )
 public class TrueFleetModule {

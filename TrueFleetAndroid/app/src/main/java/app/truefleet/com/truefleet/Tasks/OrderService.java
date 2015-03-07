@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 import app.truefleet.com.truefleet.Models.Account;
 import app.truefleet.com.truefleet.Models.Contact;
-import app.truefleet.com.truefleet.Models.Containers;
+import app.truefleet.com.truefleet.Models.Container;
 import app.truefleet.com.truefleet.Models.Freight;
 import app.truefleet.com.truefleet.Models.Linehaul;
 import app.truefleet.com.truefleet.Models.Order;
@@ -111,7 +111,7 @@ public class OrderService extends AsyncTask<String, Void, String[]> {
             return;
         }
         for (Freight freight : freights) {
-            Containers c = getContainer(freight.containerid);
+            Container c = getContainer(freight.containerid);
             trySave(c);
             freight.container = c;
             freight.linehaul = linehaul;
@@ -169,7 +169,7 @@ public class OrderService extends AsyncTask<String, Void, String[]> {
         return null;
     }
     @Nullable
-    private Containers getContainer(int containerid) {
+    private Container getContainer(int containerid) {
         try {
         return apiService.getContainer(containerid);
         } catch (RetrofitError error) {

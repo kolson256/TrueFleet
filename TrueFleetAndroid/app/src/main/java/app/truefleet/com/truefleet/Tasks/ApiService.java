@@ -8,7 +8,7 @@ import java.util.List;
 
 import app.truefleet.com.truefleet.Models.Account;
 import app.truefleet.com.truefleet.Models.Contact;
-import app.truefleet.com.truefleet.Models.Containers;
+import app.truefleet.com.truefleet.Models.Container;
 import app.truefleet.com.truefleet.Models.Freight;
 import app.truefleet.com.truefleet.Models.Linehaul;
 import app.truefleet.com.truefleet.Models.Order;
@@ -52,7 +52,7 @@ public interface ApiService {
     public Account getAccount(@Path("id") int accountId);
 
     @GET("/0.1/container/{id}")
-    public Containers getContainer(@Path("id") int containerId);
+    public Container getContainer(@Path("id") int containerId);
 
     @GET("/0.1/route/{id}")
     public Route getRoute(@Path("id") int routeId);
