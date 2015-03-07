@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Chris Lacy on 3/7/2015.
  */
-@Path("/0.1/linehausl")
+@Path("/0.1/linehauls")
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class LinehaulsResource {
@@ -37,7 +37,7 @@ public class LinehaulsResource {
     @Timed
     @UnitOfWork
     @Path("/{routeid}/{orderid}") //returning a list of the same stub linehauls from DB instead of real...
-    public List<ContactEntity> getContacts (@PathParam("accountid") int id) {
+    public List<LinehaulEntity> getLinehauls (@PathParam("accountid") int id) {
         LinehaulEntity l1 = dao.findById(1);
         List l = new ArrayList();
         l.add(l1);

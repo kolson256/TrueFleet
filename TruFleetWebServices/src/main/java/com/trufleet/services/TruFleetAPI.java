@@ -95,11 +95,8 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
         final OrderEntityDAO orderEntityDAO = new OrderEntityDAO(hibernate.getSessionFactory());
         environment.jersey().register(new OrderResource(orderEntityDAO));
 
-
-
-
-
-
+        final RouteEntityDAO routeEntityDAO = new RouteEntityDAO(hibernate.getSessionFactory());
+        environment.jersey().register(new RouteResource(routeEntityDAO));
 
         environment.jersey().register(new ShiroExceptionMapper());
         environment.getApplicationContext().setSessionHandler(new SessionHandler());

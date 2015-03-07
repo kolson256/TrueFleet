@@ -37,7 +37,7 @@ public class FreightsResource {
     @Timed
     @UnitOfWork
     @Path("/{linehaulid}") //returning a list of the same stub freight from DB instead of real...
-    public List<ContactEntity> getContacts (@PathParam("accountid") int id) {
+    public List<FreightEntity> getFreights (@PathParam("accountid") int id) {
         FreightEntity f1 = dao.findById(2); //2 does not correspond to account id, this is contact id.
         List l = new ArrayList();
         l.add(f1);
