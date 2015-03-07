@@ -1,8 +1,7 @@
 package com.trufleet.services;
 
 import com.trufleet.services.core.representations.Organization;
-import com.trufleet.services.dao.AccountEntityDAO;
-import com.trufleet.services.dao.ContactEntityDAO;
+import com.trufleet.services.dao.*;
 import com.trufleet.services.domain.representations.*;
 import com.trufleet.services.resources.*;
 
@@ -77,9 +76,26 @@ public class TruFleetAPI extends Application<TruFleetAPIConfiguration> {
 
         final ContactEntityDAO contactDAO = new ContactEntityDAO(hibernate.getSessionFactory());
         environment.jersey().register(new ContactResource(contactDAO));
+        environment.jersey().register(new ContactsResource(contactDAO));
 
         final AccountEntityDAO accountEntityDAO = new AccountEntityDAO(hibernate.getSessionFactory());
         environment.jersey().register(new AccountResource(accountEntityDAO));
+
+        final FreightEntityDAO freightEntityDAO = new FreightEntityDAO(hibernate.getSessionFactory());
+        environment.jersey().register(new FreightResource(freightEntityDAO));
+        environment.jersey().register(new FreightsResource(freightEntityDAO));
+
+        final LinehaulEntityDAO linehaulEntityDAO = new LinehaulEntityDAO(hibernate.getSessionFactory());
+        environment.jersey().register(new LinehaulResource(linehaulEntityDAO));
+        environment.jersey().register(new LinehaulsResource(linehaulEntityDAO));
+
+        final ContainerEntityDAO containerEntityDAO = new ContainerEntityDAO(hibernate.getSessionFactory());
+        environment.jersey().register(new ContainerResource(containerEntityDAO));
+
+        final OrderEntityDAO orderEntityDAO = new OrderEntityDAO(hibernate.getSessionFactory());
+        environment.jersey().register(new OrderResource(orderEntityDAO));
+
+
 
 
 

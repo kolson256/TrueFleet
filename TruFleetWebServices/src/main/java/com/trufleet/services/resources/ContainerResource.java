@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Created by Richard Morgan on 2/16/2015.
  */
-@Path("/0.1/contact")
+@Path("/0.1/container")
 @Produces( MediaType.APPLICATION_JSON )
 @Consumes( MediaType.APPLICATION_JSON )
 public class ContainerResource {
