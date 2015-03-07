@@ -110,12 +110,15 @@ public class OrderService extends AsyncTask<String, Void, String[]> {
         if (freights == null) {
             return;
         }
+        try {
         for (Freight freight : freights) {
             Container c = getContainer(freight.containerid);
             trySave(c);
             freight.container = c;
             freight.linehaul = linehaul;
             trySave(freight);
+        } } catch (NullPointerException npe) {
+            Log.e(LOG_TAG, "WebServer returned null container");
         }
     }
 
