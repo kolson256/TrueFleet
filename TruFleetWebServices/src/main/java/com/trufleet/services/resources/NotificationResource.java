@@ -104,7 +104,7 @@ public class NotificationResource extends BaseResource {
             Content content = new Content();
             content.addRegId(appUser.getRegistrationId());
             content.addData("title", "orderUpdate");
-            content.addData("user","username");
+            content.addData("user",username);
             content.addData("internalId", internalId);
             content.addData("routeId", routeId);
 
