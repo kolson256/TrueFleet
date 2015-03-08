@@ -54,10 +54,12 @@ public class OrderOverviewManager {
 
         if (linehauls.size() == 0)
             return false;
+        try {
         for (Linehaul l : linehauls) {
-            if (l.isAactive(l)) {
+            if (l.linehaulStatus.isActive()) {
                 return true;
             }
+        } } catch (Exception e) { Log.e(LOG_TAG, "Linehaul status was null");
         }
 
         return false;

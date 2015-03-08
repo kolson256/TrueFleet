@@ -64,20 +64,26 @@ public class GcmIntentService extends IntentService {
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
                 // Post notification of received message.
-                sendNotification("Received: " + extras.getString("title"));
-                String user = extras.getString("user");
-                String internalId = extras.getString("internalId");
-                //String routeid = extras.getString("routeId"); //TODO handle routeid when sent from server
-                Log.i(TAG, "Received: " + extras.toString());
 
-               getOrders(internalId);
+                try {
+                    sendNotification("Received: " + extras.getString("title"));
+                    String user = extras.getString("user");
+
+                    String internalId = extras.getString("internalId");
+                    String routeId = extras.getString("routeId");
+                    Log.i(TAG, "Received: " + extras.toString());
+
+                    getOrders(Integer.parseInt(internalId), user, Integer.parseInt(routeId));
+                }catch (Exception e) {
+                    Log.i(TAG, "Received invalid input from GCM");
+                }
             }
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
-    public void getOrders(String internalId) {
-            OrderService os = new OrderService("test", Integer.parseInt(internalId), 3); //TODO: Change to real routeid when sent from server
+    public void getOrders(int internalId, String user, int routeId) {
+            OrderService os = new OrderService(user, internalId, routeId);
             os.execute();
     }
 

@@ -15,7 +15,7 @@ public class Linehaul extends BaseModel {
     @Column(name = "orderid", index = true)
     public int orderid;
 
-    @Column(name ="serverid")
+    @Column(name = "serverid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     public int id;
     @Column(name = "Orders",
             onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
@@ -63,14 +63,19 @@ public class Linehaul extends BaseModel {
     @Column(name = "deliveryDeadline")
     public long deliveryDeadline;
 
+    @Column
+
+    public LinehaulStatus linehaulStatus;
+
     public Linehaul() { super(); }
 
-    public Linehaul(int orderid, Order order, int routeId, Account shipper,
+    public Linehaul(int id, int orderid, Order order, int routeId, Account shipper,
                     Account terminal, Account receiver, String notes,
                     long shipdate, long pickupStartDate, long pickupEndDate,
-                    long deliveryDeadline) {
+                    long deliveryDeadline, LinehaulStatus linehaulStatus) {
         super();
-
+        this.id = id;
+        this.linehaulStatus = linehaulStatus;
         this.orderid = orderid;
         this.order = order;
         this.routeId = routeId;

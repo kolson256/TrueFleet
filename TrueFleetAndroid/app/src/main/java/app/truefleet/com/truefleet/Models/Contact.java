@@ -10,6 +10,9 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Contact")
 public class Contact extends Model {
 
+    @Column(name = "serverid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    public int id;
+
     @Column
     public int accountid;
 
@@ -55,11 +58,12 @@ public class Contact extends Model {
 
     public Contact() { super();  }
 
-    public Contact(int accountid, String firstName, String lastName, String suffix,
+    public Contact(int id, int accountid, String firstName, String lastName, String suffix,
                    String mailingStreet, String mailingState, String mailingCity, String mailingPostalCode,
                    String mailingCountry, String phone,
                    String mobilePhone, String fax, String notes, Account account) {
         super();
+        this.id = id;
         this.accountid = accountid;
         this.firstname = firstName;
         this.lastname = lastName;

@@ -11,6 +11,9 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Freight")
 public class Freight extends Model {
 
+    @Column(name = "serverid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    public int id;
+
     @Column(name = "Container",
             onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Container container;
@@ -42,8 +45,9 @@ public class Freight extends Model {
         super();
     }
 
-    public Freight(Container container, Linehaul linehaul, String description, int quantity, int weight, String seal, String notes) {
+    public Freight(int id, Container container, Linehaul linehaul, String description, int quantity, int weight, String seal, String notes) {
         super();
+        this.id = id;
         this.container =container;
         this.linehaul = linehaul;
         this.description =  description;

@@ -8,7 +8,12 @@ import app.truefleet.com.truefleet.Activitieis.HomeActivity;
 import app.truefleet.com.truefleet.Activitieis.Login.LoginActivity;
 import app.truefleet.com.truefleet.Activitieis.Login.LoginInteractorImpl;
 import app.truefleet.com.truefleet.Activitieis.OrderActivitys;
+import app.truefleet.com.truefleet.Fragments.ContainerFragment;
+import app.truefleet.com.truefleet.Fragments.DeliveryFragment;
+import app.truefleet.com.truefleet.Fragments.FreightFragment;
 import app.truefleet.com.truefleet.Fragments.HomeFragment;
+import app.truefleet.com.truefleet.Fragments.OrderDetailsFragment;
+import app.truefleet.com.truefleet.Fragments.PickupFragment;
 import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.OrderOverviewManager;
@@ -42,7 +47,14 @@ import dagger.Provides;
                 HomeFragment.class,
                 OrderService.class,
                 ActiveOrderManager.class,
-                SidePanelFragment.class
+                SidePanelFragment.class,
+                HomeFragment.class,
+                OrderActivitys.class,
+                OrderDetailsFragment.class,
+                ContainerFragment.class,
+                DeliveryFragment.class,
+                FreightFragment.class,
+                PickupFragment.class
         }
 )
 public class TrueFleetModule {

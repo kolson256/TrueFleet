@@ -21,6 +21,9 @@ public class Order extends BaseModel {
             onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public  Contact contact;
 
+    @Column(name = "serverid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    public int id;
+
     @Column
     public  int orderid;
 
@@ -41,11 +44,11 @@ public class Order extends BaseModel {
 
     public Order() { super(); }
 
-    public Order(Account account, Contact contact, int orderid,
+    public Order(int id, Account account, Contact contact, int orderid,
                   String externalid, String notes, long receiptdate, String ordertype,
                   String assignedUser) {
         super();
-
+        this.id = id;
         this.account = account;
         this.contact = contact;
         this.orderid = orderid;
@@ -59,6 +62,14 @@ public class Order extends BaseModel {
         return new Select()
                 .from(Order.class)
                 .where("assignedUser = ?", user)
+                        //   .orderBy("order ASC")
+                .execute();
+    }
+
+    public static List<Order> getOrderByOrderId(int  orderid) {
+        return new Select()
+                .from(Order.class)
+                .where("orderid = ?", orderid)
                         //   .orderBy("order ASC")
                 .execute();
     }

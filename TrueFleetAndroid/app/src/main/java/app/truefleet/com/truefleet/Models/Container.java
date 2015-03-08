@@ -10,6 +10,9 @@ import com.activeandroid.annotation.Table;
 @Table(name="Container")
 public class Container extends Model {
 
+    @Column(name = "serverid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    public int id;
+
     @Column(name="description")
     public String description;
 
@@ -33,8 +36,9 @@ public class Container extends Model {
 
     public Container() { super(); }
 
-    public Container(String description, int volume, int length, int width, int height, int weight, String notes) {
+    public Container(int id, String description, int volume, int length, int width, int height, int weight, String notes) {
         super();
+        this.id = id;
         this.description = description;
         this.volume = volume;
         this.length = length;

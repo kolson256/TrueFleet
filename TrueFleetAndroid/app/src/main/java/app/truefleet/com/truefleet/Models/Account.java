@@ -15,7 +15,7 @@ public class Account extends Model {
     @Column(name = "name")
     public String name;
 
-    @Column(name="serverid")
+    @Column(name = "serverid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     public int id;
 
     @Column
@@ -49,10 +49,11 @@ public class Account extends Model {
         super();
     }
 
-    public Account(String name, String mailingstreet, String mailingcity, String mailingstate,
+    public Account(int id, String name, String mailingstreet, String mailingcity, String mailingstate,
                    String mailingpostalcode, String mailingcountry, String types,
                    String notes, String phone, String fax) {
         super();
+        this.id = id;
         this.name = name;
         this.mailingstreet = mailingstreet;
         this.mailingcity = mailingcity;

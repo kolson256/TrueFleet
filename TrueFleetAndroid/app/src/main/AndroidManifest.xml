@@ -36,7 +36,8 @@
             android:name="AA_MODELS"
             android:value="app.truefleet.com.truefleet.Models.Freight, app.truefleet.com.truefleet.Models.Account,
                             app.truefleet.com.truefleet.Models.Contact, app.truefleet.com.truefleet.Models.Container,
-                            app.truefleet.com.truefleet.Models.Linehaul, app.truefleet.com.truefleet.Models.Order"/>
+                            app.truefleet.com.truefleet.Models.Linehaul, app.truefleet.com.truefleet.Models.Order,
+                            app.truefleet.com.truefleet.Models.LinehaulStatus"/>
 
         <meta-data
             android:name="com.google.android.gms.version"

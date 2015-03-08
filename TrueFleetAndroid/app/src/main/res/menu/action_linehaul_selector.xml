@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:trufleet="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/linehaul_menu"
+        android:icon="@drawable/ic_list"
+        android:title="Active Linehauls"
+        trufleet:showAsAction="ifRoom|withText" >
+        <menu>
+            <item
+                android:id="@+id/menuActive"
+                android:title="Active Linehauls" />
+            <item
+                android:id="@+id/menuInactive"
+                android:title="Inactive Linehauls" />
+            <item
+                android:id="@+id/menuCompleted"
+                android:title="Completed Linehauls" />
+        </menu>
+    </item>
+</menu>

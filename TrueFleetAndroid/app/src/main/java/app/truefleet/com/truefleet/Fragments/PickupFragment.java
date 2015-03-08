@@ -8,10 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import javax.inject.Inject;
+
+import app.truefleet.com.truefleet.Activitieis.Events.LinehaulSelectionEvent;
 import app.truefleet.com.truefleet.Activitieis.OnSwipeTouchListener;
 import app.truefleet.com.truefleet.Models.Account;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
+import app.truefleet.com.truefleet.Models.LinehaulType;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.TrueFleetApp;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -31,13 +39,17 @@ public class PickupFragment extends Fragment implements Updater {
     TextView mPickupPhone;
     @InjectView(R.id.pickup_notes)
     TextView mPickupNotes;
+    private LinehaulType linehaulSelection;
+
+    @Inject
+    Bus bus;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pickup, container, false);
         activeOrderManager = ActiveOrderManager.getInstance();
         activeOrderManager.setContentUpdater(this);
         ButterKnife.inject(this, view);
-
+        TrueFleetApp.inject(this);
         updateUI();
 
         container.setOnTouchListener(new OnSwipeTouchListener(getActivity().getApplicationContext()) {
@@ -82,6 +94,22 @@ public class PickupFragment extends Fragment implements Updater {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        bus.register(this);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        bus.unregister(this);
+    }
+    @Subscribe
+    public void linehaulTypeSeelction(LinehaulSelectionEvent event) {
+        linehaulSelection = event.getSelectionType();
+        updateUI();
     }
 }
 

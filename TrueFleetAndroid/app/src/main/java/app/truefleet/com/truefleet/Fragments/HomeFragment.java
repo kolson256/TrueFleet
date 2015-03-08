@@ -13,9 +13,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import app.truefleet.com.truefleet.Activitieis.Events.OrderSearchEvent;
+import app.truefleet.com.truefleet.Activitieis.Events.SearchClosedEvent;
 import app.truefleet.com.truefleet.Activitieis.HomeActivity;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Adapters.OrderAdapter;
@@ -24,6 +32,7 @@ import app.truefleet.com.truefleet.Models.OrderOverviewManager;
 import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.Resources.LoginManager;
+import app.truefleet.com.truefleet.TrueFleetApp;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnItemClick;
@@ -35,6 +44,7 @@ import butterknife.OnItemSelected;
 public class HomeFragment extends Fragment implements Updater {
     final int ACTIVE_SELECTION = 0;
     final int INACTIVE_SELECTION = 1;
+    boolean active = true;
     List<Order> activeOrders;
     OrderAdapter activeAdapter;
     OrderAdapter completedAdapter;
@@ -51,6 +61,8 @@ public class HomeFragment extends Fragment implements Updater {
     @InjectView(R.id.buttonLogout)
     com.gc.materialdesign.views.ButtonRectangle mButtonLogout;
 
+    @Inject
+    Bus bus;
     BroadcastReceiver broadcastReceiver;
 
     private final String LOG_TAG = HomeFragment.class.getSimpleName();
@@ -70,6 +82,17 @@ public class HomeFragment extends Fragment implements Updater {
             updateUI();
         }
     }
+    public void displayToast(String message) {
+
+        final String msg = message;
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(getActivity().getApplicationContext(), msg,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +101,7 @@ public class HomeFragment extends Fragment implements Updater {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.inject(this, rootView);
+        TrueFleetApp.inject(this);
 
         activeOrderManager = activeOrderManager.getInstance();
 
@@ -95,19 +119,54 @@ public class HomeFragment extends Fragment implements Updater {
         Log.d(LOG_TAG, "SELECTED POSITION + " + position);
         if (position == ACTIVE_SELECTION) {
             listviewActiveOrders.setAdapter(activeAdapter);
+            active=true;
         } else if (position == INACTIVE_SELECTION) {
             listviewActiveOrders.setAdapter(completedAdapter);
+            active=false;
         }
     }
 
     @OnItemClick(R.id.listviewActiveOrders)
     void onItemClickz(AdapterView<?> parent, View view,
                       int position, long id) {
-        Order o = (Order) parent.getAdapter().getItem(position);
+        Order o =(Order) parent.getAdapter().getItem(position);
         view.setSelected(true);
         Log.i(LOG_TAG, "ListviewActive index: " + position + " clicked");
         activeOrderManager.setOrder(o);
         ((HomeActivity) getActivity()).showOrders();
+    }
+
+    @Subscribe
+    public void searchClosed(SearchClosedEvent event) {
+        if (active)
+            listviewActiveOrders.setAdapter(activeAdapter);
+        else
+            listviewActiveOrders.setAdapter(completedAdapter);
+
+    }
+    @Subscribe
+    public void orderSearch(OrderSearchEvent event) {
+        String search = event.getSearch();
+        Log.i(LOG_TAG, "Received order search: " + search);
+        int id;
+        try {
+            id = Integer.parseInt(search);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, "Invalid search: " + search);
+            displayToast("Please enter a numerical order id");
+            return;
+        }
+        List<Order> searchOrders = Order.getOrderByOrderId(id);
+
+        if (searchOrders.size() == 0) {
+            displayToast("No orders found with id: " + search);
+            return;
+        }
+
+        OrderAdapter searchAdapter = new OrderAdapter(getActivity(), searchOrders);
+
+        listviewActiveOrders.setAdapter(searchAdapter);
+
     }
 
     public void setup(View rootView) {
@@ -162,6 +221,17 @@ public class HomeFragment extends Fragment implements Updater {
         }
         super.onDestroyView();
         ButterKnife.reset(this);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        bus.register(this);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        bus.unregister(this);
     }
 
 }

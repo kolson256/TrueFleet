@@ -18,8 +18,10 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import app.truefleet.com.truefleet.Activitieis.Events.FreightCountChangedEvent;
+import app.truefleet.com.truefleet.Activitieis.Events.LinehaulSelectionEvent;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Adapters.PanelAdapter;
+import app.truefleet.com.truefleet.Models.LinehaulType;
 import app.truefleet.com.truefleet.Models.PanelItem;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.TrueFleetApp;
@@ -37,6 +39,8 @@ public class SidePanelFragment extends Fragment {
     OnColumnSelectedListener mCallback;
     ArrayList<PanelItem> panelItems;
     PanelAdapter adapter;
+    ActiveOrderManager aom;
+    private LinehaulType linehaulSelection;
 
     @Inject
     Bus bus;
@@ -65,9 +69,11 @@ public class SidePanelFragment extends Fragment {
 
         ButterKnife.inject(this, view);
         TrueFleetApp.inject(this);
-        ActiveOrderManager aom = ActiveOrderManager.getInstance();
+        aom = ActiveOrderManager.getInstance();
 
-        int count = aom.getActiveFreights().size();
+        int count = aom.getSelectedFreights().size();
+
+
         panelItems.add(new PanelItem(R.drawable.ic_pickup, "Pickup", "", false));
         panelItems.add(new PanelItem(R.drawable.ic_delivery, "Delivery",  "", false));
         panelItems.add(new PanelItem(R.drawable.ic_freights, "Freights" , String.valueOf(count), true));
@@ -101,8 +107,14 @@ public class SidePanelFragment extends Fragment {
 
         return view;
     }
+    private void  updateUI() {
+        int size = aom.getSelectedFreights().size();
+        panelItems.get(2).setCounter(String.valueOf(aom.getSelectedFreights().size()));
+        adapter.notifyDataSetChanged();
+    }
     @Override
     public void onResume() {
+        updateUI();
         super.onResume();
 
         bus.register(this);
@@ -118,6 +130,11 @@ public class SidePanelFragment extends Fragment {
         Log.i(LOG_TAG, "Received freight item count changed event");
         panelItems.get(2).setCounter(String.valueOf(event.getCount()));
         adapter.notifyDataSetChanged();
+    }
+    @Subscribe
+    public void linehaulTypeSeelction(LinehaulSelectionEvent event) {
+        linehaulSelection = event.getSelectionType();
+        updateUI();
     }
 
 }

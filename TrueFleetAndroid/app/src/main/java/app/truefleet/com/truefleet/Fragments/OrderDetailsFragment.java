@@ -19,19 +19,30 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
+import app.truefleet.com.truefleet.Activitieis.Events.LinehaulSelectionEvent;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Adapters.LinehaulAdapter;
 import app.truefleet.com.truefleet.Models.Linehaul;
+import app.truefleet.com.truefleet.Models.LinehaulType;
 import app.truefleet.com.truefleet.Models.Order;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.TrueFleetApp;
+import app.truefleet.com.truefleet.Utils;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -45,9 +56,8 @@ public class OrderDetailsFragment extends Fragment implements Updater {
     private static final int REQUEST_CODE = 100;
     private Uri fileUri;
     private ActiveOrderManager activeOrderManager;
-
+    private LinehaulType linehaulSelection;
     private static final String LOG_TAG = OrderDetailsFragment.class.getSimpleName();
-    ActiveLinehaulFragment activeLinehaulFragment;
 
     @InjectView(R.id.order_id)
     TextView orderid;
@@ -58,18 +68,27 @@ public class OrderDetailsFragment extends Fragment implements Updater {
     @InjectView(R.id.btnAddImage)
     com.gc.materialdesign.views.ButtonRectangle addImageButton;
 
+    @InjectView(R.id.spinner_order_status)
+    Spinner spinnerStatus;
+
+    @InjectView(R.id.button_backtoactive)
+    com.gc.materialdesign.views.ButtonRectangle backToActiveButton;
+
+    @InjectView(R.id.button_update_status)
+    com.gc.materialdesign.views.ButtonRectangle statusButton;
     @InjectView(R.id.listview_linehauls)
     ListView listView;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Inject
+    Bus bus;
 
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        linehaulSelection = LinehaulType.ACTIVE;
         activeOrderManager = ActiveOrderManager.getInstance();
         activeOrderManager.setLinehaulUpdater(this);
-
+        TrueFleetApp.inject(this);
         View view = inflater.inflate(R.layout.fragment_order, container, false);
         ButterKnife.inject(this, view);
-
-        activeLinehaulFragment = new ActiveLinehaulFragment();
 
         addImageButton.setOnClickListener(new View.OnClickListener() {
 
@@ -88,29 +107,44 @@ public class OrderDetailsFragment extends Fragment implements Updater {
     @Override
     public void onResume() {
         super.onResume();
+
+        bus.register(this);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        bus.unregister(this);
     }
 
+
     public void updateUI() {
+
         Order o = activeOrderManager.getOrder();
         orderid.setText(String.valueOf(o.orderid));
         receiptDate.setText(o.convertDateTime(o.receiptdate).toString());
         orderNotes.setText(o.notes);
 
-        List<Linehaul> arrayOfLinehauls;
-        arrayOfLinehauls = activeOrderManager.getLinehauls();
+        List<Linehaul> arrayOfLinehauls = new ArrayList<>();
+
+        arrayOfLinehauls = activeOrderManager.getSelectedLinehauls();
+
+        if (Utils.isNullOrEmpty(arrayOfLinehauls));
 
         LinehaulAdapter adapter = new LinehaulAdapter(getActivity(), arrayOfLinehauls);
 
-        listView.setAdapter(adapter);
-        listView.setItemsCanFocus(true);
+            listView.setAdapter(adapter);
+            listView.setItemsCanFocus(true);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
-                activeOrderManager.setActiveLinehaulIndex(position);
-
-
+                try {
+                activeOrderManager.setActiveLinehaul((Linehaul)parent.getAdapter().getItem(position));
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "Invalid linehaul object in linehaull list");
+                }
             }
         });
 
@@ -118,7 +152,24 @@ public class OrderDetailsFragment extends Fragment implements Updater {
         listView.setItemChecked(0, true);
         listView.setSelection(0);
     }
+    private void setNonoactiveDisplay() {
+        addImageButton.setVisibility(View.INVISIBLE);
+        orderNotes.setVisibility(View.INVISIBLE);
+        statusButton.setVisibility(View.INVISIBLE);
+        spinnerStatus.setVisibility(View.INVISIBLE);
+        backToActiveButton.setVisibility(View.VISIBLE);
+    }
 
+    private void setActiveDisplay() {
+        addImageButton.setVisibility(View.VISIBLE);
+        orderNotes.setVisibility(View.VISIBLE);
+        statusButton.setVisibility(View.VISIBLE);
+        spinnerStatus.setVisibility(View.VISIBLE);
+        backToActiveButton.setVisibility(View.GONE);
+    }
+
+
+    //Result from camera
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE) {
@@ -162,7 +213,6 @@ public class OrderDetailsFragment extends Fragment implements Updater {
 
 
     }
-
     private void takePhoto(View v) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
@@ -222,5 +272,14 @@ public class OrderDetailsFragment extends Fragment implements Updater {
             return false;
         }
     }
+    @Subscribe
+    public void linehaulTypeSeelction(LinehaulSelectionEvent event) {
+        linehaulSelection = event.getSelectionType();
 
+        if (linehaulSelection != LinehaulType.ACTIVE)
+            setNonoactiveDisplay();
+        else
+            setActiveDisplay();
+        updateUI();
+    }
 }

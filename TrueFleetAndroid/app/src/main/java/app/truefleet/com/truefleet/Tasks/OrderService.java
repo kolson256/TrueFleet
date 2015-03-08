@@ -44,6 +44,8 @@ public class OrderService extends AsyncTask<String, Void, String[]> {
     }
     @Override
     protected String[] doInBackground(String... params) {
+       Log.i(LOG_TAG, "Getting orders for orderid: " + orderid + " routeid: " + routeid + " user: " + assignedUser);
+
        Order order = getOrder(orderid);
 
         if (order !=null) {

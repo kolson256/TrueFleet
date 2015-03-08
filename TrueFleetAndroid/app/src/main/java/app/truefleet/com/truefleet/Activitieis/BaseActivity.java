@@ -26,7 +26,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 
         ((TrueFleetApp) getApplication()).inject(this);
         getSupportActionBar().setIcon(R.drawable.orders);
-      //  getSupportActionBar().setCustomView(R.layout.action_bar);
+     // getSupportActionBar().setCustomView(R.layout.action_bar);
       //  centerActionBarTitle();
     }
 

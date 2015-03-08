@@ -10,7 +10,6 @@ import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.Resources.ConnectionDetector;
 import app.truefleet.com.truefleet.Resources.LoginManager;
 import app.truefleet.com.truefleet.Tasks.ApiService;
-import app.truefleet.com.truefleet.Tasks.OrderService;
 import app.truefleet.com.truefleet.Tasks.Requests.LoginRequest;
 import app.truefleet.com.truefleet.Tasks.RestCallback;
 import app.truefleet.com.truefleet.Tasks.RestError;
@@ -50,9 +49,10 @@ public class LoginInteractorImpl implements LoginInteractor {
                 listener.notConnectedToInternetError();
                 return;
             }
-            OrderService os = new OrderService("test", 3, 3);
-            os.execute();
-            apiService.login(new LoginRequest(username, password), new RestCallback<User>() {
+
+        //    OrderService os = new OrderService("test", 3, 3);
+        //   os.execute();
+           apiService.login(new LoginRequest(username, password), new RestCallback<User>() {
                 @Override
                 public void success(User user, Response response) {
 

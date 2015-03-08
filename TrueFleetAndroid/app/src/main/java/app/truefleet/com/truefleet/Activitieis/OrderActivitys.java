@@ -18,7 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import app.truefleet.com.truefleet.Fragments.ActiveLinehaulFragment;
+import com.squareup.otto.Bus;
+
+import javax.inject.Inject;
+
+import app.truefleet.com.truefleet.Activitieis.Events.LinehaulSelectionEvent;
 import app.truefleet.com.truefleet.Fragments.ContainerFragment;
 import app.truefleet.com.truefleet.Fragments.DeliveryFragment;
 import app.truefleet.com.truefleet.Fragments.FreightFragment;
@@ -26,6 +30,7 @@ import app.truefleet.com.truefleet.Fragments.OrderDetailsFragment;
 import app.truefleet.com.truefleet.Fragments.PickupFragment;
 import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
+import app.truefleet.com.truefleet.Models.LinehaulType;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.TrueFleetApp;
 
@@ -35,9 +40,11 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
     DeliveryFragment deliveryFragment;
     PickupFragment pickupFragment;
     SidePanelFragment sidePanelFragment;
-    ActiveLinehaulFragment activeLinehaulFragment;
     ContainerFragment containerFragment;
     FreightFragment freightFragment;
+
+    @Inject
+    Bus bus;
 
     int id;
     private BroadcastReceiver broadcastReceiver;
@@ -50,13 +57,13 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
             boolean value = intent.getBooleanExtra("STATUS", false);
             if (value) {
                 displayToast("Status sent to server successfully");
-            }
-            else {
+            } else {
                 displayToast("Failed sending status to server");
             }
 
         }
     }
+
     public void displayToast(String message) {
         final String msg = message;
         runOnUiThread(new Runnable() {
@@ -71,6 +78,9 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // View actionview = getLayoutInflater().inflate(R.layout.actionbar_orderdetails, null);
+        //   getSupportActionBar().setDisplayShowCustomEnabled(true);
+        //   getSupportActionBar().setCustomView(R.layout.actionbar_orderdetails);
 
         broadcastReceiver = new FragmentReceiverOrderDetails();
         registerReceiver(broadcastReceiver, new IntentFilter("orderstatus"));
@@ -82,10 +92,9 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         orderFragment = new OrderDetailsFragment();
-    deliveryFragment = new DeliveryFragment();
-    pickupFragment = new PickupFragment();
-    sidePanelFragment = new SidePanelFragment();
-        activeLinehaulFragment = new ActiveLinehaulFragment();
+        deliveryFragment = new DeliveryFragment();
+        pickupFragment = new PickupFragment();
+        sidePanelFragment = new SidePanelFragment();
         containerFragment = new ContainerFragment();
         freightFragment = new FreightFragment();
 
@@ -104,23 +113,58 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
         fragmentTransaction.replace(R.id.content_panel, pickupFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-     //   if (savedInstanceState == null) {
-     //       getFragmentManager().beginTransaction()
-      //              .add(R.id.container, new PlaceholderFragment())
-      //              .commit();
-       // }
+        //   if (savedInstanceState == null) {
+        //       getFragmentManager().beginTransaction()
+        //              .add(R.id.container, new PlaceholderFragment())
+        //              .commit();
+        // }
     }
+
     private void hideSidePanel() {
         View sidePane = findViewById(R.id.side_panel);
-         if (sidePane.getVisibility() == View.VISIBLE) {
-             sidePane.setVisibility(View.GONE);
-             }
-         }
+        if (sidePane.getVisibility() == View.VISIBLE) {
+            sidePane.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+
+        getMenuInflater().inflate(R.menu.action_linehaul_selector, menu);
+        final MenuItem base = menu.findItem(R.id.linehaul_menu);
+        MenuItem active = menu.findItem(R.id.menuActive);
+        MenuItem inactive = menu.findItem(R.id.menuInactive);
+        MenuItem completed = menu.findItem(R.id.menuCompleted);
+        //SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        active.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Log.i(LOG_TAG, "ACTIVE SELECTED");
+                base.setTitle("Active Linehaul");
+                bus.post(new LinehaulSelectionEvent(LinehaulType.ACTIVE));
+                return false;
+            }
+        });
+
+        inactive.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                bus.post(new LinehaulSelectionEvent(LinehaulType.INACTIVE));
+                base.setTitle("Inactive Linehauls");
+                return false;
+            }
+        });
+
+        completed.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                bus.post(new LinehaulSelectionEvent(LinehaulType.COMPLETED));
+                base.setTitle("Completed Linehauls");
+                return false;
+            }
+        });
+
         super.onCreateOptionsMenu(menu);
         return true;
     }
@@ -173,7 +217,7 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
     }
 
     public void statusUpdate(View view) {
-;
+        ;
         //TODO: HANDLE STATUS WHEN AVL IN SERVER
         Log.i(LOG_TAG, "Status button clicked");
 
@@ -182,6 +226,7 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
     public void displayImage() {
         Log.i(LOG_TAG, "Received display image request");
     }
+
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
@@ -195,15 +240,26 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
             return rootView;
         }
     }
-//Stop receiver from leaking
+
+    //Stop receiver from leaking
     @Override
-    public void onStop()
-    {
+    public void onStop() {
         try {
             unregisterReceiver(broadcastReceiver);
         } catch (Exception e) {
             Log.d(LOG_TAG, "Receiver already unregistered");
         }
         super.onStop();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        bus.register(this);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        bus.unregister(this);
     }
 }
