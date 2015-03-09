@@ -7,6 +7,7 @@ import com.trufleet.services.domain.representations.LinehaulEntity;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.jackson.Jackson;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,8 +119,19 @@ public class LinehaulResource {
     @Timed
     @UnitOfWork
     @Path("/orderroute/")
-    public List<LinehaulEntity> listLinehaulsByRouteId (int routeid, int orderid){
-        return dao.queryLinehaulByRouteAndOrder(routeid, orderid);
+    public List<LinehaulEntity> listLinehaulsByRouteId (String body){
+        try {
+            JSONObject request = new JSONObject(body);
+
+            int routeid = request.getInt("routeid");
+            int orderid = request.getInt("orderid");
+            return dao.queryLinehaulByRouteAndOrder(routeid, orderid);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
 

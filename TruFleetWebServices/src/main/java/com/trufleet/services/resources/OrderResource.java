@@ -98,5 +98,4 @@ public class OrderResource {
         return dao.listByContact(id);
     }
 
-
 }
