@@ -93,7 +93,7 @@ public class OrderResource {
     @GET
     @Timed
     @UnitOfWork
-    @Path("/account/{contactid}")
+    @Path("/contact/{contactid}")
     public List<OrderEntity> getOrdersByContact(@PathParam("contactid") int id) {
         return dao.listByContact(id);
     }
