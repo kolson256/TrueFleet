@@ -2,6 +2,7 @@ package com.trufleet.services.domain.representations;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by Richard Morgan on 2/9/2015.
@@ -15,10 +16,14 @@ public class OrderEntity {
     private String notes;
     private Timestamp receiptdate;
 
+    private int accountid;
+    private int contactid;
+
     public OrderEntity() {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -66,6 +71,22 @@ public class OrderEntity {
 
     public void setReceiptdate(Timestamp receiptdate) {
         this.receiptdate = receiptdate;
+    }
+
+    public int getAccountid() {
+        return accountid;
+    }
+
+    public void setAccountid(int accountid) {
+        this.accountid = accountid;
+    }
+
+    public int getContactid() {
+        return contactid;
+    }
+
+    public void setContactid(int contactid) {
+        this.contactid = contactid;
     }
 
     @Override

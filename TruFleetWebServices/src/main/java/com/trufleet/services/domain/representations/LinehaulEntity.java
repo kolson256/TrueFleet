@@ -16,10 +16,20 @@ public class LinehaulEntity {
     private Timestamp pickupenddate;
     private Timestamp deliverydeadline;
 
+
+    private int orderid;
+    private int shipperid;
+    private int receiverid;
+    private int terminalid;
+    private int routeid;
+    private int linehaulstatusid;
+
+
     public LinehaulEntity() {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -77,6 +87,55 @@ public class LinehaulEntity {
 
     public void setDeliverydeadline(Timestamp deliverydeadline) {
         this.deliverydeadline = deliverydeadline;
+    }
+
+
+    public int getOrderid() {
+        return orderid;
+    }
+
+    public void setOrderid(int orderid) {
+        this.orderid = orderid;
+    }
+
+    public int getShipperid() {
+        return shipperid;
+    }
+
+    public void setShipperid(int shipperid) {
+        this.shipperid = shipperid;
+    }
+
+    public int getReceiverid() {
+        return receiverid;
+    }
+
+    public void setReceiverid(int receiverid) {
+        this.receiverid = receiverid;
+    }
+
+    public int getTerminalid() {
+        return terminalid;
+    }
+
+    public void setTerminalid(int terminalid) {
+        this.terminalid = terminalid;
+    }
+
+    public int getRouteid() {
+        return routeid;
+    }
+
+    public void setRouteid(int routeid) {
+        this.routeid = routeid;
+    }
+
+    public int getLinehaulstatusid() {
+        return linehaulstatusid;
+    }
+
+    public void setLinehaulstatusid(int linehaulstatusid) {
+        this.linehaulstatusid = linehaulstatusid;
     }
 
     @Override

@@ -12,10 +12,13 @@ public class ChargeEntity {
     private String description;
     private Double amount;
 
+    private int orderid;
+
     public ChargeEntity() {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -43,6 +46,14 @@ public class ChargeEntity {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public int getOrderid() {
+        return orderid;
+    }
+
+    public void setOrderid(int orderid) {
+        this.orderid = orderid;
     }
 
     @Override

@@ -27,6 +27,7 @@ public class AuthtokenEntity {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "token", nullable = false, insertable = true, updatable = true, length = 2147483647)
     public String getToken() {
         return token;

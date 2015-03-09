@@ -15,10 +15,13 @@ public class FreightEntity {
     private String seal;
     private String notes;
 
+    private int containerid;
+
     public FreightEntity() {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -76,6 +79,14 @@ public class FreightEntity {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public int getContainerid() {
+        return containerid;
+    }
+
+    public void setContainerid(int containerid) {
+        this.containerid = containerid;
     }
 
     @Override

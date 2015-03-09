@@ -22,6 +22,8 @@ public class ContactEntity {
     private String notes;
     private int id;
 
+    private int accountid;
+
     public ContactEntity() {
     }
 
@@ -146,6 +148,7 @@ public class ContactEntity {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -153,6 +156,14 @@ public class ContactEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getAccountid() {
+        return accountid;
+    }
+
+    public void setAccountid(int accountid) {
+        this.accountid = accountid;
     }
 
     @Override
