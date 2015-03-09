@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Richard Morgan on 2/9/2015.
@@ -42,6 +43,13 @@ public class ContactResource {
         return dao.findById(id);
     }
 
+    @GET
+    @Timed
+    @UnitOfWork
+    @Path("/account/{id}")
+    public List<ContactEntity> queryContactByAccountID(@PathParam("id") int id){
+        return dao.getByAccountID(id);
+    }
 
     @POST
     @Timed

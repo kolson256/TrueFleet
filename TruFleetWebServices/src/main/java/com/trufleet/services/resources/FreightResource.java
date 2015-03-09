@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Richard Morgan on 2/16/2015.
@@ -28,8 +29,6 @@ public class FreightResource {
     private final FreightEntityDAO dao;
 
     public FreightResource(FreightEntityDAO freightEntityDAO) {
-
-
         dao = freightEntityDAO;
     }
 
@@ -41,6 +40,14 @@ public class FreightResource {
     @Path("/{id}")
     public FreightEntity queryFreightByID (@PathParam("id") int id) {
         return dao.findById(id);
+    }
+
+    @GET
+    @Timed
+    @UnitOfWork
+    @Path("/container/{id}")
+    public List<FreightEntity> queryFrieghtByContainerID(@PathParam("id") int id){
+       return dao.findByContainer(id);
     }
 
 

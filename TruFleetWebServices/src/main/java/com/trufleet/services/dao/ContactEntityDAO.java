@@ -3,6 +3,9 @@ package com.trufleet.services.dao;
 import com.trufleet.services.domain.representations.ContactEntity;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+
+import java.util.List;
 
 /**
  * Created by Richard Morgan on 2/9/2015.
@@ -18,6 +21,12 @@ public class ContactEntityDAO extends AbstractDAO<ContactEntity> {
 
     public ContactEntity findById(int id) {
         return get(id);
+    }
+
+    public List<ContactEntity> getByAccountID(int id){
+        return currentSession().createCriteria(ContactEntity.class)
+                .add(Restrictions.eq("accountid", new Integer(id) ) )
+                .list();
     }
 
     public int create(ContactEntity contact) {

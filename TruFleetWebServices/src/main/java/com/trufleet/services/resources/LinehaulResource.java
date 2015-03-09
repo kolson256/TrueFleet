@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Richard Morgan on 2/16/2015.
@@ -81,6 +82,45 @@ public class LinehaulResource {
         dao.removeContact(linehaul);
     }
 
+    @GET
+    @Timed
+    @UnitOfWork
+    @Path("/order/{orderid}")
+    public List<LinehaulEntity> listLinehaulsByOrderId (@PathParam("orderid") int id){
+        return dao.queryLinehaulsByOrderID(id);
+    }
+
+    @GET
+    @Timed
+    @UnitOfWork
+    @Path("/account/{accountid}")
+    public List<LinehaulEntity> listLinehaulsByAccountId (@PathParam("accountid") int id){
+        return dao.queryLinehaulsByAccountID(id);
+    }
+
+    @GET
+    @Timed
+    @UnitOfWork
+    @Path("/status/{statusid}")
+    public List<LinehaulEntity> listLinehaulsByStatus (@PathParam("statusid") int id){
+        return dao.queryLinehaulsByStatus(id);
+    }
+
+    @GET
+    @Timed
+    @UnitOfWork
+    @Path("/route/{routeid}")
+    public List<LinehaulEntity> listLinehaulsByRouteId (@PathParam("routeid") int id){
+        return dao.queryLinehaulsByRouteID(id);
+    }
+
+    @POST
+    @Timed
+    @UnitOfWork
+    @Path("/orderroute/")
+    public List<LinehaulEntity> listLinehaulsByRouteId (int routeid, int orderid){
+        return dao.queryLinehaulByRouteAndOrder(routeid, orderid);
+    }
 
 
 

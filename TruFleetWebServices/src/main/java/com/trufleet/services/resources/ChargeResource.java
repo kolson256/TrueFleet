@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Richard Morgan on 2/16/2015.
@@ -83,7 +84,13 @@ public class ChargeResource {
         dao.removeContact(charge);
     }
 
-
+    @GET
+    @Timed
+    @UnitOfWork
+    @Path("/order/{orderid}")
+    public List<ChargeEntity> listChargeByOrderId (@PathParam("orderid") int id){
+        return dao.getChargeByOrderID(id);
+    }
 
 
 }
