@@ -18,6 +18,7 @@ import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.OrderOverviewManager;
 import app.truefleet.com.truefleet.Resources.LoginManager;
+import app.truefleet.com.truefleet.Tasks.LinehaulsService;
 import app.truefleet.com.truefleet.Tasks.OrderService;
 import app.truefleet.com.truefleet.modules.ApiModule;
 import app.truefleet.com.truefleet.modules.BusModule;
@@ -54,7 +55,8 @@ import dagger.Provides;
                 ContainerFragment.class,
                 DeliveryFragment.class,
                 FreightFragment.class,
-                PickupFragment.class
+                PickupFragment.class,
+                LinehaulsService.class
         }
 )
 public class TrueFleetModule {

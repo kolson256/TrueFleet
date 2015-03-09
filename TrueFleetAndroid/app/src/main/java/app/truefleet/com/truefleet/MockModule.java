@@ -54,7 +54,8 @@ import dagger.Provides;
                 ContainerFragment.class,
                 DeliveryFragment.class,
                 FreightFragment.class,
-                PickupFragment.class
+                PickupFragment.class,
+                TrueFleetModule.class
         }
 )
 public class MockModule {

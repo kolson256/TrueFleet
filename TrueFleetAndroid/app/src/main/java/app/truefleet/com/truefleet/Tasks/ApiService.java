@@ -14,6 +14,7 @@ import app.truefleet.com.truefleet.Models.Linehaul;
 import app.truefleet.com.truefleet.Models.Order;
 import app.truefleet.com.truefleet.Models.User;
 import app.truefleet.com.truefleet.Tasks.Requests.GcmRegisterRequest;
+import app.truefleet.com.truefleet.Tasks.Requests.LinehaulsRequest;
 import app.truefleet.com.truefleet.Tasks.Requests.LoginRequest;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -66,13 +67,19 @@ public interface ApiService {
     @GET("/0.1/contact/{id}")
     public Contact getContact(@Path("id") int routeId);
 
+    @POST("/0.1/linehaul/orderroute")
+    public void getLinehauls(@Body LinehaulsRequest linehaulsRequest, RestCallback<List<Linehaul>> cb);
+
+    @GET("/0.1/contact/account/{accountid}")
+    public List<Contact> getContacts(@Path("accountid") int accountid);
+
     //------- not implemented on server ------------------------------
-    @GET("/0.1/linehauls/{routeid}/{orderid}")
-    public List<Linehaul> getLinehauls(@Path("routeid") int routeid, @Path("orderid") int orderid);
+//    @GET("/0.1/linehauls/{routeid}/{orderid}")
+  //  public List<Linehaul> getLinehauls(@Path("routeid") int routeid, @Path("orderid") int orderid);
 
     @GET("/0.1/freights/{linehaulid}")
     public List<Freight> getFreights(@Path("linehaulid") int linehaulid);
 
-    @GET("/0.1/contacts/{accountid}")
-    public List<Contact> getContacts(@Path("accountid") int accountid);
+  //  @GET("/0.1/contacts/{accountid}")
+   // public List<Contact> getContacts(@Path("accountid") int accountid);
 }

@@ -201,11 +201,6 @@ public class HomeFragment extends Fragment implements Updater {
 
     @Override
     public void onStop() {
-        try {
-            getActivity().unregisterReceiver(broadcastReceiver);
-        } catch (Exception e) {
-            Log.d(LOG_TAG, "Receiver already unregistered");
-        }
         super.onStop();
     }
 
@@ -232,6 +227,11 @@ public class HomeFragment extends Fragment implements Updater {
     public void onPause() {
         super.onPause();
         bus.unregister(this);
+        try {
+            getActivity().unregisterReceiver(broadcastReceiver);
+        } catch (Exception e) {
+            Log.d(LOG_TAG, "Receiver already unregistered");
+        }
     }
 
 }
