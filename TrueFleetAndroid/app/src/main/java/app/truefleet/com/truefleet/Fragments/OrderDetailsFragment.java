@@ -3,6 +3,7 @@ package app.truefleet.com.truefleet.Fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,10 +18,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -34,23 +37,30 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import app.truefleet.com.truefleet.Activitieis.Events.ActiveOrderLinehauLStatusChangedEvent;
 import app.truefleet.com.truefleet.Activitieis.Events.LinehaulSelectionEvent;
+import app.truefleet.com.truefleet.Activitieis.Events.NoLinehaulsEvent;
+import app.truefleet.com.truefleet.Activitieis.Events.YesLinehaulsEvent;
+import app.truefleet.com.truefleet.Activitieis.OrderActivitys;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Adapters.LinehaulAdapter;
 import app.truefleet.com.truefleet.Models.Linehaul;
+import app.truefleet.com.truefleet.Models.LinehaulStatus;
 import app.truefleet.com.truefleet.Models.LinehaulType;
 import app.truefleet.com.truefleet.Models.Order;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Tasks.PostStatus;
 import app.truefleet.com.truefleet.TrueFleetApp;
 import app.truefleet.com.truefleet.Utils;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by Chris Lacy on 2/9/2015.
  */
 public class OrderDetailsFragment extends Fragment implements Updater {
-
+    ProgressDialog ringProgressDialog;
     private static final String IMAGE_DIRECTORY_NAME = "trufleet";
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final int REQUEST_CODE = 100;
@@ -76,6 +86,7 @@ public class OrderDetailsFragment extends Fragment implements Updater {
 
     @InjectView(R.id.button_update_status)
     com.gc.materialdesign.views.ButtonRectangle statusButton;
+
     @InjectView(R.id.listview_linehauls)
     ListView listView;
 
@@ -116,8 +127,44 @@ public class OrderDetailsFragment extends Fragment implements Updater {
         bus.unregister(this);
     }
 
+    @OnClick(R.id.button_update_status)
+    void onButtonStatusClicked() {
+        int pos = spinnerStatus.getSelectedItemPosition();
+        LinehaulStatus status = activeOrderManager.getActiveLinehaul().linehaulStatus;
+        LinehaulStatus updateStatus = null ;
+        if (pos == 0) {
+            updateStatus = status.futurestatus1;
+        }
+        else if (pos ==1) {
+            updateStatus = status.futurestatus2;
+        }
+        else if  (pos == 3) {
+            updateStatus = status.futurestatus3;
+        }
+        if (updateStatus!= null) {
+            ringProgressDialog = ProgressDialog.show(getActivity(), "Please wait ...", "Updating status ...", true);
+            ringProgressDialog.setCancelable(false);
+            PostStatus postStatus = new PostStatus(activeOrderManager.getActiveLinehaul(), updateStatus);
+            postStatus.execute();
+
+
+        }
+        else {
+            Log.e(LOG_TAG, "Invalid status selection");
+        }
+    }
+    @OnClick(R.id.button_backtoactive)
+    void onButtonBackToActiveClicked() {
+        bus.post(new LinehaulSelectionEvent(LinehaulType.ACTIVE));
+        ((OrderActivitys)getActivity()).setSelectionActive();
+    }
+
 
     public void updateUI() {
+        List<String> futureStatuses = activeOrderManager.getActiveLinehaulFutureStatuses();
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, futureStatuses);
+        spinnerStatus.setAdapter(spinnerAdapter);
 
         Order o = activeOrderManager.getOrder();
         orderid.setText(String.valueOf(o.orderid));
@@ -128,12 +175,18 @@ public class OrderDetailsFragment extends Fragment implements Updater {
 
         arrayOfLinehauls = activeOrderManager.getSelectedLinehauls();
 
-        if (Utils.isNullOrEmpty(arrayOfLinehauls));
+        if (Utils.isNullOrEmpty(arrayOfLinehauls)) {
+            bus.post(new NoLinehaulsEvent());
+        }
+        else {
+            bus.post(new YesLinehaulsEvent());
+        }
 
         LinehaulAdapter adapter = new LinehaulAdapter(getActivity(), arrayOfLinehauls);
 
             listView.setAdapter(adapter);
             listView.setItemsCanFocus(true);
+        listView.setEmptyView(getActivity().findViewById(R.id.empty_list_item));
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -167,6 +220,7 @@ public class OrderDetailsFragment extends Fragment implements Updater {
         spinnerStatus.setVisibility(View.VISIBLE);
         backToActiveButton.setVisibility(View.GONE);
     }
+
 
 
     //Result from camera
@@ -281,5 +335,50 @@ public class OrderDetailsFragment extends Fragment implements Updater {
         else
             setActiveDisplay();
         updateUI();
+    }
+    @Subscribe
+    public void activeOrderLinehauLStatusChangedEvent(ActiveOrderLinehauLStatusChangedEvent event) {
+
+        String status = event.getNewStatus().status;
+
+        if (status.equalsIgnoreCase("COMPLETED")) {
+            //todo: display notification moved to completed
+        }
+        if (status.equalsIgnoreCase("REJECTED")) {
+            //todo: display notification moved to completed
+        }
+        Log.i(LOG_TAG, "received activeOrderLinehauLStatusChangedEvent");
+        updateUI();
+        ringProgressDialog.dismiss();
+
+        displayToast("Linehaul Status updated");
+    }
+    public void displayToast(String message) {
+        final String msg = message;
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(getActivity().getApplicationContext(), msg,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void launchRingDialog(View view) {
+        ringProgressDialog = ProgressDialog.show(getActivity(), "Please wait ...", "Updating status ...", true);
+        ringProgressDialog.setCancelable(false);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Here you should write your time consuming task...
+                    // Let the progress ring for 10 seconds...
+                    Thread.sleep(10000);
+                } catch (Exception e) {
+
+                }
+                ringProgressDialog.dismiss();
+            }
+        }).start();
+
     }
 }

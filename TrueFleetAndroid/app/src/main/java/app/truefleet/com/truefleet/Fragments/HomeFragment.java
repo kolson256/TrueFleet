@@ -93,7 +93,6 @@ public class HomeFragment extends Fragment implements Updater {
         });
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -220,14 +219,18 @@ public class HomeFragment extends Fragment implements Updater {
     @Override
     public void onResume() {
         super.onResume();
-
+        if (loginManager.checkLogin()) {
+            getActivity().finish();
+        }
+        else
         bus.register(this);
     }
     @Override
     public void onPause() {
         super.onPause();
-        bus.unregister(this);
+
         try {
+            bus.unregister(this);
             getActivity().unregisterReceiver(broadcastReceiver);
         } catch (Exception e) {
             Log.d(LOG_TAG, "Receiver already unregistered");

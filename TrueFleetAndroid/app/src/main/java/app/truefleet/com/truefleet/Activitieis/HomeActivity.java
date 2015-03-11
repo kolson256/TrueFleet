@@ -22,7 +22,6 @@ import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Order;
 import app.truefleet.com.truefleet.Models.OrderOverviewManager;
 import app.truefleet.com.truefleet.R;
-import app.truefleet.com.truefleet.Resources.AddFakeOrders;
 import app.truefleet.com.truefleet.Resources.GcmHelper;
 import app.truefleet.com.truefleet.Resources.LoginManager;
 
@@ -52,23 +51,23 @@ public class HomeActivity extends BaseActivity {
         context = getApplicationContext();
         setTitle("Home");
         activeOrderManager = activeOrderManager.getInstance();
-
         gcmHelper.gcmSetup(this);
 
-        AddFakeOrders.addFakeOrders();
+
 
         if (savedInstanceState == null) {
-
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new HomeFragment())
                     .commit();
         }
     }
+    @Override
+    public void onBackPressed() {
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-
         bus.register(this);
     }
     @Override
@@ -150,6 +149,7 @@ public class HomeActivity extends BaseActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+
             return true;
         }
         return super.onOptionsItemSelected(item);

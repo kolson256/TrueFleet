@@ -10,8 +10,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import app.truefleet.com.truefleet.Activitieis.Events.ActiveOrderLinehauLStatusChangedEvent;
 import app.truefleet.com.truefleet.Activitieis.Events.FreightCountChangedEvent;
 import app.truefleet.com.truefleet.Activitieis.Events.LinehaulSelectionEvent;
+import app.truefleet.com.truefleet.Activitieis.Events.LinehaulStatusUpdateEvent;
 import app.truefleet.com.truefleet.Fragments.Updater;
 import app.truefleet.com.truefleet.TrueFleetApp;
 
@@ -75,11 +77,27 @@ public class ActiveOrderManager {
         activeLinehaul = null;
         setupLinehauls();
         Log.i(LOG_TAG, inactiveLinehauls.size() + " inactive linehauls");
+
+    }
+
+    public List<String> getActiveLinehaulFutureStatuses() {
+        List<String> statuses  = new ArrayList();
+
         try {
-            activeLinehaul = activeLinehauls.get(0);
+            Linehaul active = activeLinehauls.get(0);
+            LinehaulStatus activeStatus = active.linehaulStatus;
+            if (activeStatus.futurestatus1 != null)
+                statuses.add(activeStatus.futurestatus1.status);
+            if (activeStatus.futurestatus2 != null)
+                statuses.add(activeStatus.futurestatus2.status);
+            if (activeStatus.futurestatus3 != null)
+                statuses.add(activeStatus.futurestatus3.status);
+
         } catch (Exception e) {
-            Log.i(LOG_TAG, "No active linehauls in order");
+            Log.e(LOG_TAG, "No active linehaul");
+            Log.e(LOG_TAG, e.toString());
         }
+        return statuses;
     }
 
     private void setupLinehauls() {
@@ -88,6 +106,7 @@ public class ActiveOrderManager {
                 if (linehaul.linehaulStatus.isActive())
                     if (activeLinehauls.size() < 1) {
                         activeLinehauls.add(linehaul);
+                        activeLinehaul = activeLinehauls.get(0);
                         continue;
                     }
                     else{
@@ -103,6 +122,17 @@ public class ActiveOrderManager {
         } catch (Exception e) {
             Log.e(LOG_TAG, "Linehaul status was null in database");
         }
+    }
+    @Subscribe
+    public void linehaulStatusChanged(LinehaulStatusUpdateEvent event) {
+        setOrder(order);
+        Log.i(LOG_TAG, "received LinehaulStatusUpdateEvent");
+        bus.post(new ActiveOrderLinehauLStatusChangedEvent(event.getLinehaul().linehaulStatus));
+    }
+    public void linehaulStatusChanged(LinehaulStatus linehaulStatus) {
+        setOrder(order);
+        Log.i(LOG_TAG, "received LinehaulStatusUpdateEvent");
+        bus.post(new ActiveOrderLinehauLStatusChangedEvent(linehaulStatus));
     }
     @Subscribe
     public void linehaulTypeSeelction(LinehaulSelectionEvent event) {
@@ -125,6 +155,7 @@ public class ActiveOrderManager {
     public List<Linehaul> getAllLinehauls() {
         return allLinehauls;
     }
+
 
     public List<Linehaul> getSelectedLinehauls() {
         if (linehaulSelection == LinehaulType.ACTIVE)

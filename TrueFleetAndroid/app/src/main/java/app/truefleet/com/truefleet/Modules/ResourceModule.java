@@ -8,6 +8,7 @@ import app.truefleet.com.truefleet.Resources.ConnectionDetector;
 import app.truefleet.com.truefleet.Resources.GcmHelper;
 import app.truefleet.com.truefleet.Resources.GooglePlayServicesCheck;
 import app.truefleet.com.truefleet.Resources.LoginManager;
+import app.truefleet.com.truefleet.Resources.MainThreadBus;
 import dagger.Module;
 import dagger.Provides;
 
@@ -38,6 +39,11 @@ public class ResourceModule {
     @Provides
     public GooglePlayServicesCheck provideGooglePlayServicesCheck(Context context) {
         return new GooglePlayServicesCheck(context);
+    }
+
+    @Provides @Singleton
+    public MainThreadBus getMainThreadBus() {
+        return new MainThreadBus();
     }
 
 }

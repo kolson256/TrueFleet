@@ -14,6 +14,8 @@ import com.squareup.otto.Subscribe;
 import javax.inject.Inject;
 
 import app.truefleet.com.truefleet.Activitieis.Events.LinehaulSelectionEvent;
+import app.truefleet.com.truefleet.Activitieis.Events.NoLinehaulsEvent;
+import app.truefleet.com.truefleet.Activitieis.Events.YesLinehaulsEvent;
 import app.truefleet.com.truefleet.Models.Account;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.LinehaulType;
@@ -41,9 +43,10 @@ public class DeliveryFragment extends Fragment implements Updater {
     TextView mDeliveryNotes;
     @Inject
     Bus bus;
+    View view;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_delivery, container, false);
+        view = inflater.inflate(R.layout.fragment_delivery, container, false);
         TrueFleetApp.inject(this);
         activeOrderManager = ActiveOrderManager.getInstance();
         activeOrderManager.setContentUpdater(this);
@@ -96,6 +99,14 @@ public class DeliveryFragment extends Fragment implements Updater {
     public void linehaulTypeSeelction(LinehaulSelectionEvent event) {
         linehaulSelection = event.getSelectionType();
         updateUI();
+    }
+    @Subscribe
+    public void noLinehauls(NoLinehaulsEvent event) {
+        view.setVisibility(View.INVISIBLE);
+    }
+    @Subscribe
+    public void yesLinehauls(YesLinehaulsEvent event) {
+        view.setVisibility(View.VISIBLE);
     }
 }
 

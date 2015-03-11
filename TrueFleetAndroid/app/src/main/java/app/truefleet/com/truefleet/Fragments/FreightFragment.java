@@ -41,7 +41,6 @@ public class FreightFragment extends Fragment implements Updater {
         View view = inflater.inflate(R.layout.fragment_freight, container, false);
         TrueFleetApp.inject(this);
         ButterKnife.inject(this, view);
-
         activeOrderManager = ActiveOrderManager.getInstance();
         activeOrderManager.setContentUpdater(this);
         updateUI();
@@ -61,6 +60,7 @@ public class FreightFragment extends Fragment implements Updater {
         FreightAdapter adapter = new FreightAdapter(getActivity(), freights);
 
         listView.setAdapter(adapter);
+
     }
     @Override
     public void onResume() {
@@ -78,4 +78,6 @@ public class FreightFragment extends Fragment implements Updater {
         linehaulSelection = event.getSelectionType();
         updateUI();
     }
+
+
 }

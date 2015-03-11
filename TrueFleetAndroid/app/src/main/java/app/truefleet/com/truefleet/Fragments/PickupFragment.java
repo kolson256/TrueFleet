@@ -14,6 +14,8 @@ import com.squareup.otto.Subscribe;
 import javax.inject.Inject;
 
 import app.truefleet.com.truefleet.Activitieis.Events.LinehaulSelectionEvent;
+import app.truefleet.com.truefleet.Activitieis.Events.NoLinehaulsEvent;
+import app.truefleet.com.truefleet.Activitieis.Events.YesLinehaulsEvent;
 import app.truefleet.com.truefleet.Activitieis.OnSwipeTouchListener;
 import app.truefleet.com.truefleet.Models.Account;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
@@ -40,12 +42,12 @@ public class PickupFragment extends Fragment implements Updater {
     @InjectView(R.id.pickup_notes)
     TextView mPickupNotes;
     private LinehaulType linehaulSelection;
-
+    View view;
     @Inject
     Bus bus;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_pickup, container, false);
+        view = inflater.inflate(R.layout.fragment_pickup, container, false);
         activeOrderManager = ActiveOrderManager.getInstance();
         activeOrderManager.setContentUpdater(this);
         ButterKnife.inject(this, view);
@@ -83,6 +85,7 @@ public class PickupFragment extends Fragment implements Updater {
 
     }
 
+
     private void emptyPickup() {
         mPickupName.setText("No pickup set");
         mPickupAddress.setText("");
@@ -111,6 +114,23 @@ public class PickupFragment extends Fragment implements Updater {
         linehaulSelection = event.getSelectionType();
         updateUI();
     }
+
+    @Subscribe
+    public void noLinehauls(NoLinehaulsEvent event) {
+        clearView();
+    }
+    @Subscribe
+    public void yesLinehauls(YesLinehaulsEvent event) {
+        setVisible();
+    }
+    private void clearView() {
+
+        view.setVisibility(View.INVISIBLE);
+    }
+    private void setVisible() {
+        view.setVisibility(View.VISIBLE);
+    }
+
 }
 
 

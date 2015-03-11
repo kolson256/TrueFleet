@@ -17,8 +17,7 @@ public class Linehaul extends BaseModel {
 
     @Column(name = "serverid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     public int id;
-    @Column(name = "Orders",
-            onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    @Column(name = "Orders", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public Order order;
 
 
@@ -101,8 +100,7 @@ public class Linehaul extends BaseModel {
                 .execute();
     }
 
-    //TODO: Implement when status is in DB
     public static boolean isAactive(Linehaul linehaul) {
-        return true;
+        return linehaul.linehaulStatus.isActive();
     }
 }

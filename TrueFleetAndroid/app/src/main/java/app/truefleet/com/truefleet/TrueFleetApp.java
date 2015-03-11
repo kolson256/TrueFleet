@@ -53,7 +53,7 @@ public class TrueFleetApp extends Application {
     }
 
     protected List<Object> getModules() {
-        return Arrays.<Object>asList(new TrueFleetModule(this));
+        return Arrays.<Object>asList(new MockModule(this));
     }
 
     protected List<Object> getMockModules() {

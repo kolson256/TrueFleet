@@ -16,6 +16,7 @@ import android.widget.Toast;
 import app.truefleet.com.truefleet.Activitieis.BaseActivity;
 import app.truefleet.com.truefleet.Activitieis.HomeActivity;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Resources.AddFakeOrders;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -38,6 +39,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
         setTitle("Login");
+    }
+    @Override
+    public void onBackPressed() {
     }
 
     public void login(View view) {
@@ -106,6 +110,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
             // as you specify a parent activity in AndroidManifest.xml.
             int id = item.getItemId();
             if (id == R.id.action_settings) {
+                AddFakeOrders.addFakeOrders();
                 return true;
             }
             return super.onOptionsItemSelected(item);

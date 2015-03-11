@@ -31,7 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
-
             />
 
         <com.gc.materialdesign.views.ButtonRectangle
@@ -143,6 +142,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:choiceMode="singleChoice" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/empty_list_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:visibility="gone"
+                android:text="No linehauls found" >
+            </TextView>
         </LinearLayout>
 
 

@@ -17,6 +17,7 @@ import app.truefleet.com.truefleet.Models.Contact;
 import app.truefleet.com.truefleet.Models.Container;
 import app.truefleet.com.truefleet.Models.Freight;
 import app.truefleet.com.truefleet.Models.Linehaul;
+import app.truefleet.com.truefleet.Models.LinehaulStatus;
 import app.truefleet.com.truefleet.Models.Order;
 import app.truefleet.com.truefleet.TrueFleetApp;
 import retrofit.RetrofitError;
@@ -67,7 +68,7 @@ public class LinehaulsService extends AsyncTask<String, Void, String[]>  {
             l.shipper = shipper;
             l.terminal = terminal;
             l.receiver = receiver;
-
+            l.linehaulStatus = Model.load(LinehaulStatus.class, 25); //todo: change to real when implemented WS
             getContactHandler(terminal);
             getContactHandler(shipper);
             getContactHandler(receiver);

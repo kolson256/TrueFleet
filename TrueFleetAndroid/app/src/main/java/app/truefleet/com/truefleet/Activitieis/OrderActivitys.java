@@ -32,6 +32,7 @@ import app.truefleet.com.truefleet.Fragments.SidePanelFragment;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.LinehaulType;
 import app.truefleet.com.truefleet.R;
+import app.truefleet.com.truefleet.Resources.LoginManager;
 import app.truefleet.com.truefleet.TrueFleetApp;
 
 public class OrderActivitys extends BaseActivity implements SidePanelFragment.OnColumnSelectedListener {
@@ -42,9 +43,13 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
     SidePanelFragment sidePanelFragment;
     ContainerFragment containerFragment;
     FreightFragment freightFragment;
+    MenuItem base;
 
     @Inject
     Bus bus;
+
+    @Inject
+    LoginManager loginManager;
 
     int id;
     private BroadcastReceiver broadcastReceiver;
@@ -131,7 +136,8 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.action_linehaul_selector, menu);
-        final MenuItem base = menu.findItem(R.id.linehaul_menu);
+        base = menu.findItem(R.id.linehaul_menu);
+
         MenuItem active = menu.findItem(R.id.menuActive);
         MenuItem inactive = menu.findItem(R.id.menuInactive);
         MenuItem completed = menu.findItem(R.id.menuCompleted);
@@ -168,7 +174,9 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
         super.onCreateOptionsMenu(menu);
         return true;
     }
-
+    public void setSelectionActive() {
+        base.setTitle("ACTIVE LINEHAULS");
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -241,25 +249,30 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
         }
     }
 
-    //Stop receiver from leaking
-    @Override
-    public void onStop() {
-        try {
-            unregisterReceiver(broadcastReceiver);
-        } catch (Exception e) {
-            Log.d(LOG_TAG, "Receiver already unregistered");
-        }
-        super.onStop();
-    }
+
     @Override
     public void onResume() {
         super.onResume();
-
-        bus.register(this);
+        if (loginManager.checkLogin()) {
+            finish();
+            bus.unregister(this);
+        }
+        else {
+            bus.register(this);
+            registerReceiver(broadcastReceiver, new IntentFilter("orderstatus"));
+        }
     }
     @Override
     public void onPause() {
         super.onPause();
         bus.unregister(this);
+
+        try {
+            bus.unregister(this);
+            unregisterReceiver(broadcastReceiver);
+        } catch (Exception e) {
+            Log.d(LOG_TAG, "Receiver already unregistered");
+        }
     }
+
 }

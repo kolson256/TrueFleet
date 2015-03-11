@@ -41,6 +41,7 @@ public class SidePanelFragment extends Fragment {
     PanelAdapter adapter;
     ActiveOrderManager aom;
     private LinehaulType linehaulSelection;
+    private boolean clickable;
 
     @Inject
     Bus bus;
@@ -66,6 +67,7 @@ public class SidePanelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_side_panel, container, false);
         panelItems = new ArrayList<>();
+        clickable = true;
 
         ButterKnife.inject(this, view);
         TrueFleetApp.inject(this);
@@ -95,9 +97,11 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                view.setSelected(true);
-                Log.i(LOG_TAG, "Listview index: " + position + " clicked");
-                mCallback.onColumnSelected(position);
+                if (clickable) {
+                    view.setSelected(true);
+                    Log.i(LOG_TAG, "Listview index: " + position + " clicked");
+                    mCallback.onColumnSelected(position);
+                }
             }
         });
 
