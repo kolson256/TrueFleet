@@ -93,14 +93,21 @@ public class AddFakeOrders {
 
 
         cReceiver.save();
-        addOrder(1, aOrder, cOrder, ashipper, aterminal, areceiver, 1, lhStatus6);
-        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6);
+        addOrder(1, aOrder, cOrder, ashipper, aterminal, areceiver, 1, lhStatus6, 976987272000L, " order notes 1 assigned test", "test");
+        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987273000L, "order notes 2", "test");
+        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987274000L, "order notes 4", "test");
+        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987275000L, "order notes 5", "test");
+        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987276000L, "order notes 6", "test");
+        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987277000L, "order notes 7", "test");
+
+        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987271000L, "order notes1 for an admin", "admin");
+        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987272000L, "order notes2 for an admin", "admin");
     }
     private static void addOrder(int linehaulStart, Account aOrder, Contact cOrder, Account ashipper, Account aterminal, Account areceiver, int orderid,
-                          LinehaulStatus lhStatus) {
+                          LinehaulStatus lhStatus, long receiptdate, String notes, String user) {
 
-        Order o = new Order(orderid, aOrder, cOrder, orderid, "2222", "order notes", 976987273000L,
-                "orderType", "test");
+        Order o = new Order(orderid, aOrder, cOrder, orderid, "2222", notes, receiptdate,
+                "orderType", user);
         o.save();
         Linehaul lh = new Linehaul(linehaulStart, orderid, o, 888, ashipper, aterminal, areceiver,
                 "linehaul notes", 976987273001L,
@@ -130,7 +137,7 @@ public class AddFakeOrders {
         Freight f2 = new Freight(linehaulStart+2, c, lh, "freight2 description", 6, 55, "seal2", "freight2 notes");
         f2.save();
 
-        Freight f3 = new Freight(linehaulStart+3, c, lh, "freight3 description", 6, 55, "seal3", "freight3 notes");
+        Freight f3 = new Freight(linehaulStart+3, c, lh2, "freight3 description", 6, 55, "seal3", "freight3 notes");
         f3.save();
     }
 }

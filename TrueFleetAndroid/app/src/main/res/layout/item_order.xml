@@ -10,7 +10,7 @@
     android:elevation="20dp"
 
     >
-<LinearLayout
+<RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -24,40 +24,50 @@
         android:layout_height="wrap_content"
         android:id="@+id/homeOrder_id"
         android:text="#"
-        android:layout_width="match_parent"
-        android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/RowValue"
-        />
-
-    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="Notes"
-        style="@style/RowValue"
-        />
-    <TextView
-        android:layout_height="wrap_content"
-        android:id="@+id/order_notes"
-        android:text="here are notes"
-        android:layout_width="match_parent"
-        android:layout_gravity="start|center_vertical|fill_horizontal"
-        style="@style/RowValue"
-        />
-    <TextView
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|center_vertical"
-        android:text="Receipt date"
-        style="@style/RowTitle"
+        style="@style/RowValue"
         />
     <TextView
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@id/homeOrder_id"
+        android:id="@+id/reciptTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Receipt date"
+        style="@style/RowValue"
+        />
+    <TextView
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@id/reciptTitle"
         android:layout_height="wrap_content"
         android:id="@+id/order_receipt_date"
         android:text="None"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_gravity="start|center_vertical|fill_horizontal"
         style="@style/RowValue"
         />
-</LinearLayout>
+
+    <TextView
+        android:layout_below="@id/homeOrder_id"
+        android:id="@+id/theid"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Notes:"
+        style="@style/RowValue"
+        />
+    <TextView
+        android:layout_marginLeft="50dp"
+        android:layout_below="@id/homeOrder_id"
+        android:layout_toRightOf="@id/theid"
+        android:layout_height="wrap_content"
+        android:id="@+id/order_notes"
+        android:text="here are notes"
+        android:layout_width="wrap_content"
+        android:layout_gravity="start|center_vertical|fill_horizontal"
+        style="@style/RowValue"
+        />
+
+</RelativeLayout>
 </android.support.v7.widget.CardView>

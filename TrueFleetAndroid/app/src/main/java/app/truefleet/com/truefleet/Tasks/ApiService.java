@@ -26,8 +26,8 @@ import retrofit.http.Path;
 /**
  * Created by Chris Lacy on 2/9/2015.
  */
-//TODO: Add POST status
- //TODO: Add POST picture
+//TODO: Add POST status - no ws
+ //TODO: Add POST picture - no ws
 public interface ApiService {
     @Headers({
             "Content-type: application/json",
@@ -74,12 +74,9 @@ public interface ApiService {
     public List<Contact> getContacts(@Path("accountid") int accountid);
 
     //------- not implemented on server ------------------------------
-//    @GET("/0.1/linehauls/{routeid}/{orderid}")
-  //  public List<Linehaul> getLinehauls(@Path("routeid") int routeid, @Path("orderid") int orderid);
 
     @GET("/0.1/freights/{linehaulid}")
     public List<Freight> getFreights(@Path("linehaulid") int linehaulid);
 
-  //  @GET("/0.1/contacts/{accountid}")
-   // public List<Contact> getContacts(@Path("accountid") int accountid);
+
 }

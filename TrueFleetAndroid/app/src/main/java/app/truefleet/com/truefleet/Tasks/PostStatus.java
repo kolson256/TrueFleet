@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import app.truefleet.com.truefleet.Models.ActiveOrderManager;
 import app.truefleet.com.truefleet.Models.Linehaul;
 import app.truefleet.com.truefleet.Models.LinehaulStatus;
-import app.truefleet.com.truefleet.Resources.MainThreadBus;
 import app.truefleet.com.truefleet.TrueFleetApp;
 
 /**
@@ -40,9 +39,6 @@ public class PostStatus extends AsyncTask<String, Void, String[]> {
             Log.e(LOG_TAG, "Updating status to accept");
             linehaul.linehaulStatus = Model.load(LinehaulStatus.class, 5);
             linehaul.save();
-            MainThreadBus bus = new MainThreadBus();
-            //bus.post(new LinehaulStatusUpdateEvent(linehaul));
-
 
         } else if(updateLinehaulStatus.status.equalsIgnoreCase("Picked up")) {
             linehaul.linehaulStatus = Model.load(LinehaulStatus.class, 4);

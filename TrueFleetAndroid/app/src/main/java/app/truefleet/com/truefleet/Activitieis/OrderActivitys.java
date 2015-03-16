@@ -118,11 +118,6 @@ public class OrderActivitys extends BaseActivity implements SidePanelFragment.On
         fragmentTransaction.replace(R.id.content_panel, pickupFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-        //   if (savedInstanceState == null) {
-        //       getFragmentManager().beginTransaction()
-        //              .add(R.id.container, new PlaceholderFragment())
-        //              .commit();
-        // }
     }
 
     private void hideSidePanel() {

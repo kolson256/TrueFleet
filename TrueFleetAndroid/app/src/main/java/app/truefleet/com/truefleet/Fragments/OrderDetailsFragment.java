@@ -370,8 +370,6 @@ public class OrderDetailsFragment extends Fragment implements Updater {
             @Override
             public void run() {
                 try {
-                    // Here you should write your time consuming task...
-                    // Let the progress ring for 10 seconds...
                     Thread.sleep(10000);
                 } catch (Exception e) {
 

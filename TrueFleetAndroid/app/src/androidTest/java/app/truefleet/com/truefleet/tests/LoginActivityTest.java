@@ -61,6 +61,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
     public void testCorrectLogin() {
         username.setText("test");
         password.setText("test");
+
         assertTrue(login.performClick());
         am.waitForActivityWithTimeout(2000);
         //assertEquals(1, am.getHits());

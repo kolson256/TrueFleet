@@ -47,13 +47,13 @@ public class MockClient implements Client {
            response = "{\"id\":0,\"firstname\":\"First\",\"lastname\":\"User One\",\"suffix\":null,\"mailingstreet\":\"233 South Wacker Drive\",\"mailingcity\":\"Chicago\",\"mailingstate\":\"IL\",\"mailingpostalcode\":\"60606\",\"mailingcountry\":null,\"phone\":null,\"mobilephone\":null,\"fax\":null,\"notes\":null,\"id\":0}";
 
         }
-        else if (uri.getPath().startsWith("/0.1/linehauls/")) {
+        else if (uri.getPath().startsWith("/0.1/linehaul/orderroute")) {
             response = "[{\"id\":0,\"notes\":\"Linehaul 1\",\"shipdate\":1424412000000,\"pickupstartdate\":1424694600000,\"pickupenddate\":1424705400000,\"deliverydeadline\":1424986200000}," +
                     "{\"id\":1,\"notes\":\"Linehaul 2\",\"shipdate\":1424412000000,\"pickupstartdate\":1424694600000,\"pickupenddate\":1424705400000,\"deliverydeadline\":1424986200000}]";
         } else if(uri.getPath().startsWith("/0.1/freights/")) {
             response = "[{\"id\":0,\"description\":\"This is 1 Test\",\"quantity\":2,\"weight\":10000,\"seal\":\"Seal ID 1\",\"notes\":\"Freight Test 1\"}," +
                     "{\"id\":1,\"description\":\"This is 2 Test\",\"quantity\":3,\"weight\":20000,\"seal\":\"Seal ID 2\",\"notes\":\"Freight Test 2\"}]";
-        } else if (uri.getPath().startsWith("/0.1/contacts/")) {
+        } else if (uri.getPath().startsWith("/0.1/contact/account/")) {
             response = "[{\"id\":0,\"firstname\":\"First\",\"lastname\":\"User One\",\"suffix\":null,\"mailingstreet\":\"12345 S. Chicago ave.\",\"mailingcity\":\"Chicago\",,\"mailingstate\":\"IL\",\"mailingpostalcode\":60613,\"mailingcountry\":null,\"phone\":null,\"mobilephone\":null,\"fax\":null,\"notes\":null,\"id\":0}," +
                     "{\"id\":1,\"firstname\":\"First2\",\"lastname\":\"User two\",\"suffix\":null,\"mailingstreet\":null,\"mailingcity\":null,\"mailingstate\":null,\"mailingpostalcode\":null,\"mailingcountry\":null,\"phone\":null,\"mobilephone\":null,\"fax\":null,\"notes\":null,\"id\":0}";
         }

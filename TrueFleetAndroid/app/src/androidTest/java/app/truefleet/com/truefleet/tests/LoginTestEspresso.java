@@ -1,5 +1,6 @@
 package app.truefleet.com.truefleet.tests;
 
+import android.support.test.espresso.action.CloseKeyboardAction;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -10,6 +11,8 @@ import org.junit.runner.RunWith;
 import app.truefleet.com.truefleet.Activitieis.Login.LoginActivity;
 import app.truefleet.com.truefleet.R;
 import app.truefleet.com.truefleet.util.ActivityRule;
+
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -44,12 +47,14 @@ public class LoginTestEspresso {
     }
     @Test
     public void testCorrectLogin() {
-        onView(withId(R.id.textUsername)).perform(typeText("hello"));
-        onView(withId(R.id.textPassword)).perform(typeText("there"));
-
+        String username = "test";
+        onView(withId(R.id.textUsername)).perform(typeText(username));
+        onView(withId(R.id.textPassword)).perform(typeText(username));
+        onView(isRoot()).perform(new CloseKeyboardAction());
         onView(withId(R.id.buttonLogin)).perform(click());
 
-        onView(withId(R.id.buttonLogin)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+       // onView(withId(R.id.welcome_text)).check(ViewAssertions.matches(ViewMatchers.withText("Hello, " + username + "!")));
+       // onView(withId(R.id.buttonLogin)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
     }
 
 }
