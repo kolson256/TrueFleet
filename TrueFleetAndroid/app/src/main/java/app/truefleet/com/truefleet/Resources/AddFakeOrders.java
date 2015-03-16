@@ -95,13 +95,13 @@ public class AddFakeOrders {
         cReceiver.save();
         addOrder(1, aOrder, cOrder, ashipper, aterminal, areceiver, 1, lhStatus6, 976987272000L, " order notes 1 assigned test", "test");
         addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987273000L, "order notes 2", "test");
-        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987274000L, "order notes 4", "test");
-        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987275000L, "order notes 5", "test");
-        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987276000L, "order notes 6", "test");
-        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987277000L, "order notes 7", "test");
+        addOrder(7, aOrder, cOrder, ashipper, aterminal, areceiver, 3, lhStatus6, 976987274000L, "order notes 4", "test");
+        addOrder(10, aOrder, cOrder, ashipper, aterminal, areceiver, 4, lhStatus6, 976987275000L, "order notes 5", "test");
+        addOrder(13, aOrder, cOrder, ashipper, aterminal, areceiver, 5, lhStatus6, 976987276000L, "order notes 6", "test");
+        addOrder(16, aOrder, cOrder, ashipper, aterminal, areceiver, 6, lhStatus6, 976987277000L, "order notes 7", "test");
 
-        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987271000L, "order notes1 for an admin", "admin");
-        addOrder(4, aOrder, cOrder, ashipper, aterminal, areceiver, 2, lhStatus6, 976987272000L, "order notes2 for an admin", "admin");
+        addOrder(19, aOrder, cOrder, ashipper, aterminal, areceiver, 7, lhStatus6, 976987271000L, "order notes1 for an admin", "admin");
+        addOrder(22, aOrder, cOrder, ashipper, aterminal, areceiver, 8, lhStatus6, 976987272000L, "order notes2 for an admin", "admin");
     }
     private static void addOrder(int linehaulStart, Account aOrder, Contact cOrder, Account ashipper, Account aterminal, Account areceiver, int orderid,
                           LinehaulStatus lhStatus, long receiptdate, String notes, String user) {

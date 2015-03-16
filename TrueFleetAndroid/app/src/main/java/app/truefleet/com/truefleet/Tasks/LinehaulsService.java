@@ -52,7 +52,8 @@ public class LinehaulsService extends AsyncTask<String, Void, String[]>  {
         return null;
     }
     private void linehaulsHandler(List<Linehaul> linehauls) {
-
+        LinehaulStatus lhStatus = new LinehaulStatus(1, "Assigned", null,null ,null); //todo: change to real when implemented WS
+        lhStatus.save();
         if (linehauls == null) {
             return;
         }
@@ -68,7 +69,7 @@ public class LinehaulsService extends AsyncTask<String, Void, String[]>  {
             l.shipper = shipper;
             l.terminal = terminal;
             l.receiver = receiver;
-            l.linehaulStatus = Model.load(LinehaulStatus.class, 25); //todo: change to real when implemented WS
+            l.linehaulStatus = lhStatus; //todo: change to real when implemented WS
             getContactHandler(terminal);
             getContactHandler(shipper);
             getContactHandler(receiver);
